@@ -7,79 +7,61 @@
   --color-semi-blanco: #E7DDFF;
   --color-semi-blanquito: #DACAFE;
   --color-gray-gray: #818080;
+  --color-personalizado: #D2BEFE;
+  --color-personalizado-click: #E6DCFE;
+  --color-personalizado-click-hover: #B394FE;
+  
   
 }
 
+
+
 @font-face {
-  font-family: "Chakra1";
+  font-family: "Chakra";
   src: url("/src/assets/fonts/ChakraPetch-Bold.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Chakra2";
+  font-family: "Chakra1";
   src: url("/src/assets/fonts/ChakraPetch-BoldItalic.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
-  font-family: "Chakra3";
-  src: url("/src/assets/fonts/ChakraPetch-Italic.ttf") format("truetype");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Chakra4";
+  font-family: "Chakra2";
   src: url("/src/assets/fonts/ChakraPetch-Light.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
-  font-family: "Chakra5";
-  src: url("/src/assets/fonts/ChakraPetch-LightItalic.ttf") format("truetype");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Chakra6";
+  font-family: "Chakra3";
   src: url("/src/assets/fonts/ChakraPetch-Medium.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
-  font-family: "Chakra7";
-  src: url("/src/assets/fonts/ChakraPetch-MediumItalic.ttf") format("truetype");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Chakra8";
+  font-family: "Chakra4";
   src: url("/src/assets/fonts/ChakraPetch-Regular.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Chakra9";
+  font-family: "Chakra5";
   src: url("/src/assets/fonts/ChakraPetch-SemiBold.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
-@font-face {
-  font-family: "Chakra10";
-  src: url("/src/assets/fonts/ChakraPetch-SemiBoldItalic.ttf") format("truetype");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
+
 
 @font-face {
   font-family: "Arboria";
@@ -89,22 +71,24 @@
   font-display: swap;
 }
 
+
+
+
 @font-face {
-  font-family: "MontserratItalic";
-  src: url("/src/assets/fonts/Montserrat-Italic-VariableFont_wght.ttf") format("truetype");
+  font-family: "Montserrat";
+  src: url("/src/assets/fonts/Montserrat-Bold.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "MontserratVariable";
-  src: url("/src/assets/fonts/Montserrat-VariableFont_wght.ttf") format("truetype");
+  font-family: "Montserrat1";
+  src: url("/src/assets/fonts/Montserrat-Regular.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
-
 
 /* .text-morado-exitoso {
   color: var(--color-morado-exito);

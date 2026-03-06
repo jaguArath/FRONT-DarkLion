@@ -29,11 +29,11 @@ import TShirtIcon from "./../assets/icons/TShirtIcon.png";
 
 export default function Home() {
   const shirts = [
-    { id: 1, name: "CUELLO V", image: CuelloVImg, link: "/cuello-v" },
-    { id: 2, name: "REDONDO", image: Redondo, link: "/cuello-redondo" },
-    { id: 3, name: "CAMISOLA", image: Camisola, link: "/cuello-camisola" },
-    { id: 4, name: "TANK TOP", image: TankTop, link: "/cuello-tank-top" },
-  ];
+  { id: 1, name: "CAMISA CUELLO V", image: CuelloVImg, link: "/personalizar/cuello-v" },
+  { id: 2, name: "CUELLO REDONDO", image: Redondo, link: "/personalizar/cuello-redondo" },
+  { id: 3, name: "CAMISOLA", image: Camisola, link: "/personalizar/cuello-camisola" },
+  { id: 4, name: "TANK TOP", image: TankTop, link: "/personalizar/cuello-tank-top" },
+];
 
   const icons = [
     { id: 5, name: "ApprovalIcons", image: ApprovalIcons },
@@ -50,13 +50,9 @@ export default function Home() {
         className="min-h-screen px-6 py-8 pt-7 text-white bg-cover bg-top relative"
         style={{ backgroundImage: `url(${Fondo})` }}
       >
-        {/* <div className="absolute inset-0 bg-black/40"></div> */}
-        {/* <div className="relative z-10"> */}
-
         <h1
-          style={{ fontFamily: "Chakra, sans-serif" }}
+          style={{ fontFamily: "Chakra" }}
           className="mb-10 text-center text-xl md:text-2xl lg:text-5xl font-extrabold uppercase tracking-widest text-white drop-shadow-xl "
-          // className="mb-10 text-center text-4xl font-extrabold tracking-wide"
         >
           PERSONALIZA TU PRENDA
         </h1>
@@ -76,7 +72,7 @@ export default function Home() {
 
               {/* Nombree */}
               <p
-                style={{ fontFamily: "Arboria, sans-serif" }}
+                style={{ fontFamily: "Arboria" }}
                 className="relative z-10 font-semibold mb-2 text-black "
               >
                 {shirt.name}
@@ -94,6 +90,7 @@ export default function Home() {
                 to={shirt.link}
                 // target="_blank"
                 // rel="nooper noreferrer"
+                style={{ fontFamily: "Montserrat" }}
                 className="inline-block text-white relative cursor-pointer rounded-md border-2 border-morado-claro bg-morado-claro px-5 py-2 mt-4 text-sm font-semibold transition-all duration-300 hover:scale-110 hover:bg-purple-600 hover:border-purple-600 hover:text-white shadow-sm"
               >
                 Personalizar
@@ -103,45 +100,47 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-15 px-6 bg-white">
+      <section className="py-14 px-6 bg-white">
         {/* TÍTULO */}
         <header className="text-center mb-20">
           <h1
-            style={{ fontFamily: "Chakra, sans-serif" }}
-            className="text-4xl md:text-5xl lg:text-7xl font-extrabold uppercase tracking-normal"
+            style={{ fontFamily: "Chakra" }}
+            className="md:text-3xl mb-5 lg:text-[4.10rem] font-extrabold uppercase tracking-normal"
           >
-            TU CAMINO AL <span className="text-morado-exito">ÉXITO</span>
+            LA FUERZA DE TUS IDEAS <br /> INICIA <span className="text-morado-exito">AQUÍ</span>
           </h1>
 
+
           <p
-            style={{ fontFamily: "MontserratVariable" }}
-            className="mt-4 max-w-2xl mx-auto text-lg md:text-xl lg:text-2xl font-light leading-snug"
+            style={{ fontFamily: "Montserrat1" }}
+            className="max-w-2xl mx-auto text-lg md:text-xl lg:text-2xl font-light leading-tight"
           >
-            Sigue nuestra hoja de ruta interactiva para diseñar <br /> tus
-            uniformes personalizados.
+            Explora nuestra experiencia interactiva y diseña tus uniformes personalizados paso a paso, 100% en línea. <br /> <br /> En esta sección aprenderás como hacerlo.
           </p>
 
           {/* <div className="w-30 h-2.5 bg-morado-exito mx-auto mt-8 rounded-full"></div> */}
           <div className="flex justify-center">
-            <div className="w-25 h-2 bg-morado-exito mt-14 rounded-full"></div>
+            <div className="w-25 h-2 bg-morado-exito mt-16 rounded-full"></div>
           </div>
         </header>
 
         <section className="relative max-w-6xl mx-auto">
           {/* Línea central */}
-          <span className="absolute left-1/2 top-0 h-[83%] w-1 bg-semi-blanquito -translate-x-1/2 z-0"></span>
+          <span className="absolute left-1/2 -top-9.75 h-[90%] w-1 bg-semi-blanquito -translate-x-1/2 z-0"></span> 
+          
 
           {/* PASO 1 */}
-          <article className="relative grid grid-cols-1 md:grid-cols-2 gap-10 mb-24">
-            <div className="absolute left-1/2 top-8 -translate-x-1/2 z-20 border-4 border-morado-exito rounded-full bg-white p-3 shadow-lg">
-              <img src={TShirtIcon} className="w-8 h-8" />
+          <article className="relative grid grid-cols-1 md:grid-cols-2 gap-10 mb-25">
+            <div className="absolute left-1/2 top-5 -translate-x-1/2 z-20 border-4 border-morado-exito rounded-full bg-white p-3 shadow-lg">
+              <img src={TShirtIcon} className="w-7 h-7" />
             </div>
 
             <header className="md:text-right md:pr-19">
               {/* <section className="bg-white p-6 rounded-xl inline-block max-w-md w-[334px] h-[184px] border-2 border-gray-gray border:opacity-50 hover:shadow-[0_10px_20px_-8px_rgba(0,0,0,1)] hover:scale-102 hover:border-gray-gray"> */}
-              <section className=" bg-white p-6 inline-block w-[335px] h-[184px] border-2 border-[rgba(129,128,128,0.54)] rounded-[30px] transition-all duration-300 hover:shadow-[0_4px_4px_rgba(0.22,0.1,0.1,0.40)] hover:-translate-y-1">
-                <div className="flex items-center justify-end gap-2 mb-2">
-                  <h3 className="font-bold text-lg">Selecciona Modelo</h3>
+              <section className=" bg-white p-6 inline-block w-83.75 h-46 border-2 border-[rgba(129,128,128,0.54)] rounded-[30px] -mt-10 transition-all duration-300 hover:shadow-[0_4px_4px_rgba(0.22,0.1,0.1,0.40)] hover:-translate-y-1"> 
+          {/* <section className="bg-white p-6 inline-block w-[335px] h-[184px] border-2 border-[rgba(129,128,128,0.54)] rounded-[30px] mt-[-30px] transition-all duration-300 hover:shadow-[0_4px_4px_rgba(0.22,0.1,0.1,0.40)] hover:-translate-y-1"></section> */}
+                <div className="flex items-center justify-end gap-2 mb-5">
+                  <h3 style={{ fontFamily: "Chakra" }} className="font-bold text-lg">Elige el tipo de prenda</h3>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -152,22 +151,21 @@ export default function Home() {
                     stroke-width="2"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    class="icon icon-tabler icons-tabler-outline icon-tabler-hanger"
+                    className="icon icon-tabler icons-tabler-outline icon-tabler-hanger"
                   >
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                     <path d="M14 6a2 2 0 1 0 -4 0c0 1.667 .67 3 2 4h-.008l7.971 4.428a2 2 0 0 1 1.029 1.749v.823a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-.823a2 2 0 0 1 1.029 -1.749l7.971 -4.428" />
                   </svg>
                 </div>
                 <p
-                  style={{ fontFamily: "MontserratVariable" }}
-                  className=" text-sm mb-3"
+                  style={{ fontFamily: "Montserrat1" }}
+                  className=" text-sm mb-5"
                 >
-                  Seleccione la maqueta de camiseta que mejor se adapte a tus
-                  necesidades de diseño para comenzar.
+                  Seleccione la maqueta del modelo de prenda que deseas adquirir.
                 </p>
 
                 <span
-                  style={{ fontFamily: "MontserratVariable" }}
+                  style={{ fontFamily: "Montserrat" }}
                   className="inline-block px-4 py-1 text-sm font-semibold text-morado-exito border-morado-exito rounded-full bg-semi-blanco"
                 >
                   PASO 01
@@ -176,7 +174,7 @@ export default function Home() {
               </section>
             </header>
 
-            <figure className="flex justify-center">
+            <figure className="flex justify-center -mt-10"> 
               <img
                 src={Personaliza}
                 className="max-w-sm rounded-lg shadow-md"
@@ -185,17 +183,18 @@ export default function Home() {
           </article>
 
           {/* PASO 2 */}
-          <article className="relative grid grid-cols-1 md:grid-cols-2 gap-10 mb-24">
-            <div className="absolute left-1/2 top-8 -translate-x-1/2 z-20 border-4 border-morado-exito bg-white p-3 rounded-full shadow-lg">
-              <img src={DiagonalLinesIcons} className="w-8 h-8" />
+          <article className="relative grid grid-cols-1 md:grid-cols-2 gap-10 mb-21">
+            <div className="absolute left-1/2 top-26 -translate-x-1/2 z-20 border-4 border-morado-exito bg-white p-3 rounded-full shadow-lg">
+                        {/* absolute left-1/2 top-6 -translate-x-1/2 z-20 border-4 border-morado-exito rounded-full bg-white p-3 shadow-lg */}
+              <img src={DiagonalLinesIcons} className="w-7 h-7" />
             </div>
 
             <figure className="flex justify-center">
-              <img src={Tela} className="max-w-sm rounded-lg shadow-md" />
+              <img src={Tela} className=" mt-11 object-cover rounded-[10px] shadow-md max-w-xs max-h-48" />
             </figure>
             <header className="md:text-right md:pr-32">
               {/* <section className="bg-white p-6 rounded-xl shadow-lg inline-block max-w-md hover:scale-102"> */}
-              <section className=" bg-white p-6 inline-block w-[335px] h-[184px] border-2 border-[rgba(129,128,128,0.54)] rounded-[30px] transition-all duration-300 hover:shadow-[0_4px_4px_rgba(0.22,0.1,0.1,0.40)] hover:-translate-y-1 text-left md:text-left">
+              <section className=" bg-white p-6 inline-block w-[335px] h-[184px] mt-11 border-2 border-[rgba(129,128,128,0.54)] rounded-[30px] transition-all duration-300 hover:shadow-[0_4px_4px_rgba(0.22,0.1,0.1,0.40)] hover:-translate-y-1 text-left md:text-left">
                 <div className="flex items-center gap-2 mb-2">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -219,21 +218,20 @@ export default function Home() {
                     <path d="M16 4l0 2" />
                   </svg>
                   <h3
-                    style={{ fontFamily: "MontserratVariable" }}
+                    style={{ fontFamily: "Chakra" }}
                     className="font-bold text-lg mb-2 text-left md:text-left"
                   >
                     Tipo de Tela
                   </h3>
                 </div>
                 <p
-                  style={{ fontFamily: "MontserratVariable" }}
+                  style={{ fontFamily: "Montserrat1" }}
                   className="text-sm mb-3 text-left"
                 >
-                  Selecciona el material que garantice el máximo rendimiento y
-                  confort.
+                  Elige una opción de nuestras telas con tecnología dri-fit.
                 </p>
                 <span
-                  style={{ fontFamily: "MontserratVariable" }}
+                  style={{ fontFamily: "Montserrat" }}
                   className="inline-block px-4 py-1 text-sm font-semibold text-morado-exito border-morado-exito rounded-full bg-semi-blanco"
                 >
                   PASO 02
@@ -243,15 +241,15 @@ export default function Home() {
           </article>
 
           {/* PASO 3 */}
-          <article className="relative grid grid-cols-1 md:grid-cols-2 gap-10 mb-24">
-            <div className="absolute left-1/2 top-8 -translate-x-1/2 z-20 border-4 border-morado-exito rounded-full bg-white p-3 shadow-lg">
-              <img src={PencilDrawingIcons} className="w-8 h-8" />
+          <article className="relative grid grid-cols-1 md:grid-cols-2 gap-10 mb-35">
+            <div className="absolute left-1/2 top-16 -translate-x-1/2 z-20 border-4 border-morado-exito rounded-full bg-white p-3 shadow-lg">
+              <img src={PencilDrawingIcons} className="w-7 h-7" />
             </div>
 
             <header className="md:text-right md:pr-19">
-              <section className=" bg-white p-6 inline-block w-[335px] h-[184px] border-2 border-[rgba(129,128,128,0.54)] rounded-[30px] transition-all duration-300 hover:shadow-[0_4px_4px_rgba(0.22,0.1,0.1,0.40)] hover:-translate-y-1">
-                <div className="flex items-center justify-end gap-2 mb-2">
-                  <h3 className="font-bold text-lg">Personalización Visual</h3>
+              <section className=" bg-white p-6 inline-block w-[375px] h-[250px] border-2 border-[rgba(129,128,128,0.54)] rounded-[30px] transition-all duration-300 hover:shadow-[0_4px_4px_rgba(0.22,0.1,0.1,0.40)] hover:-translate-y-1">
+                <div className="flex items-center justify-end gap-2 mb-3">
+                  <h3 style={{ fontFamily: "Chakra" }} className="text-center font-bold text-lg whitespace-nowrap">Crea tu diseño - previsualización</h3>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -265,15 +263,14 @@ export default function Home() {
                   </svg>
                 </div>
                 <p
-                  style={{ fontFamily: "MontserratVariable" }}
-                  className="text-sm mb-3"
+                  style={{ fontFamily: "Montserrat1" }}
+                  className="text-sm mb-5 "
                 >
-                  Aplica los colores de tu equipo. Elige combinaciones para
-                  cuerpo, mangas y cuello.
+                  Aplica los colores de tu equipo y crea combinaciones para cuerpo, mangas y cuello. Elige la tipografía para el nombre de tu equipo o carga la imagen de tu logo. Agrega elementos complementarios como patrocinadores. 
                 </p>
 
                 <span
-                  style={{ fontFamily: "MontserratVariable" }}
+                  style={{ fontFamily: "Montserrat" }}
                   className="inline-block px-4 py-1 text-sm font-semibold text-morado-exito border-morado-exito rounded-full bg-semi-blanco"
                 >
                   PASO 03
@@ -282,16 +279,16 @@ export default function Home() {
             </header>
 
             <figure className="flex justify-center gap-4">
-              <img src={Mangas} className="w-40 rounded shadow" />
-              <img src={CuelloPaleta} className="w-40 rounded shadow" />
+              <img src={Mangas} className="w-40 rounded shadow-md max-w-xs max-h-48" />
+              <img src={CuelloPaleta} className="w-40 rounded shadow-md max-w-xs max-h-48" />
             </figure>
           </article>
 
 
           {/* PASO 4 */}
-          <article className="relative grid grid-cols-1 md:grid-cols-2 gap-10 mb-24">
-            <div className="absolute left-1/2 top-8 -translate-x-1/2 z-20 border-4 border-morado-exito bg-white p-3 rounded-full shadow-lg">
-              <img src={JerseyNumberIcons} className="w-8 h-8" />
+          <article className="relative grid grid-cols-1 md:grid-cols-2 gap-10 mb-35">
+            <div className="absolute left-1/2 top-16 -translate-x-1/2 z-20 border-4 border-morado-exito bg-white p-3 rounded-full shadow-lg">
+              <img src={JerseyNumberIcons} className="w-7 h-7" />
             </div>
             <figure className="md:text-right flex gap-4 justify-center">
               <img src={Equipo} className="w-36 rounded shadow" />
@@ -319,18 +316,18 @@ export default function Home() {
                   <path d="M19 16v6" />
                   <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
                 </svg>
-                  <h3 className="font-bold text-lg">Detalles del Jugador</h3>
+                  <h3 style={{ fontFamily: "Chakra" }}className="font-bold text-lg">Detalles del Jugador</h3>
                   
                 </div>
                 <p
-                  style={{ fontFamily: "MontserratVariable" }}
+                  style={{ fontFamily: "Montserrat1" }}
                   className=" text-sm mb-3"
                 >
-                  Añade nombre, número y elige la tipografía. Sube el logo de tu equipo y patrocinadores.
+                  Añade nombre, número y elige la tipografía.
                 </p>
 
                 <span
-                  style={{ fontFamily: "MontserratVariable" }}
+                  style={{ fontFamily: "Montserrat" }}
                   className="inline-block px-4 py-1 text-sm font-semibold text-morado-exito border-morado-exito rounded-full bg-semi-blanco"
                 >
                   PASO 04
@@ -343,14 +340,14 @@ export default function Home() {
 
           {/* PASO 5 */}
           <article className="relative grid grid-cols-1 md:grid-cols-2 gap-10 mb-24">
-            <div className="absolute left-1/2 top-8 -translate-x-1/2 z-20 border-4 border-morado-exito rounded-full bg-white p-3 shadow-lg">
-              <img src={OrderCompletedIcons} className="w-8 h-8" />
+            <div className="absolute left-1/2 top-16 -translate-x-1/2 z-20 border-4 border-morado-exito rounded-full bg-white p-3 shadow-lg">
+              <img src={OrderCompletedIcons} className="w-7 h-7" />
             </div>
 
             <header className="md:text-right md:pr-19">
-              <section className=" bg-white p-6 inline-block w-[335px] h-[184px] border-2 border-[rgba(129,128,128,0.54)] rounded-[30px] transition-all duration-300 hover:shadow-[0_4px_4px_rgba(0.22,0.1,0.1,0.40)] hover:-translate-y-1">
+              <section className=" bg-white p-6 inline-block w-[335px] h-[200px] border-2 border-[rgba(129,128,128,0.54)] rounded-[30px] transition-all duration-300 hover:shadow-[0_4px_4px_rgba(0.22,0.1,0.1,0.40)] hover:-translate-y-1">
                 <div className="flex items-center justify-end gap-2 mb-2">
-                  <h3 className="font-bold text-lg">Resumen y Contacto</h3>
+                  <h3 style={{ fontFamily: "Chakra" }} className="font-bold text-lg">Realiza tu orden</h3>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -372,15 +369,14 @@ export default function Home() {
                   </svg>
                 </div>
                 <p
-                  style={{ fontFamily: "MontserratVariable" }}
+                  style={{ fontFamily: "Montserrat1" }}
                   className=" text-sm mb-3"
                 >
-                  Revisa tu pedido, agrega cantidades por talla y envíanos tus
-                  datos para procesar la orden
+                  Revisa tu diseño, agrega cantidad, talla, nombre y número de jugador. No olvides tus datos personales para contactarte al procesar la orden.
                 </p>
 
                 <span
-                  style={{ fontFamily: "MontserratVariable" }}
+                  style={{ fontFamily: "Montserrat" }}
                   className="inline-block px-4 py-1 text-sm font-semibold text-morado-exito border-morado-exito rounded-full bg-semi-blanco"
                 >
                   PASO 05
@@ -399,22 +395,21 @@ export default function Home() {
 
 
           {/* FINAL */}
-          <article className="text-center relative mb-32 ">
-            <div className="absolute left-1/2 -top-20 -translate-x-1/2 z-20 border-4 border-morado-exito bg-morado-exito p-3 rounded-full shadow-lg">
+          <article className="text-center relative mb-32">
+            <div className="absolute left-1/2 top-12 -translate-x-1/2 z-20 border-4 border-morado-exito bg-morado-exito p-3 rounded-full shadow-lg">
               <img src={ApprovalIcons} className="w-10 h-10" />
             </div>
 
-            <section className="bg-white p-10 rounded-xl shadow-xl max-w-md mx-auto">
+            <section className="bg-white p-10 mt-41 rounded-[30px]  max-w-md mx-auto inline-block border border-[rgba(129,128,128,0.94)] transition-all shadow-[0_8px_12px_rgba(0,0,0,0.20)]">
               <h3
-                style={{ fontFamily: "Chakra9" }}
+                style={{ fontFamily: "Chakra" }}
                 className="text-2xl font-bold mb-4"
               >
                 ¡LISTO!
               </h3>
 
-              <p style={{ fontFamily: "MontserratVariable" }} className="mb-6">
-                Tu diseño está completo. Nuestro equipo te contactará en breve
-                para confirmar detalles y comenzar la producción.
+              <p style={{ fontFamily: "Montserrat1" }} className="mb-6">
+                Has creado tu diseño y tu orden de pedido. Nuestro equipo te contactará en breve para confirmar detalles y comenzar la producción.
               </p>
               <figure className="">
                 <img src={LogoDark} className="mx-auto w-32 mb-6" />
@@ -422,6 +417,7 @@ export default function Home() {
 
               <a
                 href="#home"
+                style={{ fontFamily: "Montserrat" }}
                 className="inline-block bg-morado-exito text-white px-6 py-3 rounded-full font-semibold hover:bg-morado-claro transition"
               >
                 CREAR MI DISEÑO

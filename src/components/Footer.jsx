@@ -7,7 +7,7 @@ export default function Footer() {
         {/* Texto + redes */}
         <div className="flex flex-col items-center sm:items-start space-y-1 sm:ml-52">
           <span
-            style={{ fontFamily: "Chakra, sans-serif" }}
+            style={{ fontFamily: "Chakra" }}
             className="text-4-sm font-semibold tracking-widest sm:ml-21"
           >
             DARK LION

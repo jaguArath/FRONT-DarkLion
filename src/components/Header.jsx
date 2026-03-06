@@ -11,7 +11,7 @@ export default function Header() {
           src={DarkLogo}
           alt="dark logo"
           className="h-14 sm:h-16 px-2"
-          title="Dark Lion "
+          title="Dark Lion"
         />
       </a>
 
@@ -20,7 +20,7 @@ export default function Header() {
           href="https://www.darklion.com.mx/"
           target="_blank"
           rel="noreferrer"
-          style={{ fontFamily: "Chakra, sans-serif" }}
+          style={{ fontFamily: "Chakra" }}
           className="text-white hover:bg-white w-full text-left px-2 rounded-full hover:text-purple-700 hover:scale-100"
         >
           VOLVER A INICIO

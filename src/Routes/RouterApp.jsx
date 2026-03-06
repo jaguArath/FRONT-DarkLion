@@ -4,11 +4,9 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 import Home from "../pages/Home";
-
-import CuelloV from "../Design/CuelloV";
-import Redondo from "../Design/Redondo";
-import Camisola from "../Design/Camisola";
-import TankTop from "../Design/TankTop";
+import Customize from "../pages/Customize";
+import SelectedData from "../pages/SelectedData";
+import AgregarLogo from "../components/AgregarLogo";
 
 const RouterApp = () => {
   return (
@@ -17,10 +15,10 @@ const RouterApp = () => {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/cuello-v" element={<CuelloV />} />
-        <Route path="/cuello-redondo" element={<Redondo />} />
-        <Route path="/cuello-camisola" element={<Camisola />} />
-        <Route path="/cuello-tank-top" element={<TankTop />} />
+        <Route path="/personalizar/:modelo" element={<Customize />} />
+        <Route path="/agregar-logo" element={<AgregarLogo />} />
+        <Route path="/datos-seleccionados" element={<SelectedData />} />
+        
       </Routes>
 
       <Footer />
