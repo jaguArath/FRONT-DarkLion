@@ -1,17 +1,19 @@
+
 import React from "react";
 import { NavLink } from "react-router-dom";
 
+// Logos y fondos
 import LogoDark from "./../assets/LogoDark.png";
-
 import Fondo from "./../assets/Fondo.png";
+import MarcaAgua from "./../assets/MarcaAgua.png";
 
+// Shirts
 import CuelloVImg from "./../assets/shirts/CuelloVImg.png";
 import Redondo from "./../assets/shirts/Redondo.png";
 import Camisola from "./../assets/shirts/Camisola.png";
 import TankTop from "./../assets/shirts/TankTop.png";
 
-import MarcaAgua from "./../assets/MarcaAgua.png";
-
+// Home images
 import Contacto from "./../assets/home/Contacto.png";
 import CuelloPaleta from "./../assets/home/CuelloPaleta.png";
 import Equipo from "./../assets/home/Equipo.png";
@@ -20,6 +22,7 @@ import Mangas from "./../assets/home/Mangas.png";
 import Personaliza from "./../assets/home/Personaliza.png";
 import Tela from "./../assets/home/Tela.png";
 
+// Icons
 import ApprovalIcons from "./../assets/icons/ApprovalIcons.png";
 import DiagonalLinesIcons from "./../assets/icons/DiagonalLinesIcons.png";
 import JerseyNumberIcons from "./../assets/icons/JerseyNumberIcons.png";
@@ -27,13 +30,33 @@ import OrderCompletedIcons from "./../assets/icons/OrderCompletedIcons.png";
 import PencilDrawingIcons from "./../assets/icons/PencilDrawingIcons.png";
 import TShirtIcon from "./../assets/icons/TShirtIcon.png";
 
-export default function Home() {
-  const shirts = [
-  { id: 1, name: "CUELLO V", image: CuelloVImg, link: "/personalizar/cuello-v" },
-  { id: 2, name: "REDONDO", image: Redondo, link: "/personalizar/cuello-redondo" },
-  { id: 3, name: "CAMISOLA", image: Camisola, link: "/personalizar/cuello-camisola" },
-  { id: 4, name: "TANK TOP", image: TankTop, link: "/personalizar/cuello-tank-top" },
-];
+// Data constants
+const shirts = [
+    {
+      id: 1,
+      name: "CAMISA CUELLO V",
+      image: CuelloVImg,
+      link: "/personalizar/cuello-v",
+    },
+    {
+      id: 2,
+      name: "CUELLO REDONDO",
+      image: Redondo,
+      link: "/personalizar/cuello-redondo",
+    },
+    {
+      id: 3,
+      name: "CAMISOLA",
+      image: Camisola,
+      link: "/personalizar/cuello-camisola",
+    },
+    {
+      id: 4,
+      name: "TANK TOP",
+      image: TankTop,
+      link: "/personalizar/cuello-tank-top",
+    },
+  ];
 
   const icons = [
     { id: 5, name: "ApprovalIcons", image: ApprovalIcons },
@@ -43,6 +66,10 @@ export default function Home() {
     { id: 9, name: "PencilDrawingIcons", image: PencilDrawingIcons },
     { id: 10, name: "TShirtIcon", image: TShirtIcon },
   ];
+  
+export default function Home() {
+  
+
 
   return (
     <main id="home">
@@ -105,18 +132,19 @@ export default function Home() {
         <header className="text-center mb-20">
           <h1
             style={{ fontFamily: "Chakra" }}
-            className="md:text-3xl lg:text-[4.10rem] font-extrabold uppercase tracking-normal"
+            className="md:text-3xl mb-5 lg:text-[4.10rem] font-extrabold uppercase tracking-normal"
           >
-            TU CAMINO AL <span className="text-morado-exito">ÉXITO</span>
+            LA FUERZA DE TUS IDEAS <br /> INICIA{" "}
+            <span className="text-morado-exito">AQUÍ</span>
           </h1>
-
 
           <p
             style={{ fontFamily: "Montserrat1" }}
             className="max-w-2xl mx-auto text-lg md:text-xl lg:text-2xl font-light leading-tight"
           >
-            Sigue nuestra hoja de ruta interactiva para diseñar <br /> tus
-            uniformes personalizados.
+            Explora nuestra experiencia interactiva y diseña tus uniformes
+            personalizados paso a paso, 100% en línea. <br /> <br /> En esta
+            sección aprenderás como hacerlo.
           </p>
 
           {/* <div className="w-30 h-2.5 bg-morado-exito mx-auto mt-8 rounded-full"></div> */}
@@ -127,8 +155,7 @@ export default function Home() {
 
         <section className="relative max-w-6xl mx-auto">
           {/* Línea central */}
-          <span className="absolute left-1/2 top-[-39px] h-[90%] w-1 bg-semi-blanquito -translate-x-1/2 z-0"></span>
-          
+          <span className="absolute left-1/2 -top-9.75 h-[90%] w-1 bg-semi-blanquito -translate-x-1/2 z-0"></span>
 
           {/* PASO 1 */}
           <article className="relative grid grid-cols-1 md:grid-cols-2 gap-10 mb-25">
@@ -138,10 +165,15 @@ export default function Home() {
 
             <header className="md:text-right md:pr-19">
               {/* <section className="bg-white p-6 rounded-xl inline-block max-w-md w-[334px] h-[184px] border-2 border-gray-gray border:opacity-50 hover:shadow-[0_10px_20px_-8px_rgba(0,0,0,1)] hover:scale-102 hover:border-gray-gray"> */}
-              <section className=" bg-white p-6 inline-block w-[335px] h-[184px] border-2 border-[rgba(129,128,128,0.54)] rounded-[30px] mt-[-40px] transition-all duration-300 hover:shadow-[0_4px_4px_rgba(0.22,0.1,0.1,0.40)] hover:-translate-y-1">
-          {/* <section className="bg-white p-6 inline-block w-[335px] h-[184px] border-2 border-[rgba(129,128,128,0.54)] rounded-[30px] mt-[-30px] transition-all duration-300 hover:shadow-[0_4px_4px_rgba(0.22,0.1,0.1,0.40)] hover:-translate-y-1"></section> */}
-                <div className="flex items-center justify-end gap-2 mb-2">
-                  <h3 style={{ fontFamily: "Chakra" }} className="font-bold text-lg">Selecciona Modelo</h3>
+              <section className=" bg-white p-6 inline-block w-83.75 h-46 border-2 border-[rgba(129,128,128,0.54)] rounded-[30px] -mt-10 transition-all duration-300 hover:shadow-[0_4px_4px_rgba(0.22,0.1,0.1,0.40)] hover:-translate-y-1">
+                {/* <section className="bg-white p-6 inline-block w-[335px] h-[184px] border-2 border-[rgba(129,128,128,0.54)] rounded-[30px] mt-[-30px] transition-all duration-300 hover:shadow-[0_4px_4px_rgba(0.22,0.1,0.1,0.40)] hover:-translate-y-1"></section> */}
+                <div className="flex items-center justify-end gap-2 mb-5">
+                  <h3
+                    style={{ fontFamily: "Chakra" }}
+                    className="font-bold text-lg"
+                  >
+                    Elige el tipo de prenda
+                  </h3>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -160,10 +192,10 @@ export default function Home() {
                 </div>
                 <p
                   style={{ fontFamily: "Montserrat1" }}
-                  className=" text-sm mb-3"
+                  className=" text-sm mb-5"
                 >
-                  Seleccione la maqueta de camiseta que mejor se adapte a tus
-                  necesidades de diseño para comenzar.
+                  Seleccione la maqueta del modelo de prenda que deseas
+                  adquirir.
                 </p>
 
                 <span
@@ -176,7 +208,7 @@ export default function Home() {
               </section>
             </header>
 
-            <figure className="flex justify-center mt-[-40px]">
+            <figure className="flex justify-center -mt-10">
               <img
                 src={Personaliza}
                 className="max-w-sm rounded-lg shadow-md"
@@ -187,12 +219,15 @@ export default function Home() {
           {/* PASO 2 */}
           <article className="relative grid grid-cols-1 md:grid-cols-2 gap-10 mb-21">
             <div className="absolute left-1/2 top-26 -translate-x-1/2 z-20 border-4 border-morado-exito bg-white p-3 rounded-full shadow-lg">
-                        {/* absolute left-1/2 top-6 -translate-x-1/2 z-20 border-4 border-morado-exito rounded-full bg-white p-3 shadow-lg */}
+              {/* absolute left-1/2 top-6 -translate-x-1/2 z-20 border-4 border-morado-exito rounded-full bg-white p-3 shadow-lg */}
               <img src={DiagonalLinesIcons} className="w-7 h-7" />
             </div>
 
             <figure className="flex justify-center">
-              <img src={Tela} className=" mt-11 object-cover rounded-[10px] shadow-md" />
+              <img
+                src={Tela}
+                className=" mt-11 object-cover rounded-[10px] shadow-md max-w-xs max-h-48"
+              />
             </figure>
             <header className="md:text-right md:pr-32">
               {/* <section className="bg-white p-6 rounded-xl shadow-lg inline-block max-w-md hover:scale-102"> */}
@@ -230,8 +265,7 @@ export default function Home() {
                   style={{ fontFamily: "Montserrat1" }}
                   className="text-sm mb-3 text-left"
                 >
-                  Selecciona el material que garantice el máximo rendimiento y
-                  confort.
+                  Elige una opción de nuestras telas con tecnología dri-fit.
                 </p>
                 <span
                   style={{ fontFamily: "Montserrat" }}
@@ -250,9 +284,14 @@ export default function Home() {
             </div>
 
             <header className="md:text-right md:pr-19">
-              <section className=" bg-white p-6 inline-block w-[335px] h-[184px] border-2 border-[rgba(129,128,128,0.54)] rounded-[30px] transition-all duration-300 hover:shadow-[0_4px_4px_rgba(0.22,0.1,0.1,0.40)] hover:-translate-y-1">
-                <div className="flex items-center justify-end gap-2 mb-2">
-                  <h3 style={{ fontFamily: "Chakra" }} className="font-bold text-lg">Personalización Visual</h3>
+              <section className=" bg-white p-6 inline-block w-[375px] h-[250px] border-2 border-[rgba(129,128,128,0.54)] rounded-[30px] transition-all duration-300 hover:shadow-[0_4px_4px_rgba(0.22,0.1,0.1,0.40)] hover:-translate-y-1">
+                <div className="flex items-center justify-end gap-2 mb-3">
+                  <h3
+                    style={{ fontFamily: "Chakra" }}
+                    className="text-center font-bold text-lg whitespace-nowrap"
+                  >
+                    Crea tu diseño - previsualización
+                  </h3>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -267,10 +306,12 @@ export default function Home() {
                 </div>
                 <p
                   style={{ fontFamily: "Montserrat1" }}
-                  className="text-sm mb-3"
+                  className="text-sm mb-5 "
                 >
-                  Aplica los colores de tu equipo. Elige combinaciones para
-                  cuerpo, mangas y cuello.
+                  Aplica los colores de tu equipo y crea combinaciones para
+                  cuerpo, mangas y cuello. Elige la tipografía para el nombre de
+                  tu equipo o carga la imagen de tu logo. Agrega elementos
+                  complementarios como patrocinadores.
                 </p>
 
                 <span
@@ -283,11 +324,16 @@ export default function Home() {
             </header>
 
             <figure className="flex justify-center gap-4">
-              <img src={Mangas} className="w-40 rounded shadow" />
-              <img src={CuelloPaleta} className="w-40 rounded shadow" />
+              <img
+                src={Mangas}
+                className="w-40 rounded shadow-md max-w-xs max-h-48"
+              />
+              <img
+                src={CuelloPaleta}
+                className="w-40 rounded shadow-md max-w-xs max-h-48"
+              />
             </figure>
           </article>
-
 
           {/* PASO 4 */}
           <article className="relative grid grid-cols-1 md:grid-cols-2 gap-10 mb-35">
@@ -303,31 +349,35 @@ export default function Home() {
               <section className=" bg-white p-6 inline-block w-[335px] h-[184px] border-2 border-[rgba(129,128,128,0.54)] rounded-[30px] transition-all duration-300 hover:shadow-[0_4px_4px_rgba(0.22,0.1,0.1,0.40)] hover:-translate-y-1 text-left md:text-left">
                 <div className="flex items-center gap-2 mb-2">
                   <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#6D28D9"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="icon icon-tabler icons-tabler-outline icon-tabler-user-plus"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-                  <path d="M16 19h6" />
-                  <path d="M19 16v6" />
-                  <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
-                </svg>
-                  <h3 style={{ fontFamily: "Chakra" }}className="font-bold text-lg">Detalles del Jugador</h3>
-                  
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#6D28D9"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="icon icon-tabler icons-tabler-outline icon-tabler-user-plus"
+                  >
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                    <path d="M16 19h6" />
+                    <path d="M19 16v6" />
+                    <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
+                  </svg>
+                  <h3
+                    style={{ fontFamily: "Chakra" }}
+                    className="font-bold text-lg"
+                  >
+                    Detalles del Jugador
+                  </h3>
                 </div>
                 <p
                   style={{ fontFamily: "Montserrat1" }}
                   className=" text-sm mb-3"
                 >
-                  Añade nombre, número y elige la tipografía. Sube el logo de tu equipo y patrocinadores.
+                  Añade nombre, número y elige la tipografía.
                 </p>
 
                 <span
@@ -338,8 +388,6 @@ export default function Home() {
                 </span>
               </section>
             </header>
-
-            
           </article>
 
           {/* PASO 5 */}
@@ -349,9 +397,14 @@ export default function Home() {
             </div>
 
             <header className="md:text-right md:pr-19">
-              <section className=" bg-white p-6 inline-block w-[335px] h-[184px] border-2 border-[rgba(129,128,128,0.54)] rounded-[30px] transition-all duration-300 hover:shadow-[0_4px_4px_rgba(0.22,0.1,0.1,0.40)] hover:-translate-y-1">
+              <section className=" bg-white p-6 inline-block w-[335px] h-[200px] border-2 border-[rgba(129,128,128,0.54)] rounded-[30px] transition-all duration-300 hover:shadow-[0_4px_4px_rgba(0.22,0.1,0.1,0.40)] hover:-translate-y-1">
                 <div className="flex items-center justify-end gap-2 mb-2">
-                  <h3 style={{ fontFamily: "Chakra" }} className="font-bold text-lg">Resumen y Contacto</h3>
+                  <h3
+                    style={{ fontFamily: "Chakra" }}
+                    className="font-bold text-lg"
+                  >
+                    Realiza tu orden
+                  </h3>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -376,8 +429,9 @@ export default function Home() {
                   style={{ fontFamily: "Montserrat1" }}
                   className=" text-sm mb-3"
                 >
-                  Revisa tu pedido, agrega cantidades por talla y envíanos tus
-                  datos para procesar la orden
+                  Revisa tu diseño, agrega cantidad, talla, nombre y número de
+                  jugador. No olvides tus datos personales para contactarte al
+                  procesar la orden.
                 </p>
 
                 <span
@@ -390,16 +444,10 @@ export default function Home() {
             </header>
 
             <figure className="flex justify-center">
-              <img
-                src={Contacto}
-                className="max-w-sm rounded-lg shadow-md"
-              />
+              <img src={Contacto} className="max-w-sm rounded-lg shadow-md" />
             </figure>
           </article>
 
-
-
-          {/* FINAL */}
           <article className="text-center relative mb-32">
             <div className="absolute left-1/2 top-12 -translate-x-1/2 z-20 border-4 border-morado-exito bg-morado-exito p-3 rounded-full shadow-lg">
               <img src={ApprovalIcons} className="w-10 h-10" />
@@ -414,8 +462,9 @@ export default function Home() {
               </h3>
 
               <p style={{ fontFamily: "Montserrat1" }} className="mb-6">
-                Tu diseño está completo. Nuestro equipo te contactará en breve
-                para confirmar detalles y comenzar la producción.
+                Has creado tu diseño y tu orden de pedido. Nuestro equipo te
+                contactará en breve para confirmar detalles y comenzar la
+                producción.
               </p>
               <figure className="">
                 <img src={LogoDark} className="mx-auto w-32 mb-6" />
@@ -439,15 +488,8 @@ export default function Home() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////////////
+// rol: actua como un desarrollador frontend y revisa el código de la página Home.jsx. Asegúrate de que el código esté bien estructurado, limpio y siga las mejores prácticas de React. Si encuentras algún error o área de mejora, por favor indícalo y sugiere una solución.
+// contexto: estoy construyendo una página de inicio para un sitio web de personalización de prendas deportivas. La página presenta diferentes tipos de prendas, un proceso paso a paso para personalizar las prendas y una sección final que confirma la creación del diseño. El código utiliza React, Tailwind CSS para el estilo y React Router para la navegación.
+// tarea: necesito que revises el código de Home.jsx para asegurar que esté bien estructurado, limpio y siga las mejores prácticas de React. Si encuentras algún error o área de mejora, por favor indícalo y sugiere una solución.
+// restrincciones: debe estar hecho con el framework React, utilizando Tailwind CSS para el estilo y React Router para la navegación. El código debe ser limpio, bien estructurado y seguir las mejores prácticas de React. 
+// formato: devuelveme el codigo unicamente el bloque de codigo bien comentado, sin explicaciones previas ni introducciones que sea responsivo y siga las mejores prácticas de React. quiero el mismo diseño de la página pero con un código limpio y bien estructurado. las mismas imagenes, fondos, logos, etc. pero con un código mejorado.

@@ -120,7 +120,7 @@ export default function AgregarLogo() {
       {/* EDITOR CENTRAL */}
       <div className="flex-1 flex flex-col items-center justify-center">
 
-        <div className="relative w-[400px]">
+        <div className="relative w-90">
           
           {/* Imagen base */}
           <img

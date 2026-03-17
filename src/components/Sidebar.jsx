@@ -9,16 +9,26 @@ import {
   ArrowDownTrayIcon,
   EyeIcon,
 } from "@heroicons/react/24/outline";
+import design1 from "../assets/design/design1.png";
+import design2 from "../assets/design/design2.png";
 
-export default function Sidebar() {
+export default function Sidebar({
+  colors,
+  setColors,
+  modelo: propModelo,
+  shirtRef,
+  visiblePlayerId,
+  setVisiblePlayerId,
+  setVisiblePlayer,
+}) {
   const navigate = useNavigate();
   const { modelo } = useParams();
   const { state: locationState } = useLocation();
+  const currentModelo = propModelo || modelo;
 
   // design state
   const [fabricType, setFabricType] = useState("");
   const [design, setDesign] = useState("");
-  const [colors, setColors] = useState({ torso: "", back: "", sleeves: "", collar: "" });
   const [teamName, setTeamName] = useState("");
   const [playerNameField, setPlayerNameField] = useState("");
   const [logoUrl, setLogoUrl] = useState("");
@@ -28,7 +38,32 @@ export default function Sidebar() {
 
   // players state
   const [players, setPlayers] = useState([
-    { id: 1, name: "Arath B.", gender: "H", jersey: "L", number: 21, quantity: 21 },
+    { id: 1, name: "Maduro", gender: "I", jersey: "2", number: 1, quantity: 1 },
+    {
+      id: 2,
+      name: "Donald",
+      gender: "H",
+      jersey: "MD",
+      number: 2,
+      quantity: 2,
+    },
+    {
+      id: 3,
+      name: "Sheinbaum",
+      gender: "M",
+      jersey: "GD",
+      number: 3,
+      quantity: 3,
+    },
+    { id: 4, name: "Amlo", gender: "H", jersey: "XL", number: 21, quantity: 4 },
+    {
+      id: 5,
+      name: "Fernando",
+      gender: "I",
+      jersey: "4",
+      number: 10,
+      quantity: 5,
+    },
   ]);
 
   // Cargar datos si vienen del estado (al regresar desde SelectedData)
@@ -37,32 +72,75 @@ export default function Sidebar() {
       const design = locationState.design;
       setFabricType(design.fabricType || "");
       setDesign(design.design || "");
-      setColors(design.colors || { torso: "", back: "", sleeves: "", collar: "" });
+      setColors(
+        design.colors || { torso: "", back: "", sleeves: "", collar: "" },
+      );
       setTeamName(design.teamName || "");
       setPlayerNameField(design.playerName || "");
       setLogoUrl(design.logoUrl || "");
       setTeamFont(design.teamFont || "");
       setPlayerFont(design.playerFont || "");
     }
-    
+
     if (locationState?.players) {
       setPlayers(locationState.players);
     }
   }, [locationState]);
 
-  const handleSave = () => {
-    const designData = { fabricType, design, colors, teamName, playerName: playerNameField, logoUrl, teamFont, playerFont };
-    navigate("/datos-seleccionados", { state: { design: designData, players, modelo } });
+  const handleSave = async () => {
+    // Capturar imágenes 3D (frente, atrás, manga izquierda y derecha)
+    let shirtImage = null;
+    let shirtImageBack = null;
+    let shirtImageLeftSleeve = null;
+    let shirtImageRightSleeve = null;
+    
+    if (shirtRef?.current?.captureImageBothSides) {
+      try {
+        const images = await shirtRef.current.captureImageBothSides();
+        shirtImage = images.frente;
+        shirtImageBack = images.atras;
+        shirtImageLeftSleeve = images.mangaIzquierda;
+        shirtImageRightSleeve = images.mangaDerecha;
+      } catch (err) {
+        console.error("Error capturando imágenes:", err);
+        // Fallback a método antiguo si hay error
+        if (shirtRef?.current?.captureImage) {
+          shirtImage = shirtRef.current.captureImage();
+        }
+      }
+    } else if (shirtRef?.current?.captureImage) {
+      // Si el nuevo método no está disponible, usar el antiguo
+      shirtImage = shirtRef.current.captureImage();
+    }
+
+    const designData = {
+      fabricType,
+      design,
+      colors,
+      teamName,
+      playerName: playerNameField,
+      logoUrl,
+      teamFont,
+      playerFont,
+      shirtImage, // Vista frontal
+      shirtImageBack, // Vista trasera
+      shirtImageLeftSleeve, // Manga izquierda
+      shirtImageRightSleeve, // Manga derecha
+    };
+    console.log("Jugadores que se envían desde Sidebar:", players);
+    console.log("Jugadores infantiles:", players.filter(p => p.gender === "I"));
+    navigate("/datos-seleccionados", {
+      state: { design: designData, players, modelo: currentModelo },
+    });
   };
 
   return (
     <aside
-      aria-label="Panel de personalización"
       className="
         sticky
         top-24
-        left-17
-        w-90
+        left-15
+        w-94
         max-h-[calc(100vh-200px)]
         backdrop-blur
         rounded-2xl
@@ -72,9 +150,9 @@ export default function Sidebar() {
         z-20
       "
     >
-      <nav className="space-y-6">
-        <Section title="Tipos de Tela" icon={SwatchIcon}>
-          {['Microfibra','Poliester','Nylon','Dry-Fit'].map((t) => (
+      <nav className="space-y-6 ">
+        <Section title="Tipos de Tela">
+          {["Microfibra", "Poliester", "Nylon", "Dry-Fit"].map((t) => (
             <OptionButton
               key={t}
               text={t}
@@ -84,8 +162,13 @@ export default function Sidebar() {
           ))}
         </Section>
 
-        <Section title="Diseños" icon={PhotoIcon}>
-          {["/shirt1.png", "/shirt2.png"].map((src) => (
+        <Section title="Diseños">
+          <OptionButton
+            text="Sin Diseño"
+            selected={design === ""}
+            onClick={() => setDesign("")}
+          />
+          {[design1, design2].map((src) => (
             <img
               key={src}
               src={src}
@@ -96,13 +179,13 @@ export default function Sidebar() {
           ))}
         </Section>
 
-        <Section title="Cuerpo" icon={Square3Stack3DIcon}>
+        <Section title="Cuerpo">
           <ColorPalette
             selected={colors.torso}
             onSelect={(c) => setColors((p) => ({ ...p, torso: c }))}
           />
         </Section>
-        <Section title="Espalda" icon={ArrowUpTrayIcon}>
+        <Section title="Espalda">
           <ColorPalette
             selected={colors.back}
             onSelect={(c) => setColors((p) => ({ ...p, back: c }))}
@@ -122,34 +205,19 @@ export default function Sidebar() {
             onSelect={(c) => setColors((p) => ({ ...p, collar: c }))}
           />
         </Section>
-        <Section title="Nombre del Equipo">
-          <TextSection
-            value={teamName}
-            onChange={setTeamName}
-            placeholder="Equipo..."
-            selected={selectedField === 'team'}
-            onFocus={() => setSelectedField('team')}
-            selectedFont={teamFont}
-            onFontSelect={setTeamFont}
-          />
-        </Section>
-        <Section title="Nombre del Jugador">
-          <TextSection
-            value={playerNameField}
-            onChange={setPlayerNameField}
-            placeholder="Jugador..."
-            selected={selectedField === 'player'}
-            onFocus={() => setSelectedField('player')}
-            selectedFont={playerFont}
-            onFontSelect={setPlayerFont}
-          />
-        </Section>
+        
         <Section title="Logo">
           <LogoUploadLink onLogoSelect={setLogoUrl} />
         </Section>
 
         <Section title="Agregar Jugadores">
-          <PlayersSection players={players} setPlayers={setPlayers} />
+          <PlayersSection 
+            players={players} 
+            setPlayers={setPlayers}
+            visiblePlayerId={visiblePlayerId}
+            setVisiblePlayerId={setVisiblePlayerId}
+            setVisiblePlayer={setVisiblePlayer}
+          />
         </Section>
 
         {/* GUARDAR */}
@@ -190,10 +258,11 @@ function Section({ title, icon: Icon, children }) {
             bg-personalizado
             px-3 py-2
             rounded-lg
+            cursor-pointer
           "
         >
           <span className="flex items-center gap-2">
-            {Icon && <Icon className="w-5 h-5 text-purple-700" />}
+            {Icon && <Icon className="w-5 h-5 text-purple-700 " />}
             {title}
           </span>
 
@@ -218,7 +287,7 @@ function Section({ title, icon: Icon, children }) {
 // TIPOS DE TELA
 
 function OptionButton({ text, selected, onClick }) {
-  const baseClasses = `rounded-lg py-1.5 text-sm font-medium transition`;
+  const baseClasses = `cursor-pointer rounded-lg py-1.5 text-sm font-medium transition`;
   const colorClasses = selected
     ? "bg-personalizado-click-hover"
     : "bg-personalizado-click hover:bg-personalizado-click-hover";
@@ -312,11 +381,19 @@ function ColorPalette({ selected, onSelect }) {
 
 // Text NOMBRE DE ...
 
-function TextSection({ value, onChange, placeholder = "Escribe aquí...", selected, onFocus, selectedFont, onFontSelect }) {
+function TextSection({
+  value,
+  onChange,
+  placeholder = "Escribe aquí...",
+  selected,
+  onFocus,
+  selectedFont,
+  onFontSelect,
+}) {
   const fonts = ["INTER", "ACTOR", "MONTSSERRAT", "JOMHURIA"];
 
   return (
-    <div className="col-span-2 space-y-4">
+    <div className="col-span-2 space-y-4 ">
       {/* Input de texto */}
       <div style={{ fontFamily: "Montserrat1" }}>
         <label className="block text-xs font-semibold text-gray-700 mb-2">
@@ -352,7 +429,7 @@ function TextSection({ value, onChange, placeholder = "Escribe aquí...", select
         <div className="grid grid-cols-2 gap-2">
           {fonts.map((font) => {
             const isSel = selectedFont === font;
-            const baseClasses = `rounded-lg py-2 px-3 text-xs font-medium transition text-gray-600`;
+            const baseClasses = `rounded-lg py-2 px-3 text-xs font-medium transition text-gray-600 cursor-pointer`;
             const colorClasses = isSel
               ? "bg-personalizado-click-hover"
               : "bg-personalizado-click hover:bg-personalizado-click-hover";
@@ -411,7 +488,7 @@ function LogoUploadLink({ onLogoSelect }) {
 
 // Players Section
 
-function PlayersSection({ players, setPlayers }) {
+function PlayersSection({ players, setPlayers, visiblePlayerId, setVisiblePlayerId, setVisiblePlayer }) {
   // handlers are now passed from parent
   const [selectedId, setSelectedId] = useState(null);
 
@@ -419,9 +496,9 @@ function PlayersSection({ players, setPlayers }) {
     const newPlayer = {
       id: Date.now(),
       name: "",
-      gender: "",
-      jersey: "",
-      number: "",
+      gender: "I",
+      jersey: "2",
+      number: 0,
       quantity: 1,
     };
     setPlayers([...players, newPlayer]);
@@ -429,12 +506,53 @@ function PlayersSection({ players, setPlayers }) {
 
   const handleRemove = (id) => {
     setPlayers(players.filter((p) => p.id !== id));
+    if (visiblePlayerId === id) {
+      setVisiblePlayerId(null);
+      setVisiblePlayer(null);
+    }
   };
 
   const handleChange = (id, field, value) => {
+    // Validar campos requeridos
+    if ((field === "gender" || field === "jersey") && value === "") {
+      return; // No permitir valores vacíos
+    }
+    if (field === "quantity") {
+      const quantityValue = parseInt(value) || 0;
+      if (quantityValue < 1) {
+        return; // No permitir cantidad menor a 1
+      }
+    }
+
     setPlayers(
-      players.map((p) => (p.id === id ? { ...p, [field]: value } : p)),
+      players.map((p) => {
+        if (p.id === id) {
+          const updated = { ...p, [field]: value };
+          // Si se cambia el género, asignar automáticamente el primer jersey disponible
+          if (field === "gender") {
+            updated.jersey = value === "I" ? "2" : "XCH"; // Primer tamaño para cada género
+          }
+          // Actualizar visiblePlayer si es el jugador activo
+          if (visiblePlayerId === id) {
+            setVisiblePlayer(updated);
+          }
+          return updated;
+        }
+        return p;
+      }),
     );
+  };
+
+  const handleToggleEye = (player) => {
+    if (visiblePlayerId === player.id) {
+      // Si está activado, desactivar
+      setVisiblePlayerId(null);
+      setVisiblePlayer(null);
+    } else {
+      // Si no está activado, activar este y desactivar los demás
+      setVisiblePlayerId(player.id);
+      setVisiblePlayer(player);
+    }
   };
 
   return (
@@ -448,7 +566,17 @@ function PlayersSection({ players, setPlayers }) {
           {/* FILA SUPERIOR */}
           <div className="flex items-end gap-2">
             {/* OJO */}
-            <button className="bg-personalizado-click p-2 rounded-lg shadow">
+            <button 
+              onClick={(e) => {
+                e.stopPropagation();
+                handleToggleEye(player);
+              }}
+              className={`p-2 rounded-lg shadow cursor-pointer transition-colors ${
+                visiblePlayerId === player.id
+                  ? 'bg-blue-500 text-white'
+                  : 'bg-personalizado-click'
+              }`}
+            >
               <EyeIcon className="w-5 h-5" />
             </button>
 
@@ -460,31 +588,56 @@ function PlayersSection({ players, setPlayers }) {
                 onChange={(e) =>
                   handleChange(player.id, "gender", e.target.value)
                 }
-                className="bg-purple-200 rounded-lg px-2 py-1"
+                className="bg-purple-200 rounded-lg px-2 py-1 font-semibold"
                 onClick={(e) => e.stopPropagation()}
+                required
               >
-                <option value="">-</option>
-                <option title="Hombre" value="H">H</option>
-                <option title="Mujer" value="M">M</option>
-                <option title="Niño" value="Ñ">Ñ</option>
+                <option title="Infantil" value="I">
+                  I
+                </option>
+                <option title="Hombre" value="H">
+                  H
+                </option>
+                <option title="Mujer" value="M">
+                  M
+                </option>
               </select>
             </div>
 
             {/* JERSEY */}
-            <div  className="flex flex-col text-xs">
+            <div className="flex flex-col text-xs">
               <span>Jersey</span>
               <select
                 value={player.jersey}
                 onChange={(e) =>
                   handleChange(player.id, "jersey", e.target.value)
                 }
-                className="bg-purple-200 rounded-lg px-2 py-1"
+                className="bg-purple-200 rounded-lg px-2 py-1 font-semibold"
                 onClick={(e) => e.stopPropagation()}
+                required
               >
-                <option value="">-</option>
-                <option value="S">S</option>
-                <option value="M">M</option>
-                <option value="L">L</option>
+                {player.gender === "I" ? (
+                  <>
+                    <option value="XCH">2</option>
+                    <option value="CH">4</option>
+                    <option value="MD">6</option>
+                    <option value="GD">8</option>
+                    <option value="XL">10</option>
+                    <option value="XXL">12</option>
+                    <option value="XXXL">14</option>
+                    
+                  </>
+                ) : (
+                  <>
+                    <option value="XCH">XCH</option>
+                    <option value="CH">CH</option>
+                    <option value="MD">MD</option>
+                    <option value="GD">GD</option>
+                    <option value="XL">XL</option>
+                    <option value="XXL">XXL</option>
+                    <option value="XXXL">XXXL</option>
+                  </>
+                )}
               </select>
             </div>
 
@@ -503,16 +656,21 @@ function PlayersSection({ players, setPlayers }) {
             </div>
 
             {/* CANTI */}
-            <div title="Cantidad de camisetas" className="flex flex-col text-xs">
-              <span>Canti</span>
+            <div
+              title="Cantidad de camisetas"
+              className="flex flex-col text-xs"
+            >
+              <span>Canti *</span>
               <input
                 type="number"
                 value={player.quantity}
                 onChange={(e) =>
                   handleChange(player.id, "quantity", e.target.value)
                 }
-                className="bg-purple-200 rounded-lg px-2 py-1 w-14"
+                className="bg-purple-200 rounded-lg px-2 py-1 w-14 font-semibold"
                 onClick={(e) => e.stopPropagation()}
+                min="1"
+                required
               />
             </div>
 
@@ -522,7 +680,7 @@ function PlayersSection({ players, setPlayers }) {
                 e.stopPropagation();
                 handleRemove(player.id);
               }}
-              className="bg-red-500 text-white px-3 py-2 rounded-lg shadow"
+              className="bg-red-500 text-white px-3 py-2 rounded-lg shadow cursor-pointer"
             >
               ✕
             </button>
@@ -544,7 +702,7 @@ function PlayersSection({ players, setPlayers }) {
       <div className="flex justify-end">
         <button
           onClick={handleAdd}
-          className="bg-green-600 text-white text-xl w-10 h-10 rounded-lg shadow-lg"
+          className="bg-green-600 text-white text-xl w-10 h-10 rounded-lg shadow-lg cursor-pointer"
         >
           +
         </button>
