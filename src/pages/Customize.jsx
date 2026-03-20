@@ -16,6 +16,8 @@ export default function Customize() {
   const [design, setDesign] = useState("");
   const [visiblePlayerId, setVisiblePlayerId] = useState(null);
   const [visiblePlayer, setVisiblePlayer] = useState(null);
+  const [threeDTextColor, setThreeDTextColor] = useState("rgb(255, 255, 255)");
+  const [threeDFontType, setThreeDFontType] = useState("ARBORIA");
   const shirtRef = useRef(null);
 
   let titulo = "";
@@ -46,29 +48,38 @@ export default function Customize() {
         }}
         aria-hidden="true"
       />
-
-      <Sidebar
-        colors={colors}
-        setColors={setColors}
-        design={design}
-        setDesign={setDesign}
-        modelo={modelo}
-        shirtRef={shirtRef}
-        visiblePlayerId={visiblePlayerId}
-        setVisiblePlayerId={setVisiblePlayerId}
-        setVisiblePlayer={setVisiblePlayer}
-      />
+      <main className=" flex flex-col items-center justify-center">
+        <section className="w-140 h-95">
+          <Sidebar
+            colors={colors}
+            setColors={setColors}
+            design={design}
+            setDesign={setDesign}
+            modelo={modelo}
+            shirtRef={shirtRef}
+            visiblePlayerId={visiblePlayerId}
+            setVisiblePlayerId={setVisiblePlayerId}
+            setVisiblePlayer={setVisiblePlayer}
+            threeDTextColor={threeDTextColor}
+            setThreeDTextColor={setThreeDTextColor}
+            threeDFontType={threeDFontType}
+            setThreeDFontType={setThreeDFontType}
+          />
+        </section>
+      </main>
 
       <main className="flex-1 flex flex-col items-center justify-center p-8 space-y-6">
         {/* title could be shown here if desired */}
         <h1 className="text-2xl font-semibold">{titulo}</h1>
         <section className="w-140 max-w-xl h-95">
           {/* <section className="w-full max-w-2xl h-[500px]"> */}
-          <ShirtViewer3D 
-            ref={shirtRef} 
+          <ShirtViewer3D
+            ref={shirtRef}
             colors={colors}
             design={design}
             visiblePlayer={visiblePlayer}
+            textColor={threeDTextColor}
+            fontType={threeDFontType}
           />
         </section>
       </main>

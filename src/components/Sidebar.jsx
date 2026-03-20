@@ -15,11 +15,17 @@ import design2 from "../assets/design/design2.png";
 export default function Sidebar({
   colors,
   setColors,
+  design,
+  setDesign,
   modelo: propModelo,
   shirtRef,
   visiblePlayerId,
   setVisiblePlayerId,
   setVisiblePlayer,
+  threeDTextColor,
+  setThreeDTextColor,
+  threeDFontType,
+  setThreeDFontType,
 }) {
   const navigate = useNavigate();
   const { modelo } = useParams();
@@ -28,7 +34,7 @@ export default function Sidebar({
 
   // design state
   const [fabricType, setFabricType] = useState("");
-  const [design, setDesign] = useState("");
+  // const [design, setDesign] = useState(""); // Ahora viene como prop
   const [teamName, setTeamName] = useState("");
   const [playerNameField, setPlayerNameField] = useState("");
   const [logoUrl, setLogoUrl] = useState("");
@@ -80,6 +86,8 @@ export default function Sidebar({
       setLogoUrl(design.logoUrl || "");
       setTeamFont(design.teamFont || "");
       setPlayerFont(design.playerFont || "");
+      if (design.threeDTextColor) setThreeDTextColor(design.threeDTextColor);
+      if (design.threeDFontType) setThreeDFontType(design.threeDFontType);
     }
 
     if (locationState?.players) {
@@ -122,6 +130,8 @@ export default function Sidebar({
       logoUrl,
       teamFont,
       playerFont,
+      threeDTextColor,
+      threeDFontType,
       shirtImage, // Vista frontal
       shirtImageBack, // Vista trasera
       shirtImageLeftSleeve, // Manga izquierda
@@ -179,7 +189,7 @@ export default function Sidebar({
           ))}
         </Section>
 
-        <Section title="Cuerpo">
+        <Section title="Frente">
           <ColorPalette
             selected={colors.torso}
             onSelect={(c) => setColors((p) => ({ ...p, torso: c }))}
@@ -208,6 +218,15 @@ export default function Sidebar({
         
         <Section title="Logo">
           <LogoUploadLink onLogoSelect={setLogoUrl} />
+        </Section>
+
+        <Section title="Texto">
+          <TextColor3D 
+            textColor={threeDTextColor}
+            setTextColor={setThreeDTextColor}
+            fontType={threeDFontType}
+            setFontType={setThreeDFontType}
+          />
         </Section>
 
         <Section title="Agregar Jugadores">
@@ -486,6 +505,120 @@ function LogoUploadLink({ onLogoSelect }) {
   );
 }
 
+// Componente para Texto en 3D - Color y Fuente
+
+function TextColor3D({ textColor, setTextColor, fontType, setFontType }) {
+  const fontOptions = ["ARBORIA", "CHAKRA", "MONTSERRAT"];
+  
+  // Paleta de colores para el texto 3D
+  const textColors = [
+    // Fila 1 - Blancos y grises
+    "rgb(255, 255, 255)",
+    "rgb(200, 200, 200)",
+    "rgb(150, 150, 150)",
+    "rgb(120, 120, 120)",
+    "rgb(80, 80, 80)",
+    "rgb(40, 40, 40)",
+    // Fila 2 - Rojos
+    "rgb(220, 220, 220)",
+    "rgb(139, 69, 69)",
+    "rgb(178, 34, 34)",
+    "rgb(220, 20, 60)",
+    "rgb(250, 128, 114)",
+    "rgb(255, 140, 105)",
+    // Fila 3 - Amarillos y naranjas
+    "rgb(200, 100, 50)",
+    "rgb(255, 127, 80)",
+    "rgb(255, 165, 0)",
+    "rgb(255, 200, 0)",
+    "rgb(240, 230, 150)",
+    "rgb(255, 255, 0)",
+    // Fila 4 - Verdes
+    "rgb(200, 255, 50)",
+    "rgb(173, 255, 47)",
+    "rgb(152, 251, 152)",
+    "rgb(34, 139, 34)",
+    "rgb(0, 128, 128)",
+    "rgb(72, 209, 204)",
+    // Fila 5 - Azules
+    "rgb(30, 144, 255)",
+    "rgb(135, 206, 235)",
+    "rgb(25, 25, 112)",
+    "rgb(0, 51, 102)",
+    "rgb(25, 25, 112)",
+    "rgb(70, 130, 180)",
+    // Fila 6 - Púrpuras
+    "rgb(75, 0, 130)",
+    "rgb(138, 43, 226)",
+    "rgb(186, 85, 211)",
+    "rgb(216, 191, 216)",
+    "rgb(255, 192, 203)",
+    "rgb(219, 39, 119)",
+  ];
+
+  return (
+    <div className="col-span-2 space-y-4">
+      {/* Paleta de colores */}
+      <div className="space-y-3">
+        <label className="block text-xs font-semibold text-gray-700">
+          Color del Texto
+        </label>
+
+        {/* Grid de colores */}
+        <div className="grid grid-cols-7 gap-2 w-fit mx-auto">
+          {textColors.map((color, index) => (
+            <button
+              key={index}
+              title={color}
+              style={{ backgroundColor: color }}
+              onClick={() => setTextColor(color)}
+              className={`
+                w-8 h-8
+                rounded
+                border
+                border-gray-300 
+                hover:scale-140
+                transition-transform
+                duration-200
+                cursor-pointer
+                shadow-sm
+                hover:shadow-md
+                ${textColor === color ? "ring-2 ring-purple-500" : ""}
+              `}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Fuente */}
+      <div>
+        <label className="block text-xs font-semibold text-gray-700 mb-2">
+          Fuente
+        </label>
+        <div className="grid grid-cols-3 gap-2">
+          {fontOptions.map((font) => {
+            const isSel = fontType === font;
+            const baseClasses = `rounded-lg py-2 px-2 text-xs font-medium transition text-gray-600 cursor-pointer text-center`;
+            const colorClasses = isSel
+              ? "bg-personalizado-click-hover"
+              : "bg-personalizado-click hover:bg-personalizado-click-hover";
+            return (
+              <button
+                key={font}
+                className={`${baseClasses} ${colorClasses}`}
+                style={{ fontFamily: font.toLowerCase() }}
+                onClick={() => setFontType(font)}
+              >
+                {font}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // Players Section
 
 function PlayersSection({ players, setPlayers, visiblePlayerId, setVisiblePlayerId, setVisiblePlayer }) {
@@ -532,7 +665,7 @@ function PlayersSection({ players, setPlayers, visiblePlayerId, setVisiblePlayer
           if (field === "gender") {
             updated.jersey = value === "I" ? "2" : "XCH"; // Primer tamaño para cada género
           }
-          // Actualizar visiblePlayer si es el jugador activo
+          // Actualizar visiblePlayer en tiempo real si es el jugador activo
           if (visiblePlayerId === id) {
             setVisiblePlayer(updated);
           }
