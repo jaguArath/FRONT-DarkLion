@@ -1,11 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-/**
- * Formulario para capturar nombre, teléfono y correo.
- * Muestra errores específicos por campo y deshabilita botones cuando se está enviando.
- */
-export default function ContactForm({ data, onChange, onCancel, onSubmit, sending, fieldErrors }) {
+export default function ContactForm({
+  data,
+  onChange,
+  onCancel,
+  onSubmit,
+  sending,
+  fieldErrors,
+}) {
   const handleChange = (field) => (e) => {
     onChange(field, e.target.value);
   };
@@ -39,12 +42,12 @@ export default function ContactForm({ data, onChange, onCancel, onSubmit, sendin
           <input
             type="text"
             value={data.nombre}
-            onChange={handleChange('nombre')}
+            onChange={handleChange("nombre")}
             placeholder="Tu nombre"
             className={`w-full px-3 py-2 border-b-2 transition text-sm focus:outline-none ${
               fieldErrors?.nombre
-                ? 'border-red-500 focus:border-red-600'
-                : 'border-gray-300 focus:border-purple-600'
+                ? "border-red-500 focus:border-red-600"
+                : "border-gray-300 focus:border-purple-600"
             }`}
           />
           {fieldErrors?.nombre && (
@@ -59,12 +62,12 @@ export default function ContactForm({ data, onChange, onCancel, onSubmit, sendin
           <input
             type="tel"
             value={data.telefono}
-            onChange={handleChange('telefono')}
+            onChange={handleChange("telefono")}
             placeholder="Tu teléfono"
             className={`w-full px-3 py-2 border-b-2 transition text-sm focus:outline-none ${
               fieldErrors?.telefono
-                ? 'border-red-500 focus:border-red-600'
-                : 'border-gray-300 focus:border-purple-600'
+                ? "border-red-500 focus:border-red-600"
+                : "border-gray-300 focus:border-purple-600"
             }`}
           />
           {fieldErrors?.telefono && (
@@ -79,12 +82,12 @@ export default function ContactForm({ data, onChange, onCancel, onSubmit, sendin
           <input
             type="email"
             value={data.correo}
-            onChange={handleChange('correo')}
+            onChange={handleChange("correo")}
             placeholder="tu@email.com"
             className={`w-full px-3 py-2 border-b-2 transition text-sm focus:outline-none ${
               fieldErrors?.correo
-                ? 'border-red-500 focus:border-red-600'
-                : 'border-gray-300 focus:border-purple-600'
+                ? "border-red-500 focus:border-red-600"
+                : "border-gray-300 focus:border-purple-600"
             }`}
           />
           {fieldErrors?.correo && (
@@ -105,7 +108,7 @@ export default function ContactForm({ data, onChange, onCancel, onSubmit, sendin
             disabled={sending}
             className="w-full px-4 py-2 bg-personalizado hover:bg-personalizado-click-hover font-semibold rounded-lg transition disabled:opacity-50"
           >
-            {sending ? 'Enviando...' : 'Contactame'}
+            {sending ? "Enviando..." : "Contactame"}
           </button>
         </div>
       </div>

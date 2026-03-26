@@ -42,10 +42,16 @@ export default function ShirtSizeReport({ payload }) {
     const dataForExcel = [
       ["PLAYERAS/CAMISOLA", ...TALLAS_ADULTO],
       ["DAMA", ...TALLAS_ADULTO.map((talla) => matrix.DAMA[talla] || "")],
-      ["CABALLERO", ...TALLAS_ADULTO.map((talla) => matrix.CABALLERO[talla] || "")],
+      [
+        "CABALLERO",
+        ...TALLAS_ADULTO.map((talla) => matrix.CABALLERO[talla] || ""),
+      ],
       [],
       ["PLAYERAS/CAMISOLA (INFANTIL)", ...TALLAS_INFANTIL],
-      ["INFANTIL", ...TALLAS_INFANTIL.map((talla) => matrix.INFANTIL[talla] || "")],
+      [
+        "INFANTIL",
+        ...TALLAS_INFANTIL.map((talla) => matrix.INFANTIL[talla] || ""),
+      ],
       [],
       ["INFORMACIÓN DE CONTACTO"],
       ["Nombre", payload.name],
@@ -59,7 +65,9 @@ export default function ShirtSizeReport({ payload }) {
     // Ajustar ancho de columnas
     ws["!cols"] = [
       { wch: 20 },
-      ...Array(Math.max(TALLAS_ADULTO.length, TALLAS_INFANTIL.length)).fill({ wch: 12 }),
+      ...Array(Math.max(TALLAS_ADULTO.length, TALLAS_INFANTIL.length)).fill({
+        wch: 12,
+      }),
     ];
 
     XLSX.utils.book_append_sheet(wb, ws, "Reporte");
@@ -197,7 +205,9 @@ export default function ShirtSizeReport({ payload }) {
             <table className="w-full text-sm border-collapse">
               <thead>
                 <tr className="bg-blue-200">
-                  <th className="border border-blue-300 px-3 py-2 text-left">#</th>
+                  <th className="border border-blue-300 px-3 py-2 text-left">
+                    #
+                  </th>
                   <th className="border border-blue-300 px-3 py-2 text-left">
                     Nombre
                   </th>

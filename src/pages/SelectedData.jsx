@@ -87,7 +87,12 @@ export default function SelectedData() {
   };
 
   // Función para combinar 4 imágenes en una sola
-  const combineImagesIntoOne = (imageFront, imageBack, imageLeftSleeve, imageRightSleeve) => {
+  const combineImagesIntoOne = (
+    imageFront,
+    imageBack,
+    imageLeftSleeve,
+    imageRightSleeve,
+  ) => {
     return new Promise((resolve, reject) => {
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
@@ -110,7 +115,12 @@ export default function SelectedData() {
         { data: imageFront, x: 0, y: 0, label: "Frente" },
         { data: imageRightSleeve, x: imageWidth, y: 0, label: "Manga Der." },
         { data: imageBack, x: 0, y: imageHeight, label: "Atrás" },
-        { data: imageLeftSleeve, x: imageWidth, y: imageHeight, label: "Manga Izq." },
+        {
+          data: imageLeftSleeve,
+          x: imageWidth,
+          y: imageHeight,
+          label: "Manga Izq.",
+        },
       ];
 
       images.forEach((img) => {
@@ -152,9 +162,9 @@ export default function SelectedData() {
 
   const convertGenderToSpanish = (gender) => {
     const generoMap = {
-      "H": "CABALLERO",
-      "M": "DAMA",
-      "I": "INFANTIL"
+      H: "CABALLERO",
+      M: "DAMA",
+      I: "INFANTIL",
     };
     return generoMap[gender] || gender;
   };
@@ -162,13 +172,13 @@ export default function SelectedData() {
   // Mapeo de tallas infantiles a tallas de adulto para el JSON
   const mapInfantilTallaToAdult = (talla) => {
     const tallaMap = {
-      "2": "XCH",
-      "4": "CH",
-      "6": "MD",
-      "8": "GD",
-      "10": "XL",
-      "12": "XXL",
-      "14": "XXXL"
+      2: "XCH",
+      4: "CH",
+      6: "MD",
+      8: "GD",
+      10: "XL",
+      12: "XXL",
+      14: "XXXL",
     };
     return tallaMap[talla] || talla;
   };
@@ -177,19 +187,21 @@ export default function SelectedData() {
     // Aggregate tallas by tipo and talla
     const tallasMap = {};
     console.log("Jugadores a procesar:", players);
-    
+
     players.forEach((p) => {
       const tipo = convertGenderToSpanish(p.gender);
       let talla = p.jersey || "";
-      
+
       // Si es infantil, mapear la talla a formato de adulto
       if (p.gender === "I") {
         talla = mapInfantilTallaToAdult(talla);
       }
-      
+
       const key = `${tipo}-${talla}`;
-      console.log(`Procesando jugador: ${p.name}, gender: ${p.gender}, tipo: ${tipo}, talla original: ${p.jersey}, talla mapeada: ${talla}, quantity: ${p.quantity}`);
-      
+      console.log(
+        `Procesando jugador: ${p.name}, gender: ${p.gender}, tipo: ${tipo}, talla original: ${p.jersey}, talla mapeada: ${talla}, quantity: ${p.quantity}`,
+      );
+
       if (!tallasMap[key]) {
         tallasMap[key] = { tipo, talla, cantidad: 0 };
       }
@@ -213,7 +225,8 @@ export default function SelectedData() {
       listado: players.map((p) => ({
         nombre: p.name || "",
         numero: p.number && p.number !== "" ? parseInt(p.number) : 0,
-        talla: p.gender === "I" ? mapInfantilTallaToAdult(p.jersey) : (p.jersey || ""),
+        talla:
+          p.gender === "I" ? mapInfantilTallaToAdult(p.jersey) : p.jersey || "",
         cantidad: p.quantity || 0,
         genero: convertGenderToSpanish(p.gender),
       })),
@@ -259,7 +272,7 @@ export default function SelectedData() {
           imageFront,
           imageBack,
           imageLeftSleeve,
-          imageRightSleeve
+          imageRightSleeve,
         );
         formData.append("image", combinedImageBlob, "design_completo.png");
       } else {
@@ -271,7 +284,6 @@ export default function SelectedData() {
         {
           method: "POST",
           body: formData,
-          
         },
       );
 
@@ -442,12 +454,27 @@ export default function SelectedData() {
                   </li>
 
                   <li>
-                    <strong>Mangas:</strong>{" "}
-                    {design.colors?.sleeves ? (
+                    <strong>Manga Izquierda:</strong>{" "}
+                    {design.colors?.manga_izquierda ? (
                       <span
                         className="inline-block w-6 h-6 rounded border border-gray-300 ml-1"
-                        style={{ backgroundColor: design.colors.sleeves }}
-                        title={design.colors.sleeves}
+                        style={{
+                          backgroundColor: design.colors.manga_izquierda,
+                        }}
+                        title={design.colors.manga_izquierda}
+                      />
+                    ) : (
+                      "—"
+                    )}
+                  </li>
+
+                  <li>
+                    <strong>Manga Derecha:</strong>{" "}
+                    {design.colors?.manga_derecha ? (
+                      <span
+                        className="inline-block w-6 h-6 rounded border border-gray-300 ml-1"
+                        style={{ backgroundColor: design.colors.manga_derecha }}
+                        title={design.colors.manga_derecha}
                       />
                     ) : (
                       "—"
@@ -494,8 +521,10 @@ export default function SelectedData() {
                   colors={design.colors}
                   modelo={modelo}
                   shirtImage={design.shirtImage}
-                  shirtImageBack={design.shirtImageBack}                  shirtImageLeftSleeve={design.shirtImageLeftSleeve}
-                  shirtImageRightSleeve={design.shirtImageRightSleeve}                />
+                  shirtImageBack={design.shirtImageBack}
+                  shirtImageLeftSleeve={design.shirtImageLeftSleeve}
+                  shirtImageRightSleeve={design.shirtImageRightSleeve}
+                />
               </div>
             </section>
 

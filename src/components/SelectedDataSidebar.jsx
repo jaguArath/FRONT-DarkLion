@@ -1,11 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import ColorSwatch from './ColorSwatch';
+import React from "react";
+import PropTypes from "prop-types";
+import ColorSwatch from "./ColorSwatch";
 
 /**
  * Sidebar that shows current design configuration and player list.
  */
-export default function SelectedDataSidebar({ design, players, onEdit, onSend }) {
+export default function SelectedDataSidebar({
+  design,
+  players,
+  onEdit,
+  onSend,
+}) {
   const renderPlayers = () => {
     if (!players || players.length === 0) {
       return <p className="text-xs">Sin jugadores</p>;
@@ -18,8 +23,8 @@ export default function SelectedDataSidebar({ design, players, onEdit, onSend })
               <strong>{p.name || `Jugador ${i + 1}`}</strong>
             </p>
             <p>
-              Género: {p.gender || '—'} | Jersey: {p.jersey || '—'} | Nº{' '}
-              {p.number || '—'}
+              Género: {p.gender || "—"} | Jersey: {p.jersey || "—"} | Nº{" "}
+              {p.number || "—"}
             </p>
             <p>Cant: {p.quantity || 0}</p>
           </div>
@@ -52,10 +57,10 @@ export default function SelectedDataSidebar({ design, players, onEdit, onSend })
           <h3 className="font-bold text-lg mb-3">Configuración</h3>
           <ul className="space-y-2 text-xs">
             <li>
-              <strong>Tela:</strong> {design.fabricType || '—'}
+              <strong>Tela:</strong> {design.fabricType || "—"}
             </li>
             <li>
-              <strong>Diseño:</strong>{' '}
+              <strong>Diseño:</strong>{" "}
               {design.design ? (
                 <img
                   src={design.design}
@@ -63,23 +68,37 @@ export default function SelectedDataSidebar({ design, players, onEdit, onSend })
                   className="w-12 h-12 inline"
                 />
               ) : (
-                '—'
+                "—"
               )}
             </li>
             <li>
-              <strong>Equipo:</strong> {design.teamName || '—'}
+              <strong>Equipo:</strong> {design.teamName || "—"}
             </li>
             <li>
-              <strong>Fuente equipo:</strong> {design.teamFont || '—'}
+              <strong>Fuente equipo:</strong> {design.teamFont || "—"}
             </li>
             <li>
-              <strong>Jugador:</strong> {design.playerName || '—'}
+              <strong>Jugador:</strong> {design.playerName || "—"}
             </li>
             <li>
-              <strong>Fuente jugador:</strong> {design.playerFont || '—'}
+              <strong>Fuente jugador:</strong> {design.playerFont || "—"}
             </li>
             <li>
-              <strong>Logo:</strong>{' '}
+              <strong>Color nombre:</strong>{" "}
+              <ColorSwatch color={design.nameColor} />
+            </li>
+            <li>
+              <strong>Fuente nombre:</strong> {design.nameFont || "—"}
+            </li>
+            <li>
+              <strong>Color número:</strong>{" "}
+              <ColorSwatch color={design.numberColor} />
+            </li>
+            <li>
+              <strong>Fuente número:</strong> {design.numberFont || "—"}
+            </li>
+            <li>
+              <strong>Logo:</strong>{" "}
               {design.logoUrl ? (
                 <img
                   src={design.logoUrl}
@@ -87,7 +106,7 @@ export default function SelectedDataSidebar({ design, players, onEdit, onSend })
                   className="w-12 h-12 inline"
                 />
               ) : (
-                '—'
+                "—"
               )}
             </li>
           </ul>
@@ -98,19 +117,23 @@ export default function SelectedDataSidebar({ design, players, onEdit, onSend })
           <h3 className="font-bold text-lg mb-3">Colores</h3>
           <ul className="space-y-2 text-xs">
             <li>
-              <strong>Cuerpo:</strong>{' '}
+              <strong>Cuerpo:</strong>{" "}
               <ColorSwatch color={design.colors?.torso} />
             </li>
             <li>
-              <strong>Espalda:</strong>{' '}
+              <strong>Espalda:</strong>{" "}
               <ColorSwatch color={design.colors?.back} />
             </li>
             <li>
-              <strong>Mangas:</strong>{' '}
-              <ColorSwatch color={design.colors?.sleeves} />
+              <strong>Manga Izquierda:</strong>{" "}
+              <ColorSwatch color={design.colors?.manga_izquierda} />
             </li>
             <li>
-              <strong>Cuello:</strong>{' '}
+              <strong>Manga Derecha:</strong>{" "}
+              <ColorSwatch color={design.colors?.manga_derecha} />
+            </li>
+            <li>
+              <strong>Cuello:</strong>{" "}
               <ColorSwatch color={design.colors?.collar} />
             </li>
           </ul>

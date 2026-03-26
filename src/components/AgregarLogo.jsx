@@ -97,7 +97,6 @@ export default function AgregarLogo() {
     >
       {/* TOOLBAR */}
       <aside className="w-24 bg-white/80 backdrop-blur-md shadow-md flex flex-col items-center py-6 space-y-6 rounded-r-2xl">
-        
         <label className="flex flex-col items-center gap-1 cursor-pointer">
           <span className="text-2xl">📤</span>
           <span className="text-xs">Subidos</span>
@@ -119,9 +118,7 @@ export default function AgregarLogo() {
 
       {/* EDITOR CENTRAL */}
       <div className="flex-1 flex flex-col items-center justify-center">
-
         <div className="relative w-90">
-          
           {/* Imagen base */}
           <img
             src={shirtImage}
@@ -156,9 +153,7 @@ export default function AgregarLogo() {
           >
             <div
               className={`w-16 h-16 rounded-full flex items-center justify-center transition-all ${
-                view === "frente"
-                  ? "bg-purple-600 text-white"
-                  : "bg-gray-300"
+                view === "frente" ? "bg-purple-600 text-white" : "bg-gray-300"
               }`}
             >
               <img src={FrenteIcon} alt="Frente" className="w-8 h-8" />
@@ -172,9 +167,7 @@ export default function AgregarLogo() {
           >
             <div
               className={`w-16 h-16 rounded-full flex items-center justify-center transition-all ${
-                view === "espalda"
-                  ? "bg-purple-600 text-white"
-                  : "bg-gray-300"
+                view === "espalda" ? "bg-purple-600 text-white" : "bg-gray-300"
               }`}
             >
               <img src={EspaldaIcon} alt="Espalda" className="w-8 h-8" />
@@ -188,9 +181,7 @@ export default function AgregarLogo() {
           >
             <div
               className={`w-16 h-16 rounded-full flex items-center justify-center transition-all ${
-                view === "mangas"
-                  ? "bg-purple-600 text-white"
-                  : "bg-gray-300"
+                view === "mangas" ? "bg-purple-600 text-white" : "bg-gray-300"
               }`}
             >
               <img src={MangasIcon} alt="Mangas" className="w-8 h-8" />
@@ -202,11 +193,7 @@ export default function AgregarLogo() {
 
       {/* VISTA PREVIA DERECHA */}
       <div className="w-80 flex flex-col items-center justify-center gap-6">
-        <img
-          src={shirtImage}
-          alt="Preview"
-          className="w-72 drop-shadow-xl"
-        />
+        <img src={shirtImage} alt="Preview" className="w-72 drop-shadow-xl" />
 
         <div className="w-72 flex flex-col gap-3">
           <button

@@ -10,7 +10,8 @@ export default function Shirt2D({
   shirtImageRightSleeve = null,
 }) {
   const torsoColor = colors.torso || "#ffffff";
-  const sleevesColor = colors.sleeves || "#ffffff";
+  const leftSleeveColor = colors.manga_izquierda || "#ffffff";
+  const rightSleeveColor = colors.manga_derecha || "#ffffff";
   const collarColor = colors.collar || "#ffffff";
   const backColor = colors.back || "#ffffff";
 
@@ -60,7 +61,11 @@ export default function Shirt2D({
             <img
               src={selectedImage}
               className="w-full object-contain h-auto"
-              style={{ maxHeight: "500px", maxWidth: "500px", minHeight: "300px" }}
+              style={{
+                maxHeight: "500px",
+                maxWidth: "500px",
+                minHeight: "300px",
+              }}
               alt={`Camisa 3D - ${selectedLabel}`}
             />
           ) : (

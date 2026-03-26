@@ -9,9 +9,9 @@ export default function SendImages() {
   const clientData = state?.clientData || {};
 
   const handleSendEmail = () => {
-  const subject = `Imágenes para pedido - ${clientData.name || "Cliente"}`;
+    const subject = `Imágenes para pedido - ${clientData.name || "Cliente"}`;
 
-  const body = `Hola,
+    const body = `Hola,
 
 Adjunto envío mis imágenes y logos para mi uniforme personalizado.
 
@@ -21,11 +21,10 @@ Teléfono: ${clientData.phone_number || ""}
 
 Gracias.`;
 
-  const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=darklionteamsoftware@gmail.com&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=darklionteamsoftware@gmail.com&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
-  window.open(gmailUrl, "_blank");
-};
-
+    window.open(gmailUrl, "_blank");
+  };
 
   return (
     <section
@@ -53,7 +52,9 @@ Gracias.`;
 
         {/* Datos del cliente */}
         <div className="bg-purple-50 rounded-lg p-6 text-left space-y-3">
-          <h3 className="font-bold text-lg text-purple-700">Datos del cliente:</h3>
+          <h3 className="font-bold text-lg text-purple-700">
+            Datos del cliente:
+          </h3>
           <div className="space-y-2 text-sm">
             <p>
               <strong>Nombre:</strong> {clientData.name || "N/A"}
@@ -73,7 +74,9 @@ Gracias.`;
             Próximo paso: Envía tus imágenes
           </h3>
           <p className="text-gray-700">
-            Para completar tu pedido, necesitamos que envíes <strong>todas las imágenes, logos y diseños</strong> que utilizaste o subiste para tu uniforme personalizado.
+            Para completar tu pedido, necesitamos que envíes{" "}
+            <strong>todas las imágenes, logos y diseños</strong> que utilizaste
+            o subiste para tu uniforme personalizado.
           </p>
           <ul className="list-disc list-inside space-y-1 text-sm text-gray-700">
             <li>Logo de tu equipo (si lo utilizaste)</li>
@@ -102,8 +105,10 @@ Gracias.`;
         {/* Nota adicional */}
         <div className="border-t pt-4 text-xs text-gray-600">
           <p>
-            💡 <strong>Nota:</strong> Se abrirá tu cliente de correo. Si no se abre automáticamente, envía tus imágenes a{" "}
-            <strong>darklionteamsoftware@gmail.com</strong> con el asunto incluyendo tu nombre.
+            💡 <strong>Nota:</strong> Se abrirá tu cliente de correo. Si no se
+            abre automáticamente, envía tus imágenes a{" "}
+            <strong>darklionteamsoftware@gmail.com</strong> con el asunto
+            incluyendo tu nombre.
           </p>
         </div>
       </div>

@@ -17,15 +17,21 @@ export default function Sidebar({
   setColors,
   design,
   setDesign,
+  designs,
+  setDesigns,
   modelo: propModelo,
   shirtRef,
   visiblePlayerId,
   setVisiblePlayerId,
   setVisiblePlayer,
-  threeDTextColor,
-  setThreeDTextColor,
-  threeDFontType,
-  setThreeDFontType,
+  nameColor,
+  setNameColor,
+  nameFont,
+  setNameFont,
+  numberColor,
+  setNumberColor,
+  numberFont,
+  setNumberFont,
 }) {
   const navigate = useNavigate();
   const { modelo } = useParams();
@@ -78,16 +84,33 @@ export default function Sidebar({
       const design = locationState.design;
       setFabricType(design.fabricType || "");
       setDesign(design.design || "");
+      setDesigns(
+        design.designs || {
+          torso: { design: "", visible: false },
+          back: { design: "", visible: false },
+          manga_izquierda: { design: "", visible: false },
+          manga_derecha: { design: "", visible: false },
+          collar: { design: "", visible: false },
+        },
+      );
       setColors(
-        design.colors || { torso: "", back: "", sleeves: "", collar: "" },
+        design.colors || {
+          torso: "",
+          back: "",
+          manga_izquierda: "",
+          manga_derecha: "",
+          collar: "",
+        },
       );
       setTeamName(design.teamName || "");
       setPlayerNameField(design.playerName || "");
       setLogoUrl(design.logoUrl || "");
       setTeamFont(design.teamFont || "");
       setPlayerFont(design.playerFont || "");
-      if (design.threeDTextColor) setThreeDTextColor(design.threeDTextColor);
-      if (design.threeDFontType) setThreeDFontType(design.threeDFontType);
+      if (design.nameColor) setNameColor(design.nameColor);
+      if (design.nameFont) setNameFont(design.nameFont);
+      if (design.numberColor) setNumberColor(design.numberColor);
+      if (design.numberFont) setNumberFont(design.numberFont);
     }
 
     if (locationState?.players) {
@@ -97,14 +120,15 @@ export default function Sidebar({
 
   const handleSave = async () => {
     // Capturar imágenes 3D (frente, atrás, manga izquierda y derecha)
+    // Sin mostrar nombre y número del jugador en las imágenes capturadas
     let shirtImage = null;
     let shirtImageBack = null;
     let shirtImageLeftSleeve = null;
     let shirtImageRightSleeve = null;
-    
+
     if (shirtRef?.current?.captureImageBothSides) {
       try {
-        const images = await shirtRef.current.captureImageBothSides();
+        const images = await shirtRef.current.captureImageBothSides(true); // hidePlayerText = true
         shirtImage = images.frente;
         shirtImageBack = images.atras;
         shirtImageLeftSleeve = images.mangaIzquierda;
@@ -113,32 +137,38 @@ export default function Sidebar({
         console.error("Error capturando imágenes:", err);
         // Fallback a método antiguo si hay error
         if (shirtRef?.current?.captureImage) {
-          shirtImage = shirtRef.current.captureImage();
+          shirtImage = await shirtRef.current.captureImage(true); // hidePlayerText = true
         }
       }
     } else if (shirtRef?.current?.captureImage) {
       // Si el nuevo método no está disponible, usar el antiguo
-      shirtImage = shirtRef.current.captureImage();
+      shirtImage = await shirtRef.current.captureImage(true); // hidePlayerText = true
     }
 
     const designData = {
       fabricType,
       design,
+      designs,
       colors,
       teamName,
       playerName: playerNameField,
       logoUrl,
       teamFont,
       playerFont,
-      threeDTextColor,
-      threeDFontType,
+      nameColor,
+      nameFont,
+      numberColor,
+      numberFont,
       shirtImage, // Vista frontal
       shirtImageBack, // Vista trasera
       shirtImageLeftSleeve, // Manga izquierda
       shirtImageRightSleeve, // Manga derecha
     };
     console.log("Jugadores que se envían desde Sidebar:", players);
-    console.log("Jugadores infantiles:", players.filter(p => p.gender === "I"));
+    console.log(
+      "Jugadores infantiles:",
+      players.filter((p) => p.gender === "I"),
+    );
     navigate("/datos-seleccionados", {
       state: { design: designData, players, modelo: currentModelo },
     });
@@ -194,18 +224,42 @@ export default function Sidebar({
             selected={colors.torso}
             onSelect={(c) => setColors((p) => ({ ...p, torso: c }))}
           />
+          <DesignToggle
+            part="torso"
+            designs={designs}
+            setDesigns={setDesigns}
+          />
         </Section>
+
         <Section title="Espalda">
           <ColorPalette
             selected={colors.back}
             onSelect={(c) => setColors((p) => ({ ...p, back: c }))}
           />
+          <DesignToggle part="back" designs={designs} setDesigns={setDesigns} />
         </Section>
 
-        <Section title="Mangas">
+        <Section title="Manga Derecha">
           <ColorPalette
-            selected={colors.sleeves}
-            onSelect={(c) => setColors((p) => ({ ...p, sleeves: c }))}
+            selected={colors.manga_izquierda}
+            onSelect={(c) => setColors((p) => ({ ...p, manga_izquierda: c }))}
+          />
+          <DesignToggle
+            part="manga_izquierda"
+            designs={designs}
+            setDesigns={setDesigns}
+          />
+        </Section>
+
+        <Section title="Manga Izquierda">
+          <ColorPalette
+            selected={colors.manga_derecha}
+            onSelect={(c) => setColors((p) => ({ ...p, manga_derecha: c }))}
+          />
+          <DesignToggle
+            part="manga_derecha"
+            designs={designs}
+            setDesigns={setDesigns}
           />
         </Section>
 
@@ -214,24 +268,33 @@ export default function Sidebar({
             selected={colors.collar}
             onSelect={(c) => setColors((p) => ({ ...p, collar: c }))}
           />
+          <DesignToggle
+            part="collar"
+            designs={designs}
+            setDesigns={setDesigns}
+          />
         </Section>
-        
+
         <Section title="Logo">
           <LogoUploadLink onLogoSelect={setLogoUrl} />
         </Section>
 
         <Section title="Texto">
-          <TextColor3D 
-            textColor={threeDTextColor}
-            setTextColor={setThreeDTextColor}
-            fontType={threeDFontType}
-            setFontType={setThreeDFontType}
+          <TextColor3DNameAndNumber
+            nameColor={nameColor}
+            setNameColor={setNameColor}
+            nameFont={nameFont}
+            setNameFont={setNameFont}
+            numberColor={numberColor}
+            setNumberColor={setNumberColor}
+            numberFont={numberFont}
+            setNumberFont={setNumberFont}
           />
         </Section>
 
         <Section title="Agregar Jugadores">
-          <PlayersSection 
-            players={players} 
+          <PlayersSection
+            players={players}
             setPlayers={setPlayers}
             visiblePlayerId={visiblePlayerId}
             setVisiblePlayerId={setVisiblePlayerId}
@@ -306,7 +369,7 @@ function Section({ title, icon: Icon, children }) {
 // TIPOS DE TELA
 
 function OptionButton({ text, selected, onClick }) {
-  const baseClasses = `cursor-pointer rounded-lg py-1.5 text-sm font-medium transition`;
+  const baseClasses = `cursor-pointer rounded-lg py-1.5 text-sm font-medium transition transition-transform duration-300 hover:scale-105`;
   const colorClasses = selected
     ? "bg-personalizado-click-hover"
     : "bg-personalizado-click hover:bg-personalizado-click-hover";
@@ -505,11 +568,192 @@ function LogoUploadLink({ onLogoSelect }) {
   );
 }
 
+// Componente para Texto en 3D - Color y Fuente SEPARADOS para Nombre y Número
+
+function TextColor3DNameAndNumber({
+  nameColor,
+  setNameColor,
+  nameFont,
+  setNameFont,
+  numberColor,
+  setNumberColor,
+  numberFont,
+  setNumberFont,
+}) {
+  const fontOptions = ["ARBORIA", "CHAKRA", "MONTSERRAT"];
+
+  // Paleta de colores para el texto 3D
+  const textColors = [
+    // Fila 1 - Blancos y grises
+    "rgb(255, 255, 255)",
+    "rgb(200, 200, 200)",
+    "rgb(150, 150, 150)",
+    "rgb(120, 120, 120)",
+    "rgb(80, 80, 80)",
+    "rgb(40, 40, 40)",
+    // Fila 2 - Rojos
+    "rgb(220, 220, 220)",
+    "rgb(139, 69, 69)",
+    "rgb(178, 34, 34)",
+    "rgb(220, 20, 60)",
+    "rgb(250, 128, 114)",
+    "rgb(255, 140, 105)",
+    // Fila 3 - Amarillos y naranjas
+    "rgb(200, 100, 50)",
+    "rgb(255, 127, 80)",
+    "rgb(255, 165, 0)",
+    "rgb(255, 200, 0)",
+    "rgb(240, 230, 150)",
+    "rgb(255, 255, 0)",
+    // Fila 4 - Verdes
+    "rgb(200, 255, 50)",
+    "rgb(173, 255, 47)",
+    "rgb(152, 251, 152)",
+    "rgb(34, 139, 34)",
+    "rgb(0, 128, 128)",
+    "rgb(72, 209, 204)",
+    // Fila 5 - Azules
+    "rgb(30, 144, 255)",
+    "rgb(135, 206, 235)",
+    "rgb(25, 25, 112)",
+    "rgb(0, 51, 102)",
+    "rgb(25, 25, 112)",
+    "rgb(70, 130, 180)",
+    // Fila 6 - Púrpuras
+    "rgb(75, 0, 130)",
+    "rgb(138, 43, 226)",
+    "rgb(186, 85, 211)",
+    "rgb(216, 191, 216)",
+    "rgb(255, 192, 203)",
+    "rgb(219, 39, 119)",
+  ];
+
+  return (
+    <div className="col-span-2 space-y-6">
+      {/* SECCIÓN NOMBRE */}
+      <div className="space-y-3 border-b pb-4">
+        <label className="block text-xs font-semibold text-gray-700">
+          Color del Nombre
+        </label>
+
+        {/* Grid de colores para nombre */}
+        <div className="grid grid-cols-7 gap-2 w-fit mx-auto">
+          {textColors.map((color, index) => (
+            <button
+              key={`name-${index}`}
+              title={color}
+              style={{ backgroundColor: color }}
+              onClick={() => setNameColor(color)}
+              className={`
+                w-8 h-8
+                rounded
+                border
+                border-gray-300 
+                hover:scale-140
+                transition-transform
+                duration-200
+                cursor-pointer
+                shadow-sm
+                hover:shadow-md
+                ${nameColor === color ? "ring-2 ring-purple-500" : ""}
+              `}
+            />
+          ))}
+        </div>
+
+        {/* Fuente del nombre */}
+        <div>
+          <label className="block text-xs font-semibold text-gray-700 mb-2">
+            Fuente del Nombre
+          </label>
+          <div className="grid grid-cols-3 gap-2">
+            {fontOptions.map((font) => {
+              const isSel = nameFont === font;
+              const baseClasses = `rounded-lg py-2 px-2 text-xs font-medium transition text-gray-600 cursor-pointer text-center`;
+              const colorClasses = isSel
+                ? "bg-personalizado-click-hover"
+                : "bg-personalizado-click hover:bg-personalizado-click-hover";
+              return (
+                <button
+                  key={`name-font-${font}`}
+                  className={`${baseClasses} ${colorClasses}`}
+                  style={{ fontFamily: font.toLowerCase() }}
+                  onClick={() => setNameFont(font)}
+                >
+                  {font}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* SECCIÓN NÚMERO */}
+      <div className="space-y-3">
+        <label className="block text-xs font-semibold text-gray-700">
+          Color del Número
+        </label>
+
+        {/* Grid de colores para número */}
+        <div className="grid grid-cols-7 gap-2 w-fit mx-auto">
+          {textColors.map((color, index) => (
+            <button
+              key={`number-${index}`}
+              title={color}
+              style={{ backgroundColor: color }}
+              onClick={() => setNumberColor(color)}
+              className={`
+                w-8 h-8
+                rounded
+                border
+                border-gray-300 
+                hover:scale-140
+                transition-transform
+                duration-200
+                cursor-pointer
+                shadow-sm
+                hover:shadow-md
+                ${numberColor === color ? "ring-2 ring-purple-500" : ""}
+              `}
+            />
+          ))}
+        </div>
+
+        {/* Fuente del número */}
+        <div>
+          <label className="block text-xs font-semibold text-gray-700 mb-2">
+            Fuente del Número
+          </label>
+          <div className="grid grid-cols-3 gap-2">
+            {fontOptions.map((font) => {
+              const isSel = numberFont === font;
+              const baseClasses = `rounded-lg py-2 px-2 text-xs font-medium transition text-gray-600 cursor-pointer text-center`;
+              const colorClasses = isSel
+                ? "bg-personalizado-click-hover"
+                : "bg-personalizado-click hover:bg-personalizado-click-hover";
+              return (
+                <button
+                  key={`number-font-${font}`}
+                  className={`${baseClasses} ${colorClasses}`}
+                  style={{ fontFamily: font.toLowerCase() }}
+                  onClick={() => setNumberFont(font)}
+                >
+                  {font}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // Componente para Texto en 3D - Color y Fuente
 
 function TextColor3D({ textColor, setTextColor, fontType, setFontType }) {
   const fontOptions = ["ARBORIA", "CHAKRA", "MONTSERRAT"];
-  
+
   // Paleta de colores para el texto 3D
   const textColors = [
     // Fila 1 - Blancos y grises
@@ -619,9 +863,114 @@ function TextColor3D({ textColor, setTextColor, fontType, setFontType }) {
   );
 }
 
+// Selector de Diseño por Parte
+function DesignToggle({ part, designs, setDesigns }) {
+  const partLabels = {
+    torso: "Frente",
+    back: "Espalda",
+    manga_izquierda: "Manga Izquierda",
+    manga_derecha: "Manga Derecha",
+    sleeves: "Mangas",
+    collar: "Cuello",
+  };
+
+  const currentDesign = designs[part];
+  const partLabel = partLabels[part] || part;
+
+  const handleToggle = () => {
+    console.log(
+      `[DesignToggle] Toggle ${part}: visible = ${!currentDesign.visible}`,
+    );
+    setDesigns((prev) => ({
+      ...prev,
+      [part]: {
+        ...prev[part],
+        visible: !prev[part].visible,
+      },
+    }));
+  };
+
+  const handleDesignSelect = (src) => {
+    console.log(`[DesignToggle] Seleccionado ${part}: ${src}`);
+    setDesigns((prev) => ({
+      ...prev,
+      [part]: {
+        ...prev[part],
+        design: src,
+        visible: true,
+      },
+    }));
+  };
+
+  return (
+    <div className="col-span-2 space-y-2 mt-3 border-t pt-2">
+      <div className="flex items-center justify-between">
+        <label className="block text-xs font-semibold text-gray-700">
+          Diseño:
+        </label>
+        <button
+          onClick={handleToggle}
+          className={`w-10 h-6 rounded-full transition-colors ${
+            currentDesign.visible ? "bg-purple-500" : "bg-gray-300"
+          }`}
+          title={currentDesign.visible ? "Ocultar diseño" : "Mostrar diseño"}
+        >
+          <div
+            className={`w-5 h-5 rounded-full bg-white transition-transform ${
+              currentDesign.visible ? "translate-x-4" : "translate-x-0"
+            }`}
+          />
+        </button>
+      </div>
+
+      {currentDesign.visible && (
+        <div className="flex gap-2 flex-col">
+          <button
+            onClick={() => {
+              console.log(`[DesignToggle] "Sin Diseño" clicked para ${part}`);
+              setDesigns((prev) => ({
+                ...prev,
+                [part]: { design: "", visible: true },
+              }));
+            }}
+            className={`text-xs py-1 px-2 rounded font-medium ${
+              currentDesign.design === ""
+                ? "bg-purple-500 text-white"
+                : "bg-gray-200 text-gray-700"
+            }`}
+          >
+            Sin Diseño
+          </button>
+          <div className="flex gap-2">
+            {[design1, design2].map((src) => (
+              <img
+                key={src}
+                src={src}
+                alt="Diseño"
+                className={`w-12 h-12 rounded cursor-pointer border-2 ${
+                  currentDesign.design === src
+                    ? "ring-2 ring-purple-500 border-purple-500"
+                    : "border-gray-200"
+                }`}
+                onClick={() => handleDesignSelect(src)}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // Players Section
 
-function PlayersSection({ players, setPlayers, visiblePlayerId, setVisiblePlayerId, setVisiblePlayer }) {
+function PlayersSection({
+  players,
+  setPlayers,
+  visiblePlayerId,
+  setVisiblePlayerId,
+  setVisiblePlayer,
+}) {
   // handlers are now passed from parent
   const [selectedId, setSelectedId] = useState(null);
 
@@ -650,6 +999,29 @@ function PlayersSection({ players, setPlayers, visiblePlayerId, setVisiblePlayer
     if ((field === "gender" || field === "jersey") && value === "") {
       return; // No permitir valores vacíos
     }
+
+    // Validación del nombre - máximo 8 caracteres, sin números
+    if (field === "name") {
+      // Remover solo números, permitir letras y caracteres especiales
+      const noNumbers = value.replace(/\d/g, "");
+      // Limitar a 8 caracteres
+      if (noNumbers.length > 9) {
+        return; // No permitir más de 8 caracteres
+      }
+      value = noNumbers;
+    }
+
+    // Validación del número - máximo 4 dígitos, solo números
+    if (field === "number") {
+      // Remover caracteres no numéricos
+      const digitsOnly = value.replace(/\D/g, "");
+      // Limitar a 4 dígitos
+      if (digitsOnly.length > 4) {
+        return; // No permitir más de 4 dígitos
+      }
+      value = digitsOnly ? parseInt(digitsOnly) : 0;
+    }
+
     if (field === "quantity") {
       const quantityValue = parseInt(value) || 0;
       if (quantityValue < 1) {
@@ -699,15 +1071,15 @@ function PlayersSection({ players, setPlayers, visiblePlayerId, setVisiblePlayer
           {/* FILA SUPERIOR */}
           <div className="flex items-end gap-2">
             {/* OJO */}
-            <button 
+            <button
               onClick={(e) => {
                 e.stopPropagation();
                 handleToggleEye(player);
               }}
               className={`p-2 rounded-lg shadow cursor-pointer transition-colors ${
                 visiblePlayerId === player.id
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-personalizado-click'
+                  ? "bg-blue-500 text-white"
+                  : "bg-personalizado-click"
               }`}
             >
               <EyeIcon className="w-5 h-5" />
@@ -758,7 +1130,6 @@ function PlayersSection({ players, setPlayers, visiblePlayerId, setVisiblePlayer
                     <option value="XL">10</option>
                     <option value="XXL">12</option>
                     <option value="XXXL">14</option>
-                    
                   </>
                 ) : (
                   <>
@@ -778,12 +1149,16 @@ function PlayersSection({ players, setPlayers, visiblePlayerId, setVisiblePlayer
             <div title="Número del jugador" className="flex flex-col text-xs">
               <span>Num</span>
               <input
-                type="number"
+                type="text"
+                inputMode="numeric"
                 value={player.number}
                 onChange={(e) =>
                   handleChange(player.id, "number", e.target.value)
                 }
-                className="bg-purple-200 rounded-lg px-2 py-1 w-14"
+                maxLength="4"
+                placeholder="0-9999"
+                className="bg-purple-200 rounded-lg px-2 py-1 w-14 text-black font-semibold"
+                style={{ fontFamily: "Courier New, monospace" }}
                 onClick={(e) => e.stopPropagation()}
               />
             </div>
@@ -793,7 +1168,7 @@ function PlayersSection({ players, setPlayers, visiblePlayerId, setVisiblePlayer
               title="Cantidad de camisetas"
               className="flex flex-col text-xs"
             >
-              <span>Canti *</span>
+              <span>Canti</span>
               <input
                 type="number"
                 value={player.quantity}
@@ -825,7 +1200,9 @@ function PlayersSection({ players, setPlayers, visiblePlayerId, setVisiblePlayer
             placeholder="Nombre del jugador"
             value={player.name}
             onChange={(e) => handleChange(player.id, "name", e.target.value)}
-            className="w-full bg-purple-200 rounded-lg px-3 py-2 shadow"
+            maxLength="8"
+            className="w-full bg-purple-200 rounded-lg px-3 py-2 shadow font-semibold text-black"
+            style={{ fontFamily: "Georgia, serif" }}
             onClick={(e) => e.stopPropagation()}
           />
         </div>

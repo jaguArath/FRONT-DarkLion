@@ -15,13 +15,23 @@ export default function Summary() {
         <ul className="list-disc pl-6">
           <li>Tela: {design.fabricType || "—"}</li>
           <li>
-            Diseño: {design.design ? <img src={design.design} alt="design" className="inline-block w-12 h-12" /> : "—"}
+            Diseño:{" "}
+            {design.design ? (
+              <img
+                src={design.design}
+                alt="design"
+                className="inline-block w-12 h-12"
+              />
+            ) : (
+              "—"
+            )}
           </li>
           <li>Colores:</li>
           <ul className="list-disc pl-6">
             <li>Cuerpo: {design.colors?.torso || "—"}</li>
             <li>Espalda: {design.colors?.back || "—"}</li>
-            <li>Mangas: {design.colors?.sleeves || "—"}</li>
+            <li>Manga Izquierda: {design.colors?.manga_izquierda || "—"}</li>
+            <li>Manga Derecha: {design.colors?.manga_derecha || "—"}</li>
             <li>Cuello: {design.colors?.collar || "—"}</li>
           </ul>
           <li>Nombre equipo: {design.teamName || "—"}</li>
@@ -29,7 +39,16 @@ export default function Summary() {
           <li>Nombre jugador (campo): {design.playerName || "—"}</li>
           <li>Fuente jugador: {design.playerFont || "—"}</li>
           <li>
-            Logo: {design.logoUrl ? <img src={design.logoUrl} alt="logo" className="inline-block w-12 h-12" /> : "—"}
+            Logo:{" "}
+            {design.logoUrl ? (
+              <img
+                src={design.logoUrl}
+                alt="logo"
+                className="inline-block w-12 h-12"
+              />
+            ) : (
+              "—"
+            )}
           </li>
         </ul>
       </section>

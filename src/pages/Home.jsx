@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { CardTilt, CardTiltContent } from "@/components/ui/card-tilt";
 
 // Logos y fondos
 import LogoDark from "./../assets/LogoDark.png";
@@ -160,48 +161,47 @@ export default function Home() {
             </div>
 
             <header className="md:text-right md:pr-19">
-              {/* <section className="bg-white p-6 rounded-xl inline-block max-w-md w-[334px] h-[184px] border-2 border-gray-gray border:opacity-50 hover:shadow-[0_10px_20px_-8px_rgba(0,0,0,1)] hover:scale-102 hover:border-gray-gray"> */}
-              <section className=" bg-white p-6 inline-block w-83.75 h-46 border-2 border-[rgba(129,128,128,0.54)] rounded-[30px] -mt-10 transition-all duration-300 hover:shadow-[0_4px_4px_rgba(0.22,0.1,0.1,0.40)] hover:-translate-y-1">
-                {/* <section className="bg-white p-6 inline-block w-[335px] h-[184px] border-2 border-[rgba(129,128,128,0.54)] rounded-[30px] mt-[-30px] transition-all duration-300 hover:shadow-[0_4px_4px_rgba(0.22,0.1,0.1,0.40)] hover:-translate-y-1"></section> */}
-                <div className="flex items-center justify-end gap-2 mb-5">
-                  <h3
-                    style={{ fontFamily: "Chakra" }}
-                    className="font-bold text-lg"
+              <CardTilt className="inline-block" tiltMaxAngle={15} scale={1.05}>
+                <CardTiltContent className="relative rounded-2xl bg-white p-6 w-83.75 h-46 border-2 border-[rgba(129,128,128,0.54)] -mt-10 transition-all duration-300 shadow-lg">
+                  <div className="flex items-center justify-end gap-2 mb-5">
+                    <h3
+                      style={{ fontFamily: "Chakra" }}
+                      className="font-bold text-lg"
+                    >
+                      Elige el tipo de prenda
+                    </h3>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#6D28D9"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      className="icon icon-tabler icons-tabler-outline icon-tabler-hanger"
+                    >
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                      <path d="M14 6a2 2 0 1 0 -4 0c0 1.667 .67 3 2 4h-.008l7.971 4.428a2 2 0 0 1 1.029 1.749v.823a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-.823a2 2 0 0 1 1.029 -1.749l7.971 -4.428" />
+                    </svg>
+                  </div>
+                  <p
+                    style={{ fontFamily: "Montserrat1" }}
+                    className=" text-sm mb-5"
                   >
-                    Elige el tipo de prenda
-                  </h3>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#6D28D9"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    className="icon icon-tabler icons-tabler-outline icon-tabler-hanger"
-                  >
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M14 6a2 2 0 1 0 -4 0c0 1.667 .67 3 2 4h-.008l7.971 4.428a2 2 0 0 1 1.029 1.749v.823a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-.823a2 2 0 0 1 1.029 -1.749l7.971 -4.428" />
-                  </svg>
-                </div>
-                <p
-                  style={{ fontFamily: "Montserrat1" }}
-                  className=" text-sm mb-5"
-                >
-                  Seleccione la maqueta del modelo de prenda que deseas
-                  adquirir.
-                </p>
+                    Seleccione la maqueta del modelo de prenda que deseas
+                    adquirir.
+                  </p>
 
-                <span
-                  style={{ fontFamily: "Montserrat" }}
-                  className="inline-block px-4 py-1 text-sm font-semibold text-morado-exito border-morado-exito rounded-full bg-semi-blanco"
-                >
-                  PASO 01
-                </span>
-                {/* <span className="inline-block px-4 py-1 text-sm font-semibold text-morado-exito border border-morado-exito rounded-full bg-white">  PASO 01</span> */}
-              </section>
+                  <span
+                    style={{ fontFamily: "Montserrat" }}
+                    className="inline-block px-4 py-1 text-sm font-semibold text-morado-exito border-morado-exito rounded-full bg-semi-blanco"
+                  >
+                    PASO 01
+                  </span>
+                </CardTiltContent>
+              </CardTilt>
             </header>
 
             <figure className="flex justify-center -mt-10">
@@ -225,51 +225,52 @@ export default function Home() {
                 className=" mt-11 object-cover rounded-[10px] shadow-md max-w-xs max-h-48"
               />
             </figure>
-            <header className="md:text-right md:pr-32">
-              {/* <section className="bg-white p-6 rounded-xl shadow-lg inline-block max-w-md hover:scale-102"> */}
-              <section className=" bg-white p-6 inline-block w-[335px] h-[184px] mt-11 border-2 border-[rgba(129,128,128,0.54)] rounded-[30px] transition-all duration-300 hover:shadow-[0_4px_4px_rgba(0.22,0.1,0.1,0.40)] hover:-translate-y-1 text-left md:text-left">
-                <div className="flex items-center gap-2 mb-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#6D28D9"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="icon icon-tabler icons-tabler-outline icon-tabler-ruler"
+            <header className="md:text-right mt-11 md:pr-32">
+              <CardTilt className="inline-block" tiltMaxAngle={15} scale={1.05}>
+                <CardTiltContent className="relative rounded-2xl bg-white p-6 w-83.75 h-46 border border-[rgba(129,128,128,0.54)] transition-all duration-300 shadow-lg text-left md:text-left">
+                  <div className="flex items-center gap-2 mb-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#6D28D9"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="icon icon-tabler icons-tabler-outline icon-tabler-ruler"
+                    >
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                      <path d="M5 4h14a1 1 0 0 1 1 1v5a1 1 0 0 1 -1 1h-7a1 1 0 0 0 -1 1v7a1 1 0 0 1 -1 1h-5a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1" />
+                      <path d="M4 8l2 0" />
+                      <path d="M4 12l3 0" />
+                      <path d="M4 16l2 0" />
+                      <path d="M8 4l0 2" />
+                      <path d="M12 4l0 3" />
+                      <path d="M16 4l0 2" />
+                    </svg>
+                    <h3
+                      style={{ fontFamily: "Chakra" }}
+                      className="font-bold text-lg mb-2 text-left md:text-left"
+                    >
+                      Tipo de Tela
+                    </h3>
+                  </div>
+                  <p
+                    style={{ fontFamily: "Montserrat1" }}
+                    className="text-sm mb-3 text-left"
                   >
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M5 4h14a1 1 0 0 1 1 1v5a1 1 0 0 1 -1 1h-7a1 1 0 0 0 -1 1v7a1 1 0 0 1 -1 1h-5a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1" />
-                    <path d="M4 8l2 0" />
-                    <path d="M4 12l3 0" />
-                    <path d="M4 16l2 0" />
-                    <path d="M8 4l0 2" />
-                    <path d="M12 4l0 3" />
-                    <path d="M16 4l0 2" />
-                  </svg>
-                  <h3
-                    style={{ fontFamily: "Chakra" }}
-                    className="font-bold text-lg mb-2 text-left md:text-left"
+                    Elige una opción de nuestras telas con tecnología dri-fit.
+                  </p>
+                  <span
+                    style={{ fontFamily: "Montserrat" }}
+                    className="inline-block px-4 py-1 text-sm font-semibold text-morado-exito border-morado-exito rounded-full bg-semi-blanco"
                   >
-                    Tipo de Tela
-                  </h3>
-                </div>
-                <p
-                  style={{ fontFamily: "Montserrat1" }}
-                  className="text-sm mb-3 text-left"
-                >
-                  Elige una opción de nuestras telas con tecnología dri-fit.
-                </p>
-                <span
-                  style={{ fontFamily: "Montserrat" }}
-                  className="inline-block px-4 py-1 text-sm font-semibold text-morado-exito border-morado-exito rounded-full bg-semi-blanco"
-                >
-                  PASO 02
-                </span>
-              </section>
+                    PASO 02
+                  </span>
+                </CardTiltContent>
+              </CardTilt>
             </header>
           </article>
 
@@ -280,43 +281,45 @@ export default function Home() {
             </div>
 
             <header className="md:text-right md:pr-19">
-              <section className=" bg-white p-6 inline-block w-[375px] h-[250px] border-2 border-[rgba(129,128,128,0.54)] rounded-[30px] transition-all duration-300 hover:shadow-[0_4px_4px_rgba(0.22,0.1,0.1,0.40)] hover:-translate-y-1">
-                <div className="flex items-center justify-end gap-2 mb-3">
-                  <h3
-                    style={{ fontFamily: "Chakra" }}
-                    className="text-center font-bold text-lg whitespace-nowrap"
+              <CardTilt className="inline-block" tiltMaxAngle={15} scale={1.05}>
+                <CardTiltContent className="relative rounded-2xl bg-white p-6 w-93.75 h-62.5 border-2 border-[rgba(129,128,128,0.54)] transition-all duration-300 shadow-lg">
+                  <div className="flex items-center justify-end gap-2 mb-3">
+                    <h3
+                      style={{ fontFamily: "Chakra" }}
+                      className="text-center font-bold text-lg whitespace-nowrap"
+                    >
+                      Crea tu diseño - previsualización
+                    </h3>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="#6D28D9"
+                      class="icon icon-tabler icons-tabler-filled icon-tabler-palette"
+                    >
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                      <path d="M12 2c5.498 0 10 4.002 10 9c0 1.351 -.6 2.64 -1.654 3.576c-1.03 .914 -2.412 1.424 -3.846 1.424h-2.516a1 1 0 0 0 -.5 1.875a1 1 0 0 1 .194 .14a2.3 2.3 0 0 1 -1.597 3.99l-.156 -.009l.068 .004l-.273 -.004c-5.3 -.146 -9.57 -4.416 -9.716 -9.716l-.004 -.28c0 -5.523 4.477 -10 10 -10m-3.5 6.5a2 2 0 0 0 -1.995 1.85l-.005 .15a2 2 0 1 0 2 -2m8 0a2 2 0 0 0 -1.995 1.85l-.005 .15a2 2 0 1 0 2 -2m-4 -3a2 2 0 0 0 -1.995 1.85l-.005 .15a2 2 0 1 0 2 -2" />
+                    </svg>
+                  </div>
+                  <p
+                    style={{ fontFamily: "Montserrat1" }}
+                    className="text-sm mb-5 "
                   >
-                    Crea tu diseño - previsualización
-                  </h3>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="#6D28D9"
-                    class="icon icon-tabler icons-tabler-filled icon-tabler-palette"
-                  >
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M12 2c5.498 0 10 4.002 10 9c0 1.351 -.6 2.64 -1.654 3.576c-1.03 .914 -2.412 1.424 -3.846 1.424h-2.516a1 1 0 0 0 -.5 1.875a1 1 0 0 1 .194 .14a2.3 2.3 0 0 1 -1.597 3.99l-.156 -.009l.068 .004l-.273 -.004c-5.3 -.146 -9.57 -4.416 -9.716 -9.716l-.004 -.28c0 -5.523 4.477 -10 10 -10m-3.5 6.5a2 2 0 0 0 -1.995 1.85l-.005 .15a2 2 0 1 0 2 -2m8 0a2 2 0 0 0 -1.995 1.85l-.005 .15a2 2 0 1 0 2 -2m-4 -3a2 2 0 0 0 -1.995 1.85l-.005 .15a2 2 0 1 0 2 -2" />
-                  </svg>
-                </div>
-                <p
-                  style={{ fontFamily: "Montserrat1" }}
-                  className="text-sm mb-5 "
-                >
-                  Aplica los colores de tu equipo y crea combinaciones para
-                  cuerpo, mangas y cuello. Elige la tipografía para el nombre de
-                  tu equipo o carga la imagen de tu logo. Agrega elementos
-                  complementarios como patrocinadores.
-                </p>
+                    Aplica los colores de tu equipo y crea combinaciones para
+                    cuerpo, mangas y cuello. Elige la tipografía para el nombre
+                    de tu equipo o carga la imagen de tu logo. Agrega elementos
+                    complementarios como patrocinadores.
+                  </p>
 
-                <span
-                  style={{ fontFamily: "Montserrat" }}
-                  className="inline-block px-4 py-1 text-sm font-semibold text-morado-exito border-morado-exito rounded-full bg-semi-blanco"
-                >
-                  PASO 03
-                </span>
-              </section>
+                  <span
+                    style={{ fontFamily: "Montserrat" }}
+                    className="inline-block px-4 py-1 text-sm font-semibold text-morado-exito border-morado-exito rounded-full bg-semi-blanco"
+                  >
+                    PASO 03
+                  </span>
+                </CardTiltContent>
+              </CardTilt>
             </header>
 
             <figure className="flex justify-center gap-4">
@@ -342,47 +345,49 @@ export default function Home() {
             </figure>
 
             <header className="md:text-right md:pr-32">
-              <section className=" bg-white p-6 inline-block w-[335px] h-[184px] border-2 border-[rgba(129,128,128,0.54)] rounded-[30px] transition-all duration-300 hover:shadow-[0_4px_4px_rgba(0.22,0.1,0.1,0.40)] hover:-translate-y-1 text-left md:text-left">
-                <div className="flex items-center gap-2 mb-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#6D28D9"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="icon icon-tabler icons-tabler-outline icon-tabler-user-plus"
+              <CardTilt className="inline-block" tiltMaxAngle={15} scale={1.05}>
+                <CardTiltContent className="relative rounded-2xl bg-white p-6 w-83.75 h-46 border-2 border-[rgba(129,128,128,0.54)] transition-all duration-300 shadow-lg text-left md:text-left">
+                  <div className="flex items-center gap-2 mb-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#6D28D9"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="icon icon-tabler icons-tabler-outline icon-tabler-user-plus"
+                    >
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                      <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                      <path d="M16 19h6" />
+                      <path d="M19 16v6" />
+                      <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
+                    </svg>
+                    <h3
+                      style={{ fontFamily: "Chakra" }}
+                      className="font-bold text-lg"
+                    >
+                      Detalles del Jugador
+                    </h3>
+                  </div>
+                  <p
+                    style={{ fontFamily: "Montserrat1" }}
+                    className=" text-sm mb-3"
                   >
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
-                    <path d="M16 19h6" />
-                    <path d="M19 16v6" />
-                    <path d="M6 21v-2a4 4 0 0 1 4 -4h4" />
-                  </svg>
-                  <h3
-                    style={{ fontFamily: "Chakra" }}
-                    className="font-bold text-lg"
-                  >
-                    Detalles del Jugador
-                  </h3>
-                </div>
-                <p
-                  style={{ fontFamily: "Montserrat1" }}
-                  className=" text-sm mb-3"
-                >
-                  Añade nombre, número y elige la tipografía.
-                </p>
+                    Añade nombre, número y elige la tipografía.
+                  </p>
 
-                <span
-                  style={{ fontFamily: "Montserrat" }}
-                  className="inline-block px-4 py-1 text-sm font-semibold text-morado-exito border-morado-exito rounded-full bg-semi-blanco"
-                >
-                  PASO 04
-                </span>
-              </section>
+                  <span
+                    style={{ fontFamily: "Montserrat" }}
+                    className="inline-block px-4 py-1 text-sm font-semibold text-morado-exito border-morado-exito rounded-full bg-semi-blanco"
+                  >
+                    PASO 04
+                  </span>
+                </CardTiltContent>
+              </CardTilt>
             </header>
           </article>
 
@@ -393,50 +398,52 @@ export default function Home() {
             </div>
 
             <header className="md:text-right md:pr-19">
-              <section className=" bg-white p-6 inline-block w-[335px] h-[200px] border-2 border-[rgba(129,128,128,0.54)] rounded-[30px] transition-all duration-300 hover:shadow-[0_4px_4px_rgba(0.22,0.1,0.1,0.40)] hover:-translate-y-1">
-                <div className="flex items-center justify-end gap-2 mb-2">
-                  <h3
-                    style={{ fontFamily: "Chakra" }}
-                    className="font-bold text-lg"
+              <CardTilt className="inline-block" tiltMaxAngle={15} scale={1.05}>
+                <CardTiltContent className="relative rounded-2xl bg-white p-6 w-83.75 h-50 border-2 border-[rgba(129,128,128,0.54)] transition-all duration-300 shadow-lg">
+                  <div className="flex items-center justify-end gap-2 mb-2">
+                    <h3
+                      style={{ fontFamily: "Chakra" }}
+                      className="font-bold text-lg"
+                    >
+                      Realiza tu orden
+                    </h3>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#6D28D9"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="icon icon-tabler icons-tabler-outline icon-tabler-id"
+                    >
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                      <path d="M3 7a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v10a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3l0 -10" />
+                      <path d="M7 10a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                      <path d="M15 8l2 0" />
+                      <path d="M15 12l2 0" />
+                      <path d="M7 16l10 0" />
+                    </svg>
+                  </div>
+                  <p
+                    style={{ fontFamily: "Montserrat1" }}
+                    className=" text-sm mb-3"
                   >
-                    Realiza tu orden
-                  </h3>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#6D28D9"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="icon icon-tabler icons-tabler-outline icon-tabler-id"
-                  >
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M3 7a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v10a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3l0 -10" />
-                    <path d="M7 10a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-                    <path d="M15 8l2 0" />
-                    <path d="M15 12l2 0" />
-                    <path d="M7 16l10 0" />
-                  </svg>
-                </div>
-                <p
-                  style={{ fontFamily: "Montserrat1" }}
-                  className=" text-sm mb-3"
-                >
-                  Revisa tu diseño, agrega cantidad, talla, nombre y número de
-                  jugador. No olvides tus datos personales para contactarte al
-                  procesar la orden.
-                </p>
+                    Revisa tu diseño, agrega cantidad, talla, nombre y número de
+                    jugador. No olvides tus datos personales para contactarte al
+                    procesar la orden.
+                  </p>
 
-                <span
-                  style={{ fontFamily: "Montserrat" }}
-                  className="inline-block px-4 py-1 text-sm font-semibold text-morado-exito border-morado-exito rounded-full bg-semi-blanco"
-                >
-                  PASO 05
-                </span>
-              </section>
+                  <span
+                    style={{ fontFamily: "Montserrat" }}
+                    className="inline-block px-4 py-1 text-sm font-semibold text-morado-exito border-morado-exito rounded-full bg-semi-blanco"
+                  >
+                    PASO 05
+                  </span>
+                </CardTiltContent>
+              </CardTilt>
             </header>
 
             <figure className="flex justify-center">
@@ -449,35 +456,40 @@ export default function Home() {
               <img src={ApprovalIcons} className="w-10 h-10" />
             </div>
 
-            <section className="bg-white p-10 mt-41 rounded-[30px]  max-w-md mx-auto inline-block border border-[rgba(129,128,128,0.94)] transition-all shadow-[0_8px_12px_rgba(0,0,0,0.20)]">
-              <h3
-                style={{ fontFamily: "Chakra" }}
-                className="text-2xl font-bold mb-4"
-              >
-                ¡LISTO!
-              </h3>
+            <CardTilt
+              className="inline-block mt-41"
+              tiltMaxAngle={15}
+              scale={1.05}
+            >
+              <CardTiltContent className="relative rounded-2xl bg-white p-10 max-w-md border border-[rgba(129,128,128,0.94)] transition-all shadow-lg">
+                <h3
+                  style={{ fontFamily: "Chakra" }}
+                  className="text-2xl font-bold mb-4"
+                >
+                  ¡LISTO!
+                </h3>
 
-              <p style={{ fontFamily: "Montserrat1" }} className="mb-6">
-                Has creado tu diseño y tu orden de pedido. Nuestro equipo te
-                contactará en breve para confirmar detalles y comenzar la
-                producción.
-              </p>
-              <figure className="">
-                <img src={LogoDark} className="mx-auto w-32 mb-6" />
-              </figure>
+                <p style={{ fontFamily: "Montserrat1" }} className="mb-6">
+                  Has creado tu diseño y tu orden de pedido. Nuestro equipo te
+                  contactará en breve para confirmar detalles y comenzar la
+                  producción.
+                </p>
+                <figure className="">
+                  <img src={LogoDark} className="mx-auto w-32 mb-6" />
+                </figure>
 
-              <a
-                href="#home"
-                style={{ fontFamily: "Montserrat" }}
-                className="inline-block bg-morado-exito text-white px-6 py-3 rounded-full font-semibold hover:bg-morado-claro transition"
-              >
-                CREAR MI DISEÑO
-              </a>
-            </section>
+                <a
+                  href="#home"
+                  style={{ fontFamily: "Montserrat" }}
+                  className="inline-block bg-morado-exito text-white px-6 py-3 rounded-full font-semibold hover:bg-morado-claro transition"
+                >
+                  CREAR MI DISEÑO
+                </a>
+              </CardTiltContent>
+            </CardTilt>
           </article>
         </section>
       </section>
     </main>
   );
 }
-

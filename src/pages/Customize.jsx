@@ -10,14 +10,24 @@ export default function Customize() {
   const [colors, setColors] = useState({
     torso: "",
     back: "",
-    sleeves: "",
+    manga_izquierda: "",
+    manga_derecha: "",
     collar: "",
   });
-  const [design, setDesign] = useState("");
+  const [designs, setDesigns] = useState({
+    torso: { design: "", visible: false },
+    back: { design: "", visible: false },
+    manga_izquierda: { design: "", visible: false },
+    manga_derecha: { design: "", visible: false },
+    collar: { design: "", visible: false },
+  });
+  const [design, setDesign] = useState(""); // Mantener para compatibilidad
   const [visiblePlayerId, setVisiblePlayerId] = useState(null);
   const [visiblePlayer, setVisiblePlayer] = useState(null);
-  const [threeDTextColor, setThreeDTextColor] = useState("rgb(255, 255, 255)");
-  const [threeDFontType, setThreeDFontType] = useState("ARBORIA");
+  const [nameColor, setNameColor] = useState("rgb(0, 0, 0)");
+  const [nameFont, setNameFont] = useState("ARBORIA");
+  const [numberColor, setNumberColor] = useState("rgb(0, 0, 0)");
+  const [numberFont, setNumberFont] = useState("ARBORIA");
   const shirtRef = useRef(null);
 
   let titulo = "";
@@ -55,15 +65,21 @@ export default function Customize() {
             setColors={setColors}
             design={design}
             setDesign={setDesign}
+            designs={designs}
+            setDesigns={setDesigns}
             modelo={modelo}
             shirtRef={shirtRef}
             visiblePlayerId={visiblePlayerId}
             setVisiblePlayerId={setVisiblePlayerId}
             setVisiblePlayer={setVisiblePlayer}
-            threeDTextColor={threeDTextColor}
-            setThreeDTextColor={setThreeDTextColor}
-            threeDFontType={threeDFontType}
-            setThreeDFontType={setThreeDFontType}
+            nameColor={nameColor}
+            setNameColor={setNameColor}
+            nameFont={nameFont}
+            setNameFont={setNameFont}
+            numberColor={numberColor}
+            setNumberColor={setNumberColor}
+            numberFont={numberFont}
+            setNumberFont={setNumberFont}
           />
         </section>
       </main>
@@ -77,9 +93,12 @@ export default function Customize() {
             ref={shirtRef}
             colors={colors}
             design={design}
+            designs={designs}
             visiblePlayer={visiblePlayer}
-            textColor={threeDTextColor}
-            fontType={threeDFontType}
+            nameColor={nameColor}
+            nameFont={nameFont}
+            numberColor={numberColor}
+            numberFont={numberFont}
           />
         </section>
       </main>
