@@ -319,7 +319,7 @@ export default function SelectedData() {
   return (
     <section
       style={{ fontFamily: "Montserrat1" }}
-      className="min-h-screen relative flex"
+      className="min-h-screen relative flex flex-col md:flex-row"
     >
       <aside
         className="absolute inset-0 opacity-30 bg-top bg-cover pointer-events-none"
@@ -335,7 +335,7 @@ export default function SelectedData() {
           {/* Data Sidebar */}
           <aside
             aria-label="Panel de datos seleccionados"
-            className="sticky top-24 left-0 w-90 max-h-[calc(110vh-200px)] backdrop-blur rounded-2xl shadow-xl p-5 overflow-y-auto z-20 m-5"
+            className="w-full md:sticky md:top-24 md:left-0 md:w-90 max-h-none md:max-h-[calc(110vh-200px)] backdrop-blur rounded-2xl shadow-xl p-5 overflow-y-auto z-20 m-2 md:m-5 md:order-1"
           >
             <nav className="space-y-6">
               {/* CONFIGURACIÓN */}
@@ -614,10 +614,10 @@ export default function SelectedData() {
             </nav>
           </aside>
 
-          <main className="relative z-10 flex-1 flex flex-col items-center p-5">
+          <main className="relative z-10 w-full md:flex-1 flex flex-col items-center p-2 md:p-5 md:order-2">
             {/* Camisa personalizada 2D */}
             <section className="w-full flex flex-col items-center justify-center grow">
-              <div className="h-100 flex items-center justify-center">
+              <div className="h-auto md:h-100 flex items-center justify-center">
                 <Shirt2D
                   colors={design.colors}
                   modelo={modelo}
@@ -647,10 +647,10 @@ export default function SelectedData() {
           />
 
           {/* Main Content - Shirt Models Display */}
-          <main className="relative z-10 flex-1 flex flex-col items-center p-5">
+          <main className="relative z-10 w-full md:flex-1 flex flex-col items-center p-2 md:p-5">
             {/* Camisa personalizada 2D */}
             <section className="w-full flex flex-col items-center justify-center grow">
-              <div className="h-100 flex items-center justify-center">
+              <div className="h-auto md:h-100 flex items-center justify-center">
                 <Shirt2D
                   colors={design.colors}
                   modelo={modelo}

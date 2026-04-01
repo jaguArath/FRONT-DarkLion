@@ -50,7 +50,7 @@ export default function Customize() {
   }
 
   return (
-    <section className="min-h-screen relative flex">
+    <section className="min-h-screen relative flex flex-col lg:flex-row gap-4 lg:gap-0">
       <aside
         className="absolute inset-0 opacity-30 bg-top bg-cover pointer-events-none"
         style={{
@@ -58,8 +58,10 @@ export default function Customize() {
         }}
         aria-hidden="true"
       />
-      <main className=" flex flex-col items-center justify-center">
-        <section className="w-140 h-95">
+      
+      {/* Sidebar */}
+      <div className="w-full lg:w-auto lg:flex lg:flex-col lg:items-center lg:justify-center">
+        <section className="w-full lg:w-140 h-auto lg:h-95 px-4 lg:px-0">
           <Sidebar
             colors={colors}
             setColors={setColors}
@@ -82,13 +84,12 @@ export default function Customize() {
             setNumberFont={setNumberFont}
           />
         </section>
-      </main>
+      </div>
 
-      <main className="flex-1 flex flex-col items-center justify-center p-8 space-y-6">
-        {/* title could be shown here if desired */}
-        <h1 className="text-2xl font-semibold">{titulo}</h1>
-        <section className="w-140 max-w-xl h-95">
-          {/* <section className="w-full max-w-2xl h-[500px]"> */}
+      {/* Modelo 3D */}
+      <main className="flex-1 flex flex-col items-center justify-center px-4 space-y-6">
+        <h1 className="text-xl md:text-2xl lg:text-2xl font-semibold text-center">{titulo}</h1>
+        <section className="w-full max-w-xs md:max-w-sm lg:w-140 h-80 md:h-96 lg:h-95">
           <ShirtViewer3D
             ref={shirtRef}
             colors={colors}

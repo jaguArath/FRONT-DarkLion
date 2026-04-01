@@ -16,27 +16,14 @@ export default function ContactForm({
   return (
     <aside
       aria-label="Formulario de datos de contacto"
-      className="
-            sticky
-            top-24
-            left-0
-            w-90
-            max-h-[calc(150vh-200px)]
-            backdrop-blur
-            rounded-2xl
-            shadow-xl
-            p-5
-            overflow-y-auto
-            z-20
-            m-5
-          "
+      className="w-full md:sticky md:top-24 md:left-0 md:w-90 max-h-none md:max-h-[calc(150vh-200px)] backdrop-blur rounded-2xl shadow-xl p-2 md:p-5 overflow-y-auto z-20 m-2 md:m-5"
     >
       <h2 className="text-2xl font-bold text-center py-8 rounded-t-2xl bg-personalizado to-purple-40 -mx-5 mb-8 ">
         DATOS DE CONTACTO
       </h2>
       <div className="space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-3">
+          <label className="block text-xs md:text-sm font-medium text-gray-700 mb-2 md:mb-3">
             Nombre
           </label>
           <input
@@ -44,19 +31,19 @@ export default function ContactForm({
             value={data.nombre}
             onChange={handleChange("nombre")}
             placeholder="Tu nombre"
-            className={`w-full px-3 py-2 border-b-2 transition text-sm focus:outline-none ${
+            className={`w-full px-2 md:px-3 py-2 border-b-2 transition text-xs md:text-sm focus:outline-none ${
               fieldErrors?.nombre
                 ? "border-red-500 focus:border-red-600"
                 : "border-gray-300 focus:border-purple-600"
             }`}
           />
           {fieldErrors?.nombre && (
-            <p className="text-sm text-red-600 mt-2">{fieldErrors.nombre}</p>
+            <p className="text-xs md:text-sm text-red-600 mt-2">{fieldErrors.nombre}</p>
           )}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-3">
+          <label className="block text-xs md:text-sm font-medium text-gray-700 mb-2 md:mb-3">
             Teléfono
           </label>
           <input
@@ -64,19 +51,19 @@ export default function ContactForm({
             value={data.telefono}
             onChange={handleChange("telefono")}
             placeholder="Tu teléfono"
-            className={`w-full px-3 py-2 border-b-2 transition text-sm focus:outline-none ${
+            className={`w-full px-2 md:px-3 py-2 border-b-2 transition text-xs md:text-sm focus:outline-none ${
               fieldErrors?.telefono
                 ? "border-red-500 focus:border-red-600"
                 : "border-gray-300 focus:border-purple-600"
             }`}
           />
           {fieldErrors?.telefono && (
-            <p className="text-sm text-red-600 mt-2">{fieldErrors.telefono}</p>
+            <p className="text-xs md:text-sm text-red-600 mt-2">{fieldErrors.telefono}</p>
           )}
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-3">
+          <label className="block text-xs md:text-sm font-medium text-gray-700 mb-2 md:mb-3">
             Correo Electrónico
           </label>
           <input
@@ -84,29 +71,29 @@ export default function ContactForm({
             value={data.correo}
             onChange={handleChange("correo")}
             placeholder="tu@email.com"
-            className={`w-full px-3 py-2 border-b-2 transition text-sm focus:outline-none ${
+            className={`w-full px-2 md:px-3 py-2 border-b-2 transition text-xs md:text-sm focus:outline-none ${
               fieldErrors?.correo
                 ? "border-red-500 focus:border-red-600"
                 : "border-gray-300 focus:border-purple-600"
             }`}
           />
           {fieldErrors?.correo && (
-            <p className="text-sm text-red-600 mt-2">{fieldErrors.correo}</p>
+            <p className="text-xs md:text-sm text-red-600 mt-2">{fieldErrors.correo}</p>
           )}
         </div>
 
-        <div className="flex flex-col gap-3 mt-8">
+        <div className="flex flex-col gap-2 md:gap-3 mt-6 md:mt-8">
           <button
             onClick={onCancel}
             disabled={sending}
-            className="w-full px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold rounded-lg transition disabled:opacity-50"
+            className="w-full px-3 md:px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold text-sm md:text-base rounded-lg transition disabled:opacity-50"
           >
             Cancelar
           </button>
           <button
             onClick={onSubmit}
             disabled={sending}
-            className="w-full px-4 py-2 bg-personalizado hover:bg-personalizado-click-hover font-semibold rounded-lg transition disabled:opacity-50"
+            className="w-full px-3 md:px-4 py-2 bg-personalizado hover:bg-personalizado-click-hover font-semibold text-sm md:text-base rounded-lg transition disabled:opacity-50"
           >
             {sending ? "Enviando..." : "Contactame"}
           </button>

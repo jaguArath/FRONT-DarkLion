@@ -1,6 +1,15 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { CardTilt, CardTiltContent } from "@/components/ui/card-tilt";
+import {
+  LayerStack,
+  Card as LayerStackCard,
+} from "@/components/ui/layer-stack";
+import {
+  BorderGlide,
+  BorderGlideCard,
+  BorderGlideContent,
+} from "@/components/ui/border-glide";
 
 // Logos y fondos
 import LogoDark from "./../assets/LogoDark.png";
@@ -67,6 +76,49 @@ const icons = [
   { id: 10, name: "TShirtIcon", image: TShirtIcon },
 ];
 
+const steps = [
+  {
+    id: 1,
+    paso: "PASO 01",
+    title: "Elige el tipo de prenda",
+    description: "Seleccione la maqueta del modelo de prenda que deseas adquirir.",
+    image: Personaliza,
+    icon: TShirtIcon,
+  },
+  {
+    id: 2,
+    paso: "PASO 02",
+    title: "Tipo de Tela",
+    description: "Elige una opción de nuestras telas con tecnología dri-fit.",
+    image: Tela,
+    icon: DiagonalLinesIcons,
+  },
+  {
+    id: 3,
+    paso: "PASO 03",
+    title: "Crea tu diseño - previsualización",
+    description: "Aplica los colores de tu equipo y crea combinaciones para cuerpo, mangas y cuello. Elige la tipografía para el nombre de tu equipo o carga la imagen de tu logo.",
+    image: Mangas,
+    icon: PencilDrawingIcons,
+  },
+  {
+    id: 4,
+    paso: "PASO 04",
+    title: "Detalles del Jugador",
+    description: "Añade nombre, número y elige la tipografía.",
+    image: Equipo,
+    icon: JerseyNumberIcons,
+  },
+  {
+    id: 5,
+    paso: "PASO 05",
+    title: "Realiza tu orden",
+    description: "Revisa tu diseño, agrega cantidad, talla, nombre y número de jugador. No olvides tus datos personales para contactarte al procesar la orden.",
+    image: Contacto,
+    icon: OrderCompletedIcons,
+  },
+];
+
 export default function Home() {
   return (
     <main id="home">
@@ -81,7 +133,142 @@ export default function Home() {
           PERSONALIZA TU PRENDA
         </h1>
 
-        <div className="mx-auto grid max-w-6xl place-items-center grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        {/* LayerStack para móviles */}
+        <div className="mx-auto max-w-6xl flex justify-center lg:hidden">
+          <LayerStack
+            cardWidth={300}
+            cardGap={14}
+            stageHeight={420}
+            lastCardFullWidth={true}
+            mobileSensitivity={1}
+          >
+            {shirts.map((shirt, index) => {
+              const isLast = index === shirts.length - 1;
+
+              if (isLast) {
+                return (
+                  <LayerStackCard
+                    key={shirt.id}
+                    className="bg-white text-black border border-gray-200 overflow-hidden rounded-xl"
+                  >
+                    <div className="flex h-full flex-col md:flex-row">
+                      <div className="relative md:w-1/2 h-48 md:h-full overflow-hidden">
+                        <img
+                          src={shirt.image}
+                          alt={shirt.name}
+                          loading="lazy"
+                          decoding="async"
+                          className="absolute inset-0 h-full w-full object-contain p-4"
+                          style={{
+                            contentVisibility: "auto",
+                            transform: "translateZ(0)",
+                            backfaceVisibility: "hidden",
+                          }}
+                        />
+                      </div>
+
+                      <div className="flex md:w-1/2 flex-col justify-between p-6 gap-4">
+                        <div className="flex items-center justify-between">
+                          <span
+                            style={{ fontFamily: "Montserrat" }}
+                            className="text-xs font-bold tracking-widest uppercase text-morado-exito"
+                          >
+                            {shirt.name.split(" ")[0]}
+                          </span>
+                          <div className="size-1.5 rounded-full bg-morado-exito/30" />
+                        </div>
+                        <div className="space-y-3">
+                          <div className="h-px w-8 bg-morado-exito" />
+                          <h2
+                            style={{ fontFamily: "Chakra" }}
+                            className="text-lg font-bold tracking-tight leading-tight"
+                          >
+                            {shirt.name}
+                          </h2>
+                          <p
+                            style={{ fontFamily: "Montserrat1" }}
+                            className="text-sm leading-relaxed text-gray-600"
+                          >
+                            Diseña y personaliza esta prenda con los colores de
+                            tu equipo.
+                          </p>
+                        </div>
+                        <NavLink
+                          to={shirt.link}
+                          style={{ fontFamily: "Montserrat" }}
+                          className="inline-block text-white cursor-pointer rounded-md border-2 border-morado-claro bg-morado-claro px-4 py-2 text-sm font-semibold transition-all duration-300 hover:bg-purple-700 hover:border-purple-700 w-fit"
+                        >
+                          Personalizar
+                        </NavLink>
+                      </div>
+                    </div>
+                  </LayerStackCard>
+                );
+              }
+
+              return (
+                <LayerStackCard
+                  key={shirt.id}
+                  className="bg-white text-black border border-gray-200 overflow-hidden rounded-xl"
+                >
+                  <div className="flex h-full flex-col p-6 gap-4">
+                    <div className="flex items-center justify-between">
+                      <span
+                        style={{ fontFamily: "Montserrat" }}
+                        className="text-xs font-bold tracking-widest uppercase text-morado-exito"
+                      >
+                        {`0${index + 1}`}
+                      </span>
+                      <div className="size-1.5 rounded-full bg-morado-exito/30" />
+                    </div>
+
+                    <div className="relative flex-1 overflow-hidden rounded-lg bg-gray-50 flex items-center justify-center">
+                      <img
+                        src={shirt.image}
+                        alt={shirt.name}
+                        loading="lazy"
+                        decoding="async"
+                        className="h-full w-full object-contain p-4"
+                        style={{
+                          contentVisibility: "auto",
+                          transform: "translateZ(0)",
+                          backfaceVisibility: "hidden",
+                        }}
+                      />
+                    </div>
+
+                    <div className="space-y-3">
+                      <div className="h-px w-8 bg-morado-exito" />
+                      <h2
+                        style={{ fontFamily: "Chakra" }}
+                        className="text-lg font-bold tracking-tight leading-tight"
+                      >
+                        {shirt.name}
+                      </h2>
+                      <p
+                        style={{ fontFamily: "Montserrat1" }}
+                        className="text-sm leading-relaxed text-gray-600"
+                      >
+                        Diseña y personaliza esta prenda con los colores de tu
+                        equipo.
+                      </p>
+                    </div>
+                    <NavLink
+                      to={shirt.link}
+                      style={{ fontFamily: "Montserrat" }}
+                      className="inline-block text-white cursor-pointer rounded-md border-2 border-morado-claro bg-morado-claro px-4 py-2 text-sm font-semibold transition-all duration-300 hover:bg-purple-700 hover:border-purple-700 w-fit"
+                    >
+                      Personalizar
+                    </NavLink>
+                  </div>
+                </LayerStackCard>
+              );
+            })}
+          </LayerStack>
+        </div>
+
+        {/* Grid para desktop */}
+        <div className="hidden lg:grid mx-auto grid max-w-6xl place-items-center grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {shirts.map((shirt) => (
             <div
               key={shirt.id}
@@ -150,7 +337,62 @@ export default function Home() {
           </div>
         </header>
 
-        <section className="relative max-w-6xl mx-auto">
+        {/* BorderGlide para móviles y tablet */}
+        <div className="lg:hidden">
+          <BorderGlide
+            className="max-w-2xl mx-auto h-96"
+            autoPlayInterval={9000}
+            borderDuration={7000}
+            borderColor="radial-gradient(ellipse, #6D28D9, transparent)"
+            borderWidth="6rem"
+          >
+            {steps.map((step) => (
+              <BorderGlideCard
+                key={step.id}
+                className="w-full h-full rounded-xl"
+              >
+                <BorderGlideContent className="flex flex-col h-full justify-between p-8 space-y-4 bg-white">
+                  <div className="flex flex-col gap-4">
+                    <div className="flex items-center justify-between">
+                      <span
+                        style={{ fontFamily: "Montserrat" }}
+                        className="text-xs font-bold tracking-widest uppercase text-morado-exito"
+                      >
+                        {step.paso}
+                      </span>
+                      <div className="size-2 rounded-full bg-morado-exito" />
+                    </div>
+                    <div className="space-y-3">
+                      <div className="h-px w-12 bg-morado-exito" />
+                      <h2
+                        style={{ fontFamily: "Chakra" }}
+                        className="text-2xl font-bold tracking-tight leading-tight text-black"
+                      >
+                        {step.title}
+                      </h2>
+                      <p
+                        style={{ fontFamily: "Montserrat1" }}
+                        className="text-sm leading-relaxed text-gray-700"
+                      >
+                        {step.description}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex-1 flex items-center justify-center">
+                    <img
+                      src={step.image}
+                      alt={step.title}
+                      className="max-h-32 object-contain"
+                    />
+                  </div>
+                </BorderGlideContent>
+              </BorderGlideCard>
+            ))}
+          </BorderGlide>
+        </div>
+
+        {/* Grid para desktop */}
+        <section className="relative max-w-6xl mx-auto hidden lg:block">
           {/* Línea central */}
           <span className="absolute left-1/2 -top-9.75 h-[90%] w-1 bg-semi-blanquito -translate-x-1/2 z-0"></span>
 
@@ -489,6 +731,7 @@ export default function Home() {
             </CardTilt>
           </article>
         </section>
+        {/* </div> */}
       </section>
     </main>
   );
