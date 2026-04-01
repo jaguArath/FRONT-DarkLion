@@ -89,6 +89,8 @@ function generatePlayerNameTexture(
 
   const texture = new THREE.CanvasTexture(canvas);
   texture.flipY = false;
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.needsUpdate = true;
 
   console.log(`✅ Textura de jugador generada: ${playerName} #${playerNumber}`);
 
@@ -100,6 +102,7 @@ function composePlayerNameOnDesign(
   playerName,
   playerNumber,
   designImageUrl,
+  shirtColor = "#FFFFFF",
   nameColor = "rgb(255, 255, 255)",
   nameFont = "ARBORIA",
   numberColor = "rgb(255, 255, 255)",
@@ -115,8 +118,14 @@ function composePlayerNameOnDesign(
     image.crossOrigin = "anonymous";
 
     image.onload = () => {
-      // Dibujar diseño base
+      // 1. Pintar el fondo con el color de la espalda
+      ctx.fillStyle = shirtColor || "#FFFFFF";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // 2. Dibujar diseño con multiply para teñirlo por el color de fondo
+      ctx.globalCompositeOperation = "multiply";
       ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+      ctx.globalCompositeOperation = "source-over"; // Restaurar modo normal
 
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
@@ -136,7 +145,7 @@ function composePlayerNameOnDesign(
         return false;
       };
 
-      // Nombre
+      // 3. Dibujar nombre y número
       const nameFamily = FONT_MAP[nameFont] || FONT_MAP.ARBORIA;
       ctx.font = `bold 60px "${nameFamily}", sans-serif`;
       ctx.fillStyle = nameColor;
@@ -170,6 +179,8 @@ function composePlayerNameOnDesign(
 
       const texture = new THREE.CanvasTexture(canvas);
       texture.flipY = false;
+      texture.colorSpace = THREE.SRGBColorSpace;
+      texture.needsUpdate = true;
 
       console.log(
         `✅ Textura de jugador + diseño generada: ${playerName} #${playerNumber}`,
@@ -318,8 +329,8 @@ function ShirtModel({
                 // Usar textura en caché
                 console.log("  - Usando caché");
                 material.map = playerTexturesCache[cacheKey];
-                // Preservar el color de fondo o usar gris neutro para mejor tonalidad
-                material.color.set(colors[partType] || 0xe8e8e8);
+                // Textura de jugador: usar color blanco puro sin multiplicación
+                material.color.set(0xffffff);
                 material.roughness = 0.92;
                 material.metalness = 0;
               } else {
@@ -330,6 +341,7 @@ function ShirtModel({
                   visiblePlayer.name,
                   visiblePlayer.number,
                   designs[partType],
+                  colors[partType] || "#FFFFFF",
                   nameColor,
                   nameFont,
                   numberColor,
@@ -338,8 +350,8 @@ function ShirtModel({
                   .then((texture) => {
                     console.log("✓ Textura de jugador + diseño aplicada");
                     material.map = texture;
-                    // Preservar el color de fondo o usar gris neutro para mejor tonalidad
-                    material.color.set(colors[partType] || 0xe8e8e8);
+                    // Textura de jugador: usar color blanco puro sin multiplicación
+                    material.color.set(0xffffff);
                     material.roughness = 0.92;
                     material.metalness = 0;
                     material.needsUpdate = true;
@@ -365,8 +377,8 @@ function ShirtModel({
                       numberFont,
                     );
                     material.map = playerTexture;
-                    // Preservar el color de fondo o usar gris neutro para mejor tonalidad
-                    material.color.set(colors[partType] || 0xe8e8e8);
+                    // Textura de jugador: usar color blanco puro sin multiplicación
+                    material.color.set(0xffffff);
                     material.roughness = 0.92;
                     material.metalness = 0;
                     material.needsUpdate = true;
@@ -386,8 +398,8 @@ function ShirtModel({
                 numberFont,
               );
               material.map = playerTexture;
-              // Preservar el color de fondo o usar gris neutro para mejor tonalidad
-              material.color.set(colors[partType] || 0xe8e8e8);
+              // Textura de jugador: usar color blanco puro sin multiplicación
+              material.color.set(0xffffff);
               material.roughness = 0.92;
               material.metalness = 0;
               material.needsUpdate = true;
@@ -397,9 +409,10 @@ function ShirtModel({
             // Si hay diseño para esta parte (sin jugador visible), aplicarlo
             textureLoaderRef.current.load(designs[partType], (texture) => {
               texture.flipY = false;
+              texture.colorSpace = THREE.SRGBColorSpace;
               material.map = texture;
-              // Preservar el color de fondo o usar gris neutro para mejor tonalidad
-              material.color.set(colors[partType] || 0xe8e8e8);
+              // Solo diseño: multiplicar con el color seleccionado
+              material.color.set(colors[partType]);
               material.roughness = 0.92;
               material.metalness = 0;
               material.needsUpdate = true;
@@ -642,7 +655,7 @@ const ShirtViewer3D = forwardRef(
     return (
       <div className="w-full h-full relative" ref={canvasContainerRef}>
         <Canvas
-          camera={{ position: [0, 0, 20], fov: 50 }}
+          camera={{ position: [0, 0, 20], fov: 60 }}
           gl={{ preserveDrawingBuffer: true }}
           style={{ background: "#f5f5f5" }}
         >

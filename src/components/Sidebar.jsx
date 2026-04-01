@@ -85,22 +85,16 @@ export default function Sidebar({
       setFabricType(design.fabricType || "");
       setDesign(design.design || "");
       setDesigns(
-        design.designs || {
+        design.designs || { 
           torso: { design: "", visible: false },
           back: { design: "", visible: false },
           manga_izquierda: { design: "", visible: false },
           manga_derecha: { design: "", visible: false },
           collar: { design: "", visible: false },
-        },
+        }
       );
       setColors(
-        design.colors || {
-          torso: "",
-          back: "",
-          manga_izquierda: "",
-          manga_derecha: "",
-          collar: "",
-        },
+        design.colors || { torso: "", back: "", manga_izquierda: "", manga_derecha: "", collar: "" },
       );
       setTeamName(design.teamName || "");
       setPlayerNameField(design.playerName || "");
@@ -236,32 +230,40 @@ export default function Sidebar({
             selected={colors.back}
             onSelect={(c) => setColors((p) => ({ ...p, back: c }))}
           />
-          <DesignToggle part="back" designs={designs} setDesigns={setDesigns} />
-        </Section>
-
-        <Section title="Manga Derecha">
-          <ColorPalette
-            selected={colors.manga_izquierda}
-            onSelect={(c) => setColors((p) => ({ ...p, manga_izquierda: c }))}
-          />
           <DesignToggle
-            part="manga_izquierda"
+            part="back"
             designs={designs}
             setDesigns={setDesigns}
           />
         </Section>
 
-        <Section title="Manga Izquierda">
-          <ColorPalette
-            selected={colors.manga_derecha}
-            onSelect={(c) => setColors((p) => ({ ...p, manga_derecha: c }))}
-          />
-          <DesignToggle
-            part="manga_derecha"
-            designs={designs}
-            setDesigns={setDesigns}
-          />
-        </Section>
+        
+          <Section title="Manga Derecha">
+            <ColorPalette
+              selected={colors.manga_izquierda}
+              onSelect={(c) => setColors((p) => ({ ...p, manga_izquierda: c }))}
+            />
+            <DesignToggle
+              part="manga_izquierda"
+              designs={designs}
+              setDesigns={setDesigns}
+            />
+          </Section>
+
+
+        
+          <Section title="Manga Izquierda">
+            <ColorPalette
+              selected={colors.manga_derecha}
+              onSelect={(c) => setColors((p) => ({ ...p, manga_derecha: c }))}
+            />
+            <DesignToggle
+              part="manga_derecha"
+              designs={designs}
+              setDesigns={setDesigns}
+            />
+          </Section>
+        
 
         <Section title="Cuello">
           <ColorPalette
@@ -878,9 +880,7 @@ function DesignToggle({ part, designs, setDesigns }) {
   const partLabel = partLabels[part] || part;
 
   const handleToggle = () => {
-    console.log(
-      `[DesignToggle] Toggle ${part}: visible = ${!currentDesign.visible}`,
-    );
+    console.log(`[DesignToggle] Toggle ${part}: visible = ${!currentDesign.visible}`);
     setDesigns((prev) => ({
       ...prev,
       [part]: {
@@ -911,7 +911,9 @@ function DesignToggle({ part, designs, setDesigns }) {
         <button
           onClick={handleToggle}
           className={`w-10 h-6 rounded-full transition-colors ${
-            currentDesign.visible ? "bg-purple-500" : "bg-gray-300"
+            currentDesign.visible
+              ? "bg-purple-500"
+              : "bg-gray-300"
           }`}
           title={currentDesign.visible ? "Ocultar diseño" : "Mostrar diseño"}
         >

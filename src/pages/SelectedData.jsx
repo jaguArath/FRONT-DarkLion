@@ -379,7 +379,7 @@ export default function SelectedData() {
                   </li>
 
                   <li>
-                    <strong>Diseño:</strong>{" "}
+                    <strong>Diseño Global:</strong>{" "}
                     {design.design ? (
                       <img
                         src={design.design}
@@ -390,37 +390,97 @@ export default function SelectedData() {
                       "—"
                     )}
                   </li>
-
-                  <li>
-                    <strong>Equipo:</strong> {design.teamName || "—"}
-                  </li>
-
-                  <li>
-                    <strong>Fuente equipo:</strong> {design.teamFont || "—"}
-                  </li>
-
-                  <li>
-                    <strong>Jugador:</strong> {design.playerName || "—"}
-                  </li>
-
-                  <li>
-                    <strong>Fuente jugador:</strong> {design.playerFont || "—"}
-                  </li>
-
-                  <li>
-                    <strong>Logo:</strong>{" "}
-                    {design.logoUrl ? (
-                      <img
-                        src={design.logoUrl}
-                        alt="logo"
-                        className="w-12 h-12 inline"
-                      />
-                    ) : (
-                      "—"
-                    )}
-                  </li>
                 </ul>
               </div>
+
+              {/* DISEÑOS POR PARTE */}
+              {design.designs &&
+                (design.designs.torso?.visible ||
+                  design.designs.back?.visible ||
+                  design.designs.manga_izquierda?.visible ||
+                  design.designs.manga_derecha?.visible ||
+                  design.designs.collar?.visible) && (
+                <div>
+                  <h3 className="font-bold text-lg mb-3">Diseños por Parte</h3>
+
+                  <ul className="space-y-2 text-xs">
+                    {design.designs.torso?.visible && (
+                      <li>
+                        <strong>Frente:</strong>{" "}
+                        {design.designs.torso?.design ? (
+                          <img
+                            src={design.designs.torso.design}
+                            alt="design-torso"
+                            className="w-12 h-12 inline"
+                          />
+                        ) : (
+                          "—"
+                        )}
+                      </li>
+                    )}
+
+                    {design.designs.back?.visible && (
+                      <li>
+                        <strong>Espalda:</strong>{" "}
+                        {design.designs.back?.design ? (
+                          <img
+                            src={design.designs.back.design}
+                            alt="design-back"
+                            className="w-12 h-12 inline"
+                          />
+                        ) : (
+                          "—"
+                        )}
+                      </li>
+                    )}
+
+                    {design.designs.manga_izquierda?.visible && (
+                      <li>
+                        <strong>Manga Izquierda:</strong>{" "}
+                        {design.designs.manga_izquierda?.design ? (
+                          <img
+                            src={design.designs.manga_izquierda.design}
+                            alt="design-left-sleeve"
+                            className="w-12 h-12 inline"
+                          />
+                        ) : (
+                          "—"
+                        )}
+                      </li>
+                    )}
+
+                    {design.designs.manga_derecha?.visible && (
+                      <li>
+                        <strong>Manga Derecha:</strong>{" "}
+                        {design.designs.manga_derecha?.design ? (
+                          <img
+                            src={design.designs.manga_derecha.design}
+                            alt="design-right-sleeve"
+                            className="w-12 h-12 inline"
+                          />
+                        ) : (
+                          "—"
+                        )}
+                      </li>
+                    )}
+
+                    {design.designs.collar?.visible && (
+                      <li>
+                        <strong>Cuello:</strong>{" "}
+                        {design.designs.collar?.design ? (
+                          <img
+                            src={design.designs.collar.design}
+                            alt="design-collar"
+                            className="w-12 h-12 inline"
+                          />
+                        ) : (
+                          "—"
+                        )}
+                      </li>
+                    )}
+                  </ul>
+                </div>
+              )}
 
               {/* COLORES */}
               <div>
@@ -492,6 +552,47 @@ export default function SelectedData() {
                     ) : (
                       "—"
                     )}
+                  </li>
+                </ul>
+              </div>
+
+              {/* COLORES DE TEXTO (Nombre y Número) */}
+              <div>
+                <h3 className="font-bold text-lg mb-3">Colores de Texto</h3>
+
+                <ul className="space-y-2 text-xs">
+                  <li>
+                    <strong>Color Nombre:</strong>{" "}
+                    {design.nameColor ? (
+                      <span
+                        className="inline-block w-6 h-6 rounded border border-gray-300 ml-1"
+                        style={{ backgroundColor: design.nameColor }}
+                        title={design.nameColor}
+                      />
+                    ) : (
+                      "—"
+                    )}
+                  </li>
+
+                  <li>
+                    <strong>Fuente Nombre:</strong> {design.nameFont || "—"}
+                  </li>
+
+                  <li>
+                    <strong>Color Número:</strong>{" "}
+                    {design.numberColor ? (
+                      <span
+                        className="inline-block w-6 h-6 rounded border border-gray-300 ml-1"
+                        style={{ backgroundColor: design.numberColor }}
+                        title={design.numberColor}
+                      />
+                    ) : (
+                      "—"
+                    )}
+                  </li>
+
+                  <li>
+                    <strong>Fuente Número:</strong> {design.numberFont || "—"}
                   </li>
                 </ul>
               </div>

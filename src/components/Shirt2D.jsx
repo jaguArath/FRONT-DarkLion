@@ -54,17 +54,17 @@ export default function Shirt2D({
       </div> */}
 
       {/* IMAGEN GRANDE */}
-      <div className="flex flex-col items-center gap-3">
+      <div className="flex flex-col items-center gap-1">
         <p className="text-sm font-semibold text-gray-600">{selectedLabel}</p>
-        <div className="bg-white p-4 rounded-lg shadow-md border border-gray-200">
+        <div className="bg-white rounded-lg shadow-md border border-gray-200">
           {selectedImage ? (
             <img
               src={selectedImage}
-              className="w-full object-contain h-auto"
+              className="w-full object-contain h-90"
               style={{
                 maxHeight: "500px",
                 maxWidth: "500px",
-                minHeight: "300px",
+                
               }}
               alt={`Camisa 3D - ${selectedLabel}`}
             />
