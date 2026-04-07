@@ -85,7 +85,7 @@ export default function Sidebar({
       setFabricType(design.fabricType || "");
       setDesign(design.design || "");
       setDesigns(
-        design.designs || { 
+        design.designs || {
           torso: { design: "", visible: false },
           back: { design: "", visible: false },
           manga_izquierda: { design: "", visible: false },
@@ -237,33 +237,33 @@ export default function Sidebar({
           />
         </Section>
 
-        
-          <Section title="Manga Derecha">
-            <ColorPalette
-              selected={colors.manga_derecha}
-              onSelect={(c) => setColors((p) => ({ ...p, manga_derecha: c }))}
-            />
-            <DesignToggle
-              part="manga_derecha"
-              designs={designs}
-              setDesigns={setDesigns}
-            />
-          </Section>
+
+        <Section title="Manga Izquierda">
+          <ColorPalette
+            selected={colors.manga_izquierda}
+            onSelect={(c) => setColors((p) => ({ ...p, manga_izquierda: c }))}
+          />
+          <DesignToggle
+            part="manga_izquierda"
+            designs={designs}
+            setDesigns={setDesigns}
+          />
+        </Section>
 
 
-        
-          <Section title="Manga Izquierda">
-            <ColorPalette
-              selected={colors.manga_izquierda}
-              onSelect={(c) => setColors((p) => ({ ...p, manga_izquierda: c }))}
-            />
-            <DesignToggle
-              part="manga_izquierda"
-              designs={designs}
-              setDesigns={setDesigns}
-            />
-          </Section>
-        
+
+        <Section title="Manga Derecha">
+          <ColorPalette
+            selected={colors.manga_derecha}
+            onSelect={(c) => setColors((p) => ({ ...p, manga_derecha: c }))}
+          />
+          <DesignToggle
+            part="manga_derecha"
+            designs={designs}
+            setDesigns={setDesigns}
+          />
+        </Section>
+
 
         <Section title="Cuello">
           <ColorPalette
@@ -910,17 +910,15 @@ function DesignToggle({ part, designs, setDesigns }) {
         </label>
         <button
           onClick={handleToggle}
-          className={`w-10 h-6 rounded-full transition-colors ${
-            currentDesign.visible
-              ? "bg-purple-500"
-              : "bg-gray-300"
-          }`}
+          className={`w-10 h-6 rounded-full transition-colors ${currentDesign.visible
+            ? "bg-purple-500"
+            : "bg-gray-300"
+            }`}
           title={currentDesign.visible ? "Ocultar diseño" : "Mostrar diseño"}
         >
           <div
-            className={`w-5 h-5 rounded-full bg-white transition-transform ${
-              currentDesign.visible ? "translate-x-4" : "translate-x-0"
-            }`}
+            className={`w-5 h-5 rounded-full bg-white transition-transform ${currentDesign.visible ? "translate-x-4" : "translate-x-0"
+              }`}
           />
         </button>
       </div>
@@ -935,11 +933,10 @@ function DesignToggle({ part, designs, setDesigns }) {
                 [part]: { design: "", visible: true },
               }));
             }}
-            className={`text-xs py-1 px-2 rounded font-medium ${
-              currentDesign.design === ""
-                ? "bg-purple-500 text-white"
-                : "bg-gray-200 text-gray-700"
-            }`}
+            className={`text-xs py-1 px-2 rounded font-medium ${currentDesign.design === ""
+              ? "bg-purple-500 text-white"
+              : "bg-gray-200 text-gray-700"
+              }`}
           >
             Sin Diseño
           </button>
@@ -949,11 +946,10 @@ function DesignToggle({ part, designs, setDesigns }) {
                 key={src}
                 src={src}
                 alt="Diseño"
-                className={`w-12 h-12 rounded cursor-pointer border-2 ${
-                  currentDesign.design === src
-                    ? "ring-2 ring-purple-500 border-purple-500"
-                    : "border-gray-200"
-                }`}
+                className={`w-12 h-12 rounded cursor-pointer border-2 ${currentDesign.design === src
+                  ? "ring-2 ring-purple-500 border-purple-500"
+                  : "border-gray-200"
+                  }`}
                 onClick={() => handleDesignSelect(src)}
               />
             ))}
@@ -1078,11 +1074,10 @@ function PlayersSection({
                 e.stopPropagation();
                 handleToggleEye(player);
               }}
-              className={`p-2 rounded-lg shadow cursor-pointer transition-colors ${
-                visiblePlayerId === player.id
-                  ? "bg-blue-500 text-white"
-                  : "bg-personalizado-click"
-              }`}
+              className={`p-2 rounded-lg shadow cursor-pointer transition-colors ${visiblePlayerId === player.id
+                ? "bg-blue-500 text-white"
+                : "bg-personalizado-click"
+                }`}
             >
               <EyeIcon className="w-5 h-5" />
             </button>

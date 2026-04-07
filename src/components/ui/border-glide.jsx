@@ -83,7 +83,16 @@ const MovingBorder = ({
 
     if (!path || !Number.isFinite(val)) return 0;
 
-    return path.getPointAtLength(val).x;
+    const width = path.getBBox().width;
+    const height = path.getBBox().height;
+
+    if (width <= 0 || height <= 0) return 0;
+
+    try {
+      return path.getPointAtLength(val).x;
+    } catch {
+      return 0;
+    }
   });
 
   const y = useTransform(progress, (val) => {
@@ -91,7 +100,16 @@ const MovingBorder = ({
 
     if (!path || !Number.isFinite(val)) return 0;
 
-    return path.getPointAtLength(val).y;
+    const width = path.getBBox().width;
+    const height = path.getBBox().height;
+
+    if (width <= 0 || height <= 0) return 0;
+
+    try {
+      return path.getPointAtLength(val).y;
+    } catch {
+      return 0;
+    }
   });
 
   const angle = useTransform(progress, (val) => {
@@ -99,14 +117,21 @@ const MovingBorder = ({
 
     if (!path || !Number.isFinite(val)) return 0;
 
-    const length = path.getTotalLength();
+    const bbox = path.getBBox();
+    if (bbox.width <= 0 || bbox.height <= 0) return 0;
 
-    if (!Number.isFinite(length) || length <= 0) return 0;
+    try {
+      const length = path.getTotalLength();
 
-    const p1 = path.getPointAtLength(val);
-    const p2 = path.getPointAtLength((val + 1) % length);
+      if (!Number.isFinite(length) || length <= 0) return 0;
 
-    return Math.atan2(p2.y - p1.y, p2.x - p1.x) * (180 / Math.PI);
+      const p1 = path.getPointAtLength(val);
+      const p2 = path.getPointAtLength((val + 1) % length);
+
+      return Math.atan2(p2.y - p1.y, p2.x - p1.x) * (180 / Math.PI);
+    } catch {
+      return 0;
+    }
   });
 
   const transform = useMotionTemplate`
@@ -138,13 +163,14 @@ const MovingBorder = ({
         style={{ willChange: "auto" }}
       >
         <rect
+          ref={pathRef}
+          x="1"
+          y="1"
+          width="99%"
+          height="99%"
           fill="none"
-          width="100%"
-          height="100%"
           rx={rx}
           ry={ry}
-          ref={pathRef}
-          style={{ willChange: "auto" }}
         />
       </svg>
       <motion.div

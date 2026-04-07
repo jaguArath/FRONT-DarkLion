@@ -20,8 +20,8 @@ const TEXT_CONFIG = {
 const UV_REGIONS = {
   frente: { x: 0.0000, y: 0.1172, w: 0.50, h: 0.6527 },
   espalda: { x: 0.50, y: 0.1172, w: 0.45, h: 0.7227 },
-  manga_izquierda: { x: 0.000, y: 0.8008, w: 0.550, h: 0.15 },
-  manga_derecha: { x: 0.50, y: 0.8008, w: 0.40, h: 0.1592 },
+  manga_izquierda: { x: 0.50, y: 0.8008, w: 0.40, h: 0.1592 },
+  manga_derecha: { x: 0.000, y: 0.8008, w: 0.550, h: 0.15 },
 };
 
 const NECK_REGIONS = {
