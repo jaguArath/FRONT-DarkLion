@@ -81,7 +81,8 @@ const steps = [
     id: 1,
     paso: "PASO 01",
     title: "Elige el tipo de prenda",
-    description: "Seleccione la maqueta del modelo de prenda que deseas adquirir.",
+    description:
+      "Seleccione la maqueta del modelo de prenda que deseas adquirir.",
     image: Personaliza,
     icon: TShirtIcon,
   },
@@ -97,7 +98,8 @@ const steps = [
     id: 3,
     paso: "PASO 03",
     title: "Crea tu diseño - previsualización",
-    description: "Aplica los colores de tu equipo y crea combinaciones para cuerpo, mangas y cuello. Elige la tipografía para el nombre de tu equipo o carga la imagen de tu logo.",
+    description:
+      "Aplica los colores de tu equipo y crea combinaciones para cuerpo, mangas y cuello. Elige la tipografía para el nombre de tu equipo o carga la imagen de tu logo.",
     image: Mangas,
     icon: PencilDrawingIcons,
   },
@@ -113,7 +115,8 @@ const steps = [
     id: 5,
     paso: "PASO 05",
     title: "Realiza tu orden",
-    description: "Revisa tu diseño, agrega cantidad, talla, nombre y número de jugador. No olvides tus datos personales para contactarte al procesar la orden.",
+    description:
+      "Revisa tu diseño, agrega cantidad, talla, nombre y número de jugador. No olvides tus datos personales para contactarte al procesar la orden.",
     image: Contacto,
     icon: OrderCompletedIcons,
   },
@@ -419,9 +422,9 @@ export default function Home() {
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="#6D28D9"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       className="icon icon-tabler icons-tabler-outline icon-tabler-hanger"
                     >
                       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -478,10 +481,10 @@ export default function Home() {
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="#6D28D9"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="icon icon-tabler icons-tabler-outline icon-tabler-ruler"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="icon icon-tabler icons-tabler-outline icon-tabler-ruler"
                     >
                       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                       <path d="M5 4h14a1 1 0 0 1 1 1v5a1 1 0 0 1 -1 1h-7a1 1 0 0 0 -1 1v7a1 1 0 0 1 -1 1h-5a1 1 0 0 1 -1 -1v-14a1 1 0 0 1 1 -1" />
@@ -538,7 +541,7 @@ export default function Home() {
                       height="24"
                       viewBox="0 0 24 24"
                       fill="#6D28D9"
-                      class="icon icon-tabler icons-tabler-filled icon-tabler-palette"
+                      className="icon icon-tabler icons-tabler-filled icon-tabler-palette"
                     >
                       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                       <path d="M12 2c5.498 0 10 4.002 10 9c0 1.351 -.6 2.64 -1.654 3.576c-1.03 .914 -2.412 1.424 -3.846 1.424h-2.516a1 1 0 0 0 -.5 1.875a1 1 0 0 1 .194 .14a2.3 2.3 0 0 1 -1.597 3.99l-.156 -.009l.068 .004l-.273 -.004c-5.3 -.146 -9.57 -4.416 -9.716 -9.716l-.004 -.28c0 -5.523 4.477 -10 10 -10m-3.5 6.5a2 2 0 0 0 -1.995 1.85l-.005 .15a2 2 0 1 0 2 -2m8 0a2 2 0 0 0 -1.995 1.85l-.005 .15a2 2 0 1 0 2 -2m-4 -3a2 2 0 0 0 -1.995 1.85l-.005 .15a2 2 0 1 0 2 -2" />
@@ -597,10 +600,10 @@ export default function Home() {
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="#6D28D9"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="icon icon-tabler icons-tabler-outline icon-tabler-user-plus"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="icon icon-tabler icons-tabler-outline icon-tabler-user-plus"
                     >
                       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                       <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
@@ -656,10 +659,10 @@ export default function Home() {
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="#6D28D9"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="icon icon-tabler icons-tabler-outline icon-tabler-id"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="icon icon-tabler icons-tabler-outline icon-tabler-id"
                     >
                       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                       <path d="M3 7a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v10a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3l0 -10" />

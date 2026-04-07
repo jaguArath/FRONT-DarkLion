@@ -34,16 +34,16 @@ export default function Customize() {
 
   switch (modelo) {
     case "cuello-v":
-      titulo = "Este es Cuello V";
+      titulo = "Camisa Cuello V";
       break;
     case "cuello-redondo":
-      titulo = "Este es Cuello Redondo";
+      titulo = "Camisa Cuello Redondo";
       break;
     case "cuello-camisola":
-      titulo = "Este es Camisola";
+      titulo = "Camisola";
       break;
     case "cuello-tank-top":
-      titulo = "Este es Tank Top";
+      titulo = "Tank Top";
       break;
     default:
       titulo = "Modelo no encontrado";
@@ -92,6 +92,7 @@ export default function Customize() {
         <section className="w-full max-w-xs md:max-w-sm lg:w-140 h-80 md:h-96 lg:h-95">
           <ShirtViewer3D
             ref={shirtRef}
+            shirtType={modelo}
             colors={colors}
             design={design}
             designs={designs}

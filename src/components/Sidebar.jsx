@@ -240,11 +240,11 @@ export default function Sidebar({
         
           <Section title="Manga Derecha">
             <ColorPalette
-              selected={colors.manga_izquierda}
-              onSelect={(c) => setColors((p) => ({ ...p, manga_izquierda: c }))}
+              selected={colors.manga_derecha}
+              onSelect={(c) => setColors((p) => ({ ...p, manga_derecha: c }))}
             />
             <DesignToggle
-              part="manga_izquierda"
+              part="manga_derecha"
               designs={designs}
               setDesigns={setDesigns}
             />
@@ -254,11 +254,11 @@ export default function Sidebar({
         
           <Section title="Manga Izquierda">
             <ColorPalette
-              selected={colors.manga_derecha}
-              onSelect={(c) => setColors((p) => ({ ...p, manga_derecha: c }))}
+              selected={colors.manga_izquierda}
+              onSelect={(c) => setColors((p) => ({ ...p, manga_izquierda: c }))}
             />
             <DesignToggle
-              part="manga_derecha"
+              part="manga_izquierda"
               designs={designs}
               setDesigns={setDesigns}
             />

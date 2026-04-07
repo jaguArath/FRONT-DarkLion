@@ -17,6 +17,18 @@ const TEXT_CONFIG = {
   numberY: 500,
 };
 
+const UV_REGIONS = {
+  frente: { x: 0.0000, y: 0.1172, w: 0.50, h: 0.6527 },
+  espalda: { x: 0.50, y: 0.1172, w: 0.45, h: 0.7227 },
+  manga_izquierda: { x: 0.000, y: 0.8008, w: 0.550, h: 0.15 },
+  manga_derecha: { x: 0.50, y: 0.8008, w: 0.40, h: 0.1592 },
+};
+
+const NECK_REGIONS = {
+  neck_front: { x: 0.100, y: 0.0586, w: 0.5044, h: 0.0195 },
+  neck_back: { x: 0.6250, y: 0.0586, w: 0.2344, h: 0.0195 },
+};
+
 // Mapeo de fuentes
 const FONT_MAP = {
   ARBORIA: "Arboria",
@@ -194,7 +206,154 @@ function composePlayerNameOnDesign(
   });
 }
 
+// Función maestra para generar la textura COMPLETA por UVs
+async function generateComposedTexture(
+  colors = {},
+  designs = {},
+  visiblePlayer = null,
+  nameColor = "rgb(255, 255, 255)",
+  nameFont = "ARBORIA",
+  numberColor = "rgb(255, 255, 255)",
+  numberFont = "ARBORIA",
+  textureLoader = null
+) {
+  const canvas = document.createElement("canvas");
+  canvas.width = 2048; // Alta resolución para UVs complejos
+  canvas.height = 2048;
+  const ctx = canvas.getContext("2d");
+
+  // 1. Fondo base neutro (gris oscuro por si algo falla)
+  ctx.fillStyle = "#333333";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Función para pintar una región UV con color y diseño
+  const processRegion = async (id, region, color, designUrl) => {
+    const rx = region.x * canvas.width;
+    const ry = region.y * canvas.height;
+    const rw = region.w * canvas.width;
+    const rh = region.h * canvas.height;
+
+    // Pintar color base del área
+    ctx.fillStyle = color || "#FFFFFF";
+    ctx.fillRect(rx, ry, rw, rh);
+
+    // Pintar diseño si existe
+    if (designUrl) {
+      try {
+        const img = await new Promise((res, rej) => {
+          const i = new Image();
+          i.crossOrigin = "anonymous";
+          i.onload = () => res(i);
+          i.onerror = rej;
+          i.src = designUrl;
+        });
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(rx, ry, rw, rh);
+        ctx.clip();
+
+        ctx.globalCompositeOperation = "multiply";
+        ctx.drawImage(img, rx, ry, rw, rh);
+        ctx.restore();
+        ctx.globalCompositeOperation = "source-over";
+      } catch (err) {
+        console.warn(`⚠️ No se pudo cargar el diseño para la región ${id}:`, err);
+      }
+    }
+  };
+
+  // Dibujar todas las regiones principales
+  const REGION_KEYS = {
+    frente: "torso",
+    espalda: "back",
+    manga_izquierda: "manga_izquierda",
+    manga_derecha: "manga_derecha",
+  };
+
+  for (const [uvKey, configKey] of Object.entries(REGION_KEYS)) {
+    await processRegion(
+      uvKey,
+      UV_REGIONS[uvKey],
+      colors[configKey],
+      designs[configKey]
+    );
+  }
+
+  // Dibujar regiones del cuello (usando el color 'collar')
+  const neckParts = Object.keys(NECK_REGIONS);
+  for (const neckPart of neckParts) {
+    await processRegion(neckPart, NECK_REGIONS[neckPart], colors.collar, designs.collar);
+  }
+
+  // 2. Jugador (Nombre y Número en la espalda)
+  if (visiblePlayer && visiblePlayer.name) {
+    const backRegion = UV_REGIONS.espalda;
+    const bx = backRegion.x * canvas.width;
+    const by = backRegion.y * canvas.height;
+    const bw = backRegion.w * canvas.width;
+    const bh = backRegion.h * canvas.height;
+
+    ctx.save();
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    const isLightColor = (color) => {
+      if (!color || !color.includes("rgb")) return false;
+      const matches = color.match(/\d+/g);
+      if (matches && matches.length >= 3) {
+        const r = parseInt(matches[0]);
+        const g = parseInt(matches[1]);
+        const b = parseInt(matches[2]);
+        const l = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+        return l > 0.5;
+      }
+      return false;
+    };
+
+    // Nombre
+    const nameFamily = FONT_MAP[nameFont] || FONT_MAP.ARBORIA;
+    ctx.font = `bold ${Math.floor(bh * 0.1)}px "${nameFamily}", sans-serif`;
+    ctx.fillStyle = nameColor;
+    ctx.lineWidth = Math.floor(bh * 0.01);
+    ctx.strokeStyle = isLightColor(nameColor) ? "black" : "white";
+
+    // Coordenadas locales dentro de la región 'espalda'
+    // El TEXT_CONFIG original usaba 761 (x) y 309 (y) sobre 1024.
+    // Adaptamos esas proporciones al centro de la región 'espalda'.
+    const cx = bx + bw / 2;
+    const nameY = by + bh * 0.3;
+    const numberY = by + bh * 0.6;
+
+    // ctx.strokeText(visiblePlayer.name.toUpperCase(), cx, nameY);
+    // ctx.fillText(visiblePlayer.name.toUpperCase(), cx, nameY);
+    ctx.strokeText(visiblePlayer.name.toUpperCase(), cx, nameY);
+    ctx.fillStyle = nameColor;
+    ctx.fillText(visiblePlayer.name.toUpperCase(), cx, nameY);
+
+    // Número
+    const numberFamily = FONT_MAP[numberFont] || FONT_MAP.ARBORIA;
+    ctx.font = `bold ${Math.floor(bh * 0.3)}px "${numberFamily}", sans-serif`;
+    ctx.lineWidth = Math.floor(bh * 0.02);
+    ctx.strokeStyle = isLightColor(numberColor) ? "black" : "white";
+    ctx.strokeText(visiblePlayer.number.toString(), cx, numberY);
+    ctx.fillStyle = numberColor;
+    ctx.fillText(visiblePlayer.number.toString(), cx, numberY);
+
+    ctx.restore();
+  }
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.flipY = false;
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.needsUpdate = true;
+
+  console.log("🎨 Textura COMPUESTA basada en UVs generada exitosamente");
+  return texture;
+}
+
 function ShirtModel({
+  shirtType = "cuello-redondo",
   colors = {},
   designs = {},
   visiblePlayer = null,
@@ -204,263 +363,66 @@ function ShirtModel({
   numberColor = "rgb(255, 255, 255)",
   numberFont = "ARBORIA",
 }) {
-  const { scene } = useGLTF("/camisa3D/camiseta.glb");
+  const { modelPath, modelScale } = useMemo(() => {
+    const map = {
+      "cuello-redondo": { path: "/camisa3D/CamisaCuelloRedondo.glb", scale: 2 },
+      "cuello-v": { path: "/camisa3D/camiseta.glb", scale: 5 },
+      "cuello-camisola": { path: "/camisa3D/camiseta1.glb", scale: 20 },
+      "cuello-tank-top": { path: "/camisa3D/CamisaCuelloRedondo.glb", scale: 2 },
+    };
+    const selected = map[shirtType] || map["cuello-redondo"];
+    return { modelPath: selected.path, modelScale: selected.scale };
+  }, [shirtType]);
+  const { scene } = useGLTF(modelPath);
   const groupRef = useRef(null);
   const textureLoaderRef = useRef(new THREE.TextureLoader());
-  const [playerTexturesCache, setPlayerTexturesCache] = useState({});
 
   useEffect(() => {
     if (!scene) return;
 
-    console.log("🎬 useEffect ejecutándose...");
-    console.log("visiblePlayer:", visiblePlayer);
-    console.log("designs:", designs);
-    console.log("colors:", colors);
+    console.log("🎬 useEffect ejecutándose (Estrategia UV)...");
 
-    // ⚠️ LOG DIAGNÓSTICO: Mostrar estructura del modelo
-    console.group("📦 ESTRUCTURA DEL MODELO 3D");
-    const meshes = [];
-    scene.traverse((node) => {
-      if (node.isMesh) {
-        meshes.push(node.name);
-        console.log(`  ✓ Mesh: "${node.name}"`);
-      }
-    });
-    console.groupEnd();
-    console.log("Copia esta lista de meshes para compartir con soporte ↑");
-
-    scene.traverse((node) => {
-      if (node.isMesh && node.material) {
-        try {
-          // ⚠️ IGNORAR contenedores o meshes innecesarios
-          if (node.name === "cloth_parent" || node.name === "root") {
-            console.warn(`⏭️ Ignorando mesh contenedor: "${node.name}"`);
+    // Generar la textura compuesta de forma asíncrona
+    generateComposedTexture(
+      colors,
+      designs,
+      visiblePlayer,
+      nameColor,
+      nameFont,
+      numberColor,
+      numberFont
+    ).then((composedTexture) => {
+      scene.traverse((node) => {
+        if (node.isMesh && node.material) {
+          // Ignorar piezas interiores si se desea, o aplicarles un color básico
+          if (node.name.toLowerCase().includes("interior")) {
+            const innerMat = node.material.clone();
+            innerMat.color.setHex(0xffffff); // Blanco puro para el interior
+            innerMat.map = null;
+            node.material = innerMat;
             return;
           }
 
-          // Clonar material para evitar compartirlo
+          // Aplicar la textura compuesta a la malla exterior
           const material = node.material.clone();
-
-          // Determinar qué parte es (por nombre exacto)
-          const nodeName = node.name;
-          const nodeNameLower = nodeName.toLowerCase();
-          let partType = null;
-
-          // Mapeo más preciso según los nombres reales del modelo
-          if (nodeNameLower === "frente") {
-            partType = "torso";
-          } else if (nodeNameLower === "espalda") {
-            partType = "back";
-          } else if (nodeNameLower === "manga_derecha") {
-            partType = "manga_derecha";
-          } else if (nodeNameLower === "manga_izquierda") {
-            partType = "manga_izquierda";
-          } else if (
-            nodeNameLower.includes("back") ||
-            nodeNameLower.includes("espalda") ||
-            nodeNameLower.includes("atrás") ||
-            nodeNameLower.includes("atras")
-          ) {
-            partType = "back";
-          } else if (
-            nodeNameLower.includes("manga_derecha") ||
-            nodeNameLower.includes("right sleeve") ||
-            nodeNameLower.includes("sleeve_right")
-          ) {
-            partType = "manga_derecha";
-          } else if (
-            nodeNameLower.includes("manga_izquierda") ||
-            nodeNameLower.includes("left sleeve") ||
-            nodeNameLower.includes("sleeve_left")
-          ) {
-            partType = "manga_izquierda";
-          } else if (
-            nodeNameLower.includes("sleeve") ||
-            nodeNameLower.includes("manga") ||
-            nodeNameLower.includes("arm")
-          ) {
-            partType = "sleeves";
-          } else if (
-            nodeNameLower.includes("collar") ||
-            nodeNameLower.includes("cuello") ||
-            nodeNameLower.includes("neck")
-          ) {
-            partType = "collar";
-          }
-
-          // Si no se reconoce la parte, saltarla
-          if (partType === null) {
-            console.warn(`⚠️ Mesh desconocido (saltado): "${nodeName}"`);
-            return;
-          }
-
-          console.log(
-            `%c"${nodeName}" → ${partType}: ${colors[partType] || "sin color"}`,
-            `color: ${colors[partType] || "#ccc"}; font-weight: bold;`,
-          );
-
-          // Verificar la condición de jugador visible
-          console.log(
-            `Checking partType="${partType}", visiblePlayer=${visiblePlayer ? visiblePlayer.name : "null"}, visiblePlayer.name=${visiblePlayer?.name}`,
-          );
-
-          // 🧹 LIMPIAR TODO PRIMERO
-          material.map = null;
-          material.normalMap = null;
-          material.roughnessMap = null;
-          material.metalnessMap = null;
-          material.aoMap = null;
-          material.emissiveMap = null;
-          material.lightMap = null;
-          material.needsUpdate = true;
-
-          let hasAsyncTexture = false;
-
-          // Lógica mejorada: Jugador + Diseño se componen, no se reemplazan
-          if (partType === "back" && visiblePlayer && visiblePlayer.name) {
-            console.log("✓ Se va a aplicar textura de jugador");
-            // Si es la espalda y hay un jugador visible
-            if (designs[partType]) {
-              console.log("  - Con diseño");
-              // Si hay diseño, componer nombre sobre diseño
-              const cacheKey = `${designs[partType]}.${visiblePlayer.name}.${visiblePlayer.number}.${nameColor}.${numberColor}.${nameFont}.${numberFont}`;
-
-              if (playerTexturesCache[cacheKey]) {
-                // Usar textura en caché
-                console.log("  - Usando caché");
-                material.map = playerTexturesCache[cacheKey];
-                // Textura de jugador: usar color blanco puro sin multiplicación
-                material.color.set(0xffffff);
-                material.roughness = 0.92;
-                material.metalness = 0;
-              } else {
-                // Crear nuevo composición de diseño + nombre
-                console.log("  - Creando nueva textura");
-                hasAsyncTexture = true;
-                composePlayerNameOnDesign(
-                  visiblePlayer.name,
-                  visiblePlayer.number,
-                  designs[partType],
-                  colors[partType] || "#FFFFFF",
-                  nameColor,
-                  nameFont,
-                  numberColor,
-                  numberFont,
-                )
-                  .then((texture) => {
-                    console.log("✓ Textura de jugador + diseño aplicada");
-                    material.map = texture;
-                    // Textura de jugador: usar color blanco puro sin multiplicación
-                    material.color.set(0xffffff);
-                    material.roughness = 0.92;
-                    material.metalness = 0;
-                    material.needsUpdate = true;
-                    setPlayerTexturesCache((prev) => ({
-                      ...prev,
-                      [cacheKey]: texture,
-                    }));
-                    node.material = material;
-                  })
-                  .catch((error) => {
-                    console.error(
-                      "Error componiendo diseño con nombre:",
-                      error,
-                    );
-                    // Fallback: mostrar solo nombre sin diseño
-                    const playerTexture = generatePlayerNameTexture(
-                      visiblePlayer.name,
-                      visiblePlayer.number,
-                      colors[partType] || "#FFFFFF",
-                      nameColor,
-                      nameFont,
-                      numberColor,
-                      numberFont,
-                    );
-                    material.map = playerTexture;
-                    // Textura de jugador: usar color blanco puro sin multiplicación
-                    material.color.set(0xffffff);
-                    material.roughness = 0.92;
-                    material.metalness = 0;
-                    material.needsUpdate = true;
-                    node.material = material;
-                  });
-              }
-            } else {
-              console.log("  - Sin diseño, solo nombre");
-              // Sin diseño, solo mostrar nombre y número con color de fondo
-              const playerTexture = generatePlayerNameTexture(
-                visiblePlayer.name,
-                visiblePlayer.number,
-                colors[partType] || "#FFFFFF",
-                nameColor,
-                nameFont,
-                numberColor,
-                numberFont,
-              );
-              material.map = playerTexture;
-              // Textura de jugador: usar color blanco puro sin multiplicación
-              material.color.set(0xffffff);
-              material.roughness = 0.92;
-              material.metalness = 0;
-              material.needsUpdate = true;
-            }
-          } else if (designs[partType]) {
-            console.log("✓ Se va a aplicar diseño (sin jugador)");
-            // Si hay diseño para esta parte (sin jugador visible), aplicarlo
-            textureLoaderRef.current.load(designs[partType], (texture) => {
-              texture.flipY = false;
-              texture.colorSpace = THREE.SRGBColorSpace;
-              material.map = texture;
-              // Solo diseño: multiplicar con el color seleccionado
-              material.color.set(colors[partType]);
-              material.roughness = 0.92;
-              material.metalness = 0;
-              material.needsUpdate = true;
-              node.material = material;
-            });
-            hasAsyncTexture = true;
-          } else {
-            console.log("✓ Solo color sólido");
-            // 🎨 SOLO COLOR: sin diseño ni jugador
-            if (colors[partType]) {
-              material.color.set(colors[partType]);
-            } else {
-              material.color.set("#FFFFFF"); // Color blanco por defecto
-            }
-            // Asegurar que NO hay textura
-            material.map = null;
-            material.roughness = 0.92;
-            material.metalness = 0;
-          }
-
-          // Limpiar mapas finales para que no haya ruido
-          material.normalMap = null;
-          material.roughnessMap = null;
-          material.metalnessMap = null;
-          material.aoMap = null;
-          material.emissiveMap = null;
-          material.lightMap = null;
-
-          // Propiedades de material para un look limpio
+          material.map = composedTexture;
+          material.color.set("#FFFFFF"); // El color ya está en la textura
+          material.roughness = 0.95;
           material.metalness = 0;
           material.needsUpdate = true;
+          node.material = material;
 
-          // Solo asignar material si no hay texturas asincrónicas pendientes
-          if (!hasAsyncTexture) {
-            console.log("Asignando material al nodo (síncrono)");
-            node.material = material;
-          }
-        } catch (error) {
-          console.error("Error aplicando color/textura:", error);
+          console.log(`✅ Textura UV aplicada a: ${node.name}`);
         }
-      }
+      });
+    }).catch(err => {
+      console.error("❌ Error generando la textura compuesta:", err);
     });
   }, [
     colors,
     designs,
     visiblePlayer,
     scene,
-    playerTexturesCache,
     nameColor,
     nameFont,
     numberColor,
@@ -474,9 +436,10 @@ function ShirtModel({
   }, [rotationY]);
 
   return (
-    <group ref={groupRef}>
+    // mover la camisa 3d un poco hacia arriba para centrarla mejor en la vista
+    <group ref={groupRef} position={[0, 0, 0]}>
       <Center>
-        <primitive object={scene} scale={2} />
+        <primitive object={scene} scale={modelScale} />
       </Center>
     </group>
   );
@@ -492,6 +455,7 @@ const ShirtViewer3D = forwardRef(
       colors = {},
       design = "",
       designs = {},
+      shirtType,
       visiblePlayer = null,
       nameColor = "rgb(0, 0, 0)",
       nameFont = "ARBORIA",
@@ -633,9 +597,9 @@ const ShirtViewer3D = forwardRef(
             // Capturar frente (0°)
             captureAtRotation(0, "frente");
 
-            // Capturar manga izquierda (90°, lado izquierdo)
+            // Capturar manga izquierda (-90°, lado izquierdo)
             setTimeout(() => {
-              captureAtRotation(Math.PI / 2, "mangaIzquierda");
+              captureAtRotation(-Math.PI / 2, "mangaIzquierda");
             }, 300);
 
             // Capturar atrás (180°)
@@ -643,9 +607,9 @@ const ShirtViewer3D = forwardRef(
               captureAtRotation(Math.PI, "atras");
             }, 600);
 
-            // Capturar manga derecha (-90°, lado derecho)
+            // Capturar manga derecha (90°, lado derecho)
             setTimeout(() => {
-              captureAtRotation(-Math.PI / 2, "mangaDerecha");
+              captureAtRotation(Math.PI / 2, "mangaDerecha");
             }, 900);
           }, initialDelay);
         });
@@ -655,21 +619,18 @@ const ShirtViewer3D = forwardRef(
     return (
       <div className="w-full h-full relative" ref={canvasContainerRef}>
         <Canvas
-          camera={{ position: [0, 0, 20], fov: 60 }}
+          camera={{ position: [0, 0, 20], fov: 11 }}
           gl={{ preserveDrawingBuffer: true }}
           style={{ background: "#f5f5f5" }}
         >
           {/* Iluminación */}
           <ambientLight intensity={0.9} />
-
           <hemisphereLight
             skyColor={"#ffffff"}
             groundColor={"#e0e0e0"}
             intensity={0.6}
           />
-
           <directionalLight position={[5, 5, 5]} intensity={0.4} />
-
           <directionalLight position={[15, 5, 5]} intensity={0.3} />
 
           {/* Entorno HDR */}
@@ -677,6 +638,7 @@ const ShirtViewer3D = forwardRef(
 
           <Suspense fallback={null}>
             <ShirtModel
+              shirtType={shirtType}
               colors={colors}
               designs={designsObject}
               visiblePlayer={tempHidePlayerText ? null : visiblePlayer}

@@ -1,6 +1,12 @@
-'use client';;
-import React, { useRef, createContext, useContext, useCallback } from 'react';
-import { motion, AnimatePresence, useSpring, useMotionTemplate, useTransform } from 'motion/react';
+"use client";
+import React, { useRef, createContext, useContext, useCallback } from "react";
+import {
+  motion,
+  AnimatePresence,
+  useSpring,
+  useMotionTemplate,
+  useTransform,
+} from "motion/react";
 import {
   Card,
   CardContent,
@@ -8,15 +14,15 @@ import {
   CardFooter,
   CardTitle,
   CardDescription,
-} from '@/components/ui/card';
-import { cn } from '@/lib/utils';
+} from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 const BorderGlideContext = createContext(undefined);
 
 const useBorderGlideContext = () => {
   const context = useContext(BorderGlideContext);
   if (!context) {
-    throw new Error('BorderGlide components must be used within BorderGlide');
+    throw new Error("BorderGlide components must be used within BorderGlide");
   }
   return context;
 };
@@ -24,11 +30,11 @@ const useBorderGlideContext = () => {
 const MovingBorder = ({
   children,
   duration = 3000,
-  rx = '1.5rem',
-  ry = '1.5rem',
-  color = '#3b82f6',
-  width = '12rem',
-  height = '0.5rem',
+  rx = "1.5rem",
+  ry = "1.5rem",
+  color = "#3b82f6",
+  width = "12rem",
+  height = "0.5rem",
   opacity = 0.8,
 }) => {
   const pathRef = useRef(null);
@@ -59,26 +65,47 @@ const MovingBorder = ({
   }, [animate]);
 
   const progress = useTransform(time, (val) => {
-    if (!pathRef.current) return 0;
-    const length = pathRef.current.getTotalLength();
-    return val % length;
+    const path = pathRef.current;
+
+    if (!path) return 0;
+
+    const length = path.getTotalLength();
+
+    if (!Number.isFinite(length) || length <= 0) {
+      return 0;
+    }
+
+    return ((val % length) + length) % length;
   });
 
   const x = useTransform(progress, (val) => {
-    if (!pathRef.current) return 0;
-    return pathRef.current.getPointAtLength(val).x;
+    const path = pathRef.current;
+
+    if (!path || !Number.isFinite(val)) return 0;
+
+    return path.getPointAtLength(val).x;
   });
 
   const y = useTransform(progress, (val) => {
-    if (!pathRef.current) return 0;
-    return pathRef.current.getPointAtLength(val).y;
+    const path = pathRef.current;
+
+    if (!path || !Number.isFinite(val)) return 0;
+
+    return path.getPointAtLength(val).y;
   });
 
   const angle = useTransform(progress, (val) => {
-    if (!pathRef.current) return 0;
-    const length = pathRef.current.getTotalLength();
-    const p1 = pathRef.current.getPointAtLength(val);
-    const p2 = pathRef.current.getPointAtLength((val + 1) % length);
+    const path = pathRef.current;
+
+    if (!path || !Number.isFinite(val)) return 0;
+
+    const length = path.getTotalLength();
+
+    if (!Number.isFinite(length) || length <= 0) return 0;
+
+    const p1 = path.getPointAtLength(val);
+    const p2 = path.getPointAtLength((val + 1) % length);
+
     return Math.atan2(p2.y - p1.y, p2.x - p1.x) * (180 / Math.PI);
   });
 
@@ -92,10 +119,10 @@ const MovingBorder = ({
 
   const getBackgroundStyle = (color) => {
     if (
-      color.includes('gradient') ||
-      color.includes('linear-gradient') ||
-      color.includes('radial-gradient') ||
-      color.includes('conic-gradient')
+      color.includes("gradient") ||
+      color.includes("linear-gradient") ||
+      color.includes("radial-gradient") ||
+      color.includes("conic-gradient")
     ) {
       return color;
     }
@@ -105,36 +132,40 @@ const MovingBorder = ({
   return (
     <>
       <svg
-        xmlns='http://www.w3.org/2000/svg'
-        preserveAspectRatio='none'
-        className='absolute h-full w-full pointer-events-none'
-        style={{ willChange: 'auto' }}>
+        xmlns="http://www.w3.org/2000/svg"
+        preserveAspectRatio="none"
+        className="absolute h-full w-full pointer-events-none"
+        style={{ willChange: "auto" }}
+      >
         <rect
-          fill='none'
-          width='100%'
-          height='100%'
+          fill="none"
+          width="100%"
+          height="100%"
           rx={rx}
           ry={ry}
           ref={pathRef}
-          style={{ willChange: 'auto' }} />
+          style={{ willChange: "auto" }}
+        />
       </svg>
       <motion.div
         style={{
-          position: 'absolute',
+          position: "absolute",
           top: 0,
           left: 0,
           transform,
-          willChange: 'transform',
-        }}>
+          willChange: "transform",
+        }}
+      >
         <div
-          className='rounded-full'
+          className="rounded-full"
           style={{
             height,
             width,
             opacity,
             background: getBackgroundStyle(color),
-            borderRadius: '50%',
-          }} />
+            borderRadius: "50%",
+          }}
+        />
       </motion.div>
     </>
   );
@@ -145,9 +176,9 @@ const BorderGlide = ({
   className,
   autoPlayInterval = 5000,
   borderDuration = 3000,
-  borderColor = '#3b82f6',
-  borderWidth = '6rem',
-  borderHeight = '6rem',
+  borderColor = "#3b82f6",
+  borderWidth = "6rem",
+  borderHeight = "6rem",
   borderOpacity = 0.8,
 }) => {
   const [currentIndex, setCurrentIndex] = React.useState(0);
@@ -158,32 +189,31 @@ const BorderGlide = ({
   const totalItems = childrenArray.length;
 
   const swipeConfidenceThreshold = 10000;
-  const swipePower = (offset, velocity) =>
-    Math.abs(offset) * velocity;
+  const swipePower = (offset, velocity) => Math.abs(offset) * velocity;
 
-  const paginate = useCallback((newDirection) => {
-    setDirection(newDirection);
-    if (newDirection === 1) {
-      setCurrentIndex((prev) => (prev === totalItems - 1 ? 0 : prev + 1));
-    } else {
-      setCurrentIndex((prev) => (prev === 0 ? totalItems - 1 : prev - 1));
-    }
-  }, [totalItems]);
-
-  const handleDragEnd = useCallback((
-    e,
-    {
-      offset,
-      velocity
+  const paginate = useCallback(
+    (newDirection) => {
+      setDirection(newDirection);
+      if (newDirection === 1) {
+        setCurrentIndex((prev) => (prev === totalItems - 1 ? 0 : prev + 1));
+      } else {
+        setCurrentIndex((prev) => (prev === 0 ? totalItems - 1 : prev - 1));
+      }
     },
-  ) => {
-    const swipe = swipePower(offset.x, velocity.x);
-    if (swipe < -swipeConfidenceThreshold) {
-      paginate(1);
-    } else if (swipe > swipeConfidenceThreshold) {
-      paginate(-1);
-    }
-  }, [paginate]);
+    [totalItems],
+  );
+
+  const handleDragEnd = useCallback(
+    (e, { offset, velocity }) => {
+      const swipe = swipePower(offset.x, velocity.x);
+      if (swipe < -swipeConfidenceThreshold) {
+        paginate(1);
+      } else if (swipe > swipeConfidenceThreshold) {
+        paginate(-1);
+      }
+    },
+    [paginate],
+  );
 
   const setupAutoPlay = useCallback(() => {
     if (autoPlayRef.current) {
@@ -214,19 +244,19 @@ const BorderGlide = ({
 
   const slideVariants = {
     enter: (direction) => ({
-      x: direction > 0 ? '100%' : '-100%',
+      x: direction > 0 ? "100%" : "-100%",
       opacity: 0,
       scale: 0.95,
     }),
     center: {
       zIndex: 1,
-      x: '0%',
+      x: "0%",
       opacity: 1,
       scale: 1,
     },
     exit: (direction) => ({
       zIndex: 0,
-      x: direction < 0 ? '100%' : '-100%',
+      x: direction < 0 ? "100%" : "-100%",
       opacity: 0,
       scale: 0.95,
     }),
@@ -241,38 +271,38 @@ const BorderGlide = ({
 
   return (
     <BorderGlideContext.Provider value={contextValue}>
-      <div className={cn('relative w-full', className)}>
-        <div
-          className='relative w-full h-full overflow-hidden rounded-xl bg-transparent p-0.5'>
-          <div className='absolute inset-0 pointer-events-none'>
+      <div className={cn("relative w-full", className)}>
+        <div className="relative w-full h-full overflow-hidden rounded-xl bg-transparent p-0.5">
+          <div className="absolute inset-0 pointer-events-none">
             <MovingBorder
               duration={borderDuration}
-              rx='0.75rem'
-              ry='0.75rem'
+              rx="0.75rem"
+              ry="0.75rem"
               color={borderColor}
               width={borderWidth}
               height={borderHeight}
-              opacity={borderOpacity}>
+              opacity={borderOpacity}
+            >
               <div />
             </MovingBorder>
           </div>
-          <div
-            className='relative w-full h-full rounded-xl overflow-hidden bg-white dark:bg-[#09090b] backdrop-blur-xs'>
-            <AnimatePresence initial={false} custom={direction} mode='wait'>
+          <div className="relative w-full h-full rounded-xl overflow-hidden bg-white dark:bg-[#09090b] backdrop-blur-xs">
+            <AnimatePresence initial={false} custom={direction} mode="wait">
               <motion.div
                 key={currentIndex}
                 custom={direction}
                 variants={slideVariants}
-                initial='enter'
-                animate='center'
-                exit='exit'
+                initial="enter"
+                animate="center"
+                exit="exit"
                 transition={spring}
-                drag='x'
+                drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
                 dragElastic={0.2}
                 onDragEnd={handleDragEnd}
-                className='absolute inset-0 cursor-grab active:cursor-grabbing will-change-transform'
-                style={{ willChange: 'transform' }}>
+                className="absolute inset-0 cursor-grab active:cursor-grabbing will-change-transform"
+                style={{ willChange: "transform" }}
+              >
                 {childrenArray[currentIndex]}
               </motion.div>
             </AnimatePresence>
@@ -283,71 +313,56 @@ const BorderGlide = ({
   );
 };
 
-const BorderGlideCard = ({
-  children,
-  className,
-}) => {
+const BorderGlideCard = ({ children, className }) => {
   return (
     <Card
       className={cn(
-        'bg-transparent border shadow-none text-foreground w-full h-full',
-        className
-      )}>
+        "bg-transparent border shadow-none text-foreground w-full h-full",
+        className,
+      )}
+    >
       {children}
     </Card>
   );
 };
 
-const BorderGlideContent = ({
-  children,
-  className,
-}) => {
+const BorderGlideContent = ({ children, className }) => {
   return (
-    <CardContent className={cn('p-0 w-full h-full', className)}>
+    <CardContent className={cn("p-0 w-full h-full", className)}>
       {children}
     </CardContent>
   );
 };
 
-const BorderGlideHeader = ({
-  children,
-  className,
-}) => {
+const BorderGlideHeader = ({ children, className }) => {
   return (
-    <CardHeader className={cn('flex flex-col space-y-1.5 p-6', className)}>
+    <CardHeader className={cn("flex flex-col space-y-1.5 p-6", className)}>
       {children}
     </CardHeader>
   );
 };
 
-const BorderGlideFooter = ({
-  children,
-  className,
-}) => {
+const BorderGlideFooter = ({ children, className }) => {
   return (
-    <CardFooter className={cn('flex items-center p-6 pt-0', className)}>
+    <CardFooter className={cn("flex items-center p-6 pt-0", className)}>
       {children}
     </CardFooter>
   );
 };
 
-const BorderGlideTitle = ({
-  children,
-  className,
-}) => {
+const BorderGlideTitle = ({ children, className }) => {
   return (
-    <CardTitle className={cn('font-semibold leading-none tracking-tight', className)}>
+    <CardTitle
+      className={cn("font-semibold leading-none tracking-tight", className)}
+    >
       {children}
     </CardTitle>
   );
 };
 
-const BorderGlideDescription = ({
-  children,
-  className,
-}) => {
+const BorderGlideDescription = ({ children, className }) => {
   return (
-    <CardDescription className={cn('text-sm text-muted-foreground', className)}>
+    <CardDescription className={cn("text-sm text-muted-foreground", className)}>
       {children}
     </CardDescription>
   );

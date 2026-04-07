@@ -113,13 +113,13 @@ export default function SelectedData() {
       let imagesLoaded = 0;
       const images = [
         { data: imageFront, x: 0, y: 0, label: "Frente" },
-        { data: imageRightSleeve, x: imageWidth, y: 0, label: "Manga Der." },
+        { data: imageLeftSleeve, x: imageWidth, y: 0, label: "Manga Izq." },
         { data: imageBack, x: 0, y: imageHeight, label: "Atrás" },
         {
-          data: imageLeftSleeve,
+          data: imageRightSleeve,
           x: imageWidth,
           y: imageHeight,
-          label: "Manga Izq.",
+          label: "Manga Der.",
         },
       ];
 
@@ -400,87 +400,89 @@ export default function SelectedData() {
                   design.designs.manga_izquierda?.visible ||
                   design.designs.manga_derecha?.visible ||
                   design.designs.collar?.visible) && (
-                <div>
-                  <h3 className="font-bold text-lg mb-3">Diseños por Parte</h3>
+                  <div>
+                    <h3 className="font-bold text-lg mb-3">
+                      Diseños por Parte
+                    </h3>
 
-                  <ul className="space-y-2 text-xs">
-                    {design.designs.torso?.visible && (
-                      <li>
-                        <strong>Frente:</strong>{" "}
-                        {design.designs.torso?.design ? (
-                          <img
-                            src={design.designs.torso.design}
-                            alt="design-torso"
-                            className="w-12 h-12 inline"
-                          />
-                        ) : (
-                          "—"
-                        )}
-                      </li>
-                    )}
+                    <ul className="space-y-2 text-xs">
+                      {design.designs.torso?.visible && (
+                        <li>
+                          <strong>Frente:</strong>{" "}
+                          {design.designs.torso?.design ? (
+                            <img
+                              src={design.designs.torso.design}
+                              alt="design-torso"
+                              className="w-12 h-12 inline"
+                            />
+                          ) : (
+                            "—"
+                          )}
+                        </li>
+                      )}
 
-                    {design.designs.back?.visible && (
-                      <li>
-                        <strong>Espalda:</strong>{" "}
-                        {design.designs.back?.design ? (
-                          <img
-                            src={design.designs.back.design}
-                            alt="design-back"
-                            className="w-12 h-12 inline"
-                          />
-                        ) : (
-                          "—"
-                        )}
-                      </li>
-                    )}
+                      {design.designs.back?.visible && (
+                        <li>
+                          <strong>Espalda:</strong>{" "}
+                          {design.designs.back?.design ? (
+                            <img
+                              src={design.designs.back.design}
+                              alt="design-back"
+                              className="w-12 h-12 inline"
+                            />
+                          ) : (
+                            "—"
+                          )}
+                        </li>
+                      )}
 
-                    {design.designs.manga_izquierda?.visible && (
-                      <li>
-                        <strong>Manga Izquierda:</strong>{" "}
-                        {design.designs.manga_izquierda?.design ? (
-                          <img
-                            src={design.designs.manga_izquierda.design}
-                            alt="design-left-sleeve"
-                            className="w-12 h-12 inline"
-                          />
-                        ) : (
-                          "—"
-                        )}
-                      </li>
-                    )}
+                      {design.designs.manga_izquierda?.visible && (
+                        <li>
+                          <strong>Manga Izquierda:</strong>{" "}
+                          {design.designs.manga_izquierda?.design ? (
+                            <img
+                              src={design.designs.manga_izquierda.design}
+                              alt="design-left-sleeve"
+                              className="w-12 h-12 inline"
+                            />
+                          ) : (
+                            "—"
+                          )}
+                        </li>
+                      )}
 
-                    {design.designs.manga_derecha?.visible && (
-                      <li>
-                        <strong>Manga Derecha:</strong>{" "}
-                        {design.designs.manga_derecha?.design ? (
-                          <img
-                            src={design.designs.manga_derecha.design}
-                            alt="design-right-sleeve"
-                            className="w-12 h-12 inline"
-                          />
-                        ) : (
-                          "—"
-                        )}
-                      </li>
-                    )}
+                      {design.designs.manga_derecha?.visible && (
+                        <li>
+                          <strong>Manga Derecha:</strong>{" "}
+                          {design.designs.manga_derecha?.design ? (
+                            <img
+                              src={design.designs.manga_derecha.design}
+                              alt="design-right-sleeve"
+                              className="w-12 h-12 inline"
+                            />
+                          ) : (
+                            "—"
+                          )}
+                        </li>
+                      )}
 
-                    {design.designs.collar?.visible && (
-                      <li>
-                        <strong>Cuello:</strong>{" "}
-                        {design.designs.collar?.design ? (
-                          <img
-                            src={design.designs.collar.design}
-                            alt="design-collar"
-                            className="w-12 h-12 inline"
-                          />
-                        ) : (
-                          "—"
-                        )}
-                      </li>
-                    )}
-                  </ul>
-                </div>
-              )}
+                      {design.designs.collar?.visible && (
+                        <li>
+                          <strong>Cuello:</strong>{" "}
+                          {design.designs.collar?.design ? (
+                            <img
+                              src={design.designs.collar.design}
+                              alt="design-collar"
+                              className="w-12 h-12 inline"
+                            />
+                          ) : (
+                            "—"
+                          )}
+                        </li>
+                      )}
+                    </ul>
+                  </div>
+                )}
 
               {/* COLORES */}
               <div>
