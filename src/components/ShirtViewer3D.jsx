@@ -313,17 +313,17 @@ async function generateComposedTexture(
 
     // Nombre
     const nameFamily = FONT_MAP[nameFont] || FONT_MAP.ARBORIA;
-    ctx.font = `bold ${Math.floor(bh * 0.1)}px "${nameFamily}", sans-serif`;
+    ctx.font = `bold ${Math.floor(bh * 0.07)}px "${nameFamily}", sans-serif`;
     ctx.fillStyle = nameColor;
-    ctx.lineWidth = Math.floor(bh * 0.01);
+    ctx.lineWidth = Math.floor(bh * 0.008);
     ctx.strokeStyle = isLightColor(nameColor) ? "black" : "white";
 
     // Coordenadas locales dentro de la región 'espalda'
     // El TEXT_CONFIG original usaba 761 (x) y 309 (y) sobre 1024.
     // Adaptamos esas proporciones al centro de la región 'espalda'.
     const cx = bx + bw / 2;
-    const nameY = by + bh * 0.3;
-    const numberY = by + bh * 0.6;
+    const nameY = by + bh * 0.22;
+    const numberY = by + bh * 0.35;
 
     // ctx.strokeText(visiblePlayer.name.toUpperCase(), cx, nameY);
     // ctx.fillText(visiblePlayer.name.toUpperCase(), cx, nameY);
@@ -333,8 +333,8 @@ async function generateComposedTexture(
 
     // Número
     const numberFamily = FONT_MAP[numberFont] || FONT_MAP.ARBORIA;
-    ctx.font = `bold ${Math.floor(bh * 0.3)}px "${numberFamily}", sans-serif`;
-    ctx.lineWidth = Math.floor(bh * 0.02);
+    ctx.font = `bold ${Math.floor(bh * 0.18)}px "${numberFamily}", sans-serif`;
+    ctx.lineWidth = Math.floor(bh * 0.015);
     ctx.strokeStyle = isLightColor(numberColor) ? "black" : "white";
     ctx.strokeText(visiblePlayer.number.toString(), cx, numberY);
     ctx.fillStyle = numberColor;
